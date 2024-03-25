@@ -1,0 +1,211 @@
+import requests
+import xml.etree.ElementTree as ET
+import http.client
+import json
+import os
+import datetime
+import time
+
+# Define the Zoho API endpoint and headers
+zoho_conn = http.client.HTTPSConnection("www.zohoapis.com")
+
+# Organization Id needs to be change
+zoho_headers = {
+    'X-com-zoho-invoice-organizationid': "UNKNOWN",
+    'content-type': "application/json"
+}
+
+# ... Other code ...
+# Your OAuth 2.0 configuration
+OAUTH2_CLIENT_ID = "1000.5MYIXYYR46HL8DT8OZ1UZIOR0BUY5J"
+OAUTH2_CLIENT_SECRET = "6981d594488781e255b7d27a72a2949780ad385531"
+OAUTH2_AUTHORIZATION_URL = "https://accounts.zoho.com/oauth/v2/auth"
+OAUTH2_TOKEN_URL = "https://accounts.zoho.com/oauth/v2/token"
+OAUTH2_REDIRECT_URI = "https://www.google.com"
+OAUTH2_SCOPE = "SalesIQ.visitorroutingrules.READ,SalesIQ.chatroutingrules.READ,SalesIQ.trackingpresets.READ,SalesIQ.visitorhistoryviews.READ"
+
+
+# Function to create a custom header XML for a given set of headers
+def create_custom_header_xml(headers):
+    root = ET.Element("Root")
+    header = ET.SubElement(root, "Header")
+    for column_name, header_text in headers.items():
+        header_data = ET.SubElement(header, column_name)
+        header_data.text = header_text
+    tree = ET.ElementTree(root)
+    xml_file_path = rf"C:\path\Downloads\Customers\customer\custom_header.xml"
+    tree.write(xml_file_path, encoding="utf-8", xml_declaration=True)
+    return xml_file_path
+
+# Specify the folder containing XML files
+folder_path = r"C:\path\Downloads\Customers\customer"
+
+# Define the custom headers for each column
+custom_headers = {
+    "Name": "contact_name",
+    "ExTermId": "payment_terms_label",
+    "ExCurrencyId": "currency_code",
+    "ExWarehouseId": "company_name",
+    "Email": "EmailID",
+    "Tel1": "Phone",
+    "Tel2": "MobilePhone",
+    "Web": "website",
+    "Addr1": "billing_address.address",  # Updated to include billing address
+    "Addr2": "billing_address.street2",
+    "City": "billing_address.city",      # Updated to include billing city
+    "Area": "billing_address.state_code",  # Updated to include billing state
+    "ExCountryId": "billing_address.country",  # Updated to include billing country
+    "Zip": "billing_address.zip",          # Updated to include billing code
+    "Fax": "fax",          # Updated to include billing fax
+    "Addr1_Shipping": "Shipping Address",  # Changed to avoid duplicate keys
+    "Addr2_Shipping": "Shipping Street2",   # Changed to avoid duplicate keys
+    "City_Shipping": "Shipping City",       # Changed to avoid duplicate keys
+    "Area_Shipping": "Shipping State",      # Changed to avoid duplicate keys
+    "ExCountryId_Shipping": "Shipping Country",  # Changed to avoid duplicate keys
+    "Zip_Shipping": "Shipping Code",         # Changed to avoid duplicate keys
+    "Fax_Shipping": "Shipping Fax",         # Changed to avoid duplicate keys
+    "CustInactive": "status",
+    "ExPmtMethId": "Bank Account Payment",
+    "UseDirectDeposite": "Direct Deposit",
+    "NameLang": "Language",
+    "Notes": "notes"
+}
+
+# Function to obtain an access token
+def get_access_token():
+    auth_code_url = f"{OAUTH2_AUTHORIZATION_URL}?response_type=code&client_id={OAUTH2_CLIENT_ID}&scope={OAUTH2_SCOPE}&redirect_uri={OAUTH2_REDIRECT_URI}"
+
+    # Redirect the user to the authorization URL and have them log in and authorize the app
+    print(f'Visit this URL to authorize the app: {auth_code_url}')
+
+    # Retrieve the authorization code from the redirect URI after the user grants access
+    authorization_code = input('Enter the authorization code from the redirect URL: ')
+
+    # Exchange the authorization code for an access token
+    token_data = {
+        'code': authorization_code,
+        'client_id': OAUTH2_CLIENT_ID,
+        'client_secret': OAUTH2_CLIENT_SECRET,
+        'redirect_uri': OAUTH2_REDIRECT_URI,
+        'grant_type': 'authorization_code',
+    }
+
+    response = requests.post(OAUTH2_TOKEN_URL, data=token_data)
+    token_json = response.json()
+    access_token = token_json.get('access_token')
+
+    return access_token
+
+# Function to refresh an access token using OAuth 2.0
+def refresh_access_token(refresh_token):
+    token_data = {
+        'refresh_token': refresh_token,
+        'client_id': OAUTH2_CLIENT_ID,
+        'client_secret': OAUTH2_CLIENT_SECRET,
+        'grant_type': 'refresh_token',
+    }
+
+    response = requests.post(OAUTH2_TOKEN_URL, data=token_data)
+    token_json = response.json()
+    new_access_token = token_json.get('access_token')
+
+    return new_access_token
+
+# Initialize the access token and expiration time
+access_token = None
+access_token_expiration = None
+
+while True:
+    # Check if there are any XML files in the folder
+    xml_files = [filename for filename in os.listdir(folder_path) if filename.endswith(".xml")]
+
+    if xml_files:
+        # Create a unique timestamp for the JSON payload
+        timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
+        data = []
+
+        try:
+            # Create a custom header XML for the given headers
+            custom_header_xml_path = create_custom_header_xml(custom_headers)
+
+            # Loop through XML files in the folder
+            for filename in xml_files:
+                xml_file_path = os.path.join(folder_path, filename)
+                tree = ET.parse(xml_file_path)
+                root = tree.getroot()
+
+                # Extract data from the XML file and append it to the data list
+                for row in root.findall(".//Row"):
+                    row_data = {}
+                for column_name in custom_headers.keys():
+                    element = row.find(f".//{column_name}")
+                    if element is not None:  # Check if element exists
+                        # Map the provided input to the desired format
+                        if column_name == "billing_address.address":
+                            row_data[custom_headers[column_name]] = {
+                                "attention": "Mr.John",
+                                "address": element.text if element is not None else "",
+                                "street2": row.find(".//billing_address.street2").text if row.find(".//billing_address.street2") is not None else "",
+                                "state_code": row.find(".//billing_address.state_code").text if row.find(".//billing_address.state_code") is not None else "",
+                                "city": row.find(".//billing_address.city").text if row.find(".//billing_address.city") is not None else "",
+                                "state": row.find(".//billing_address.state_code").text if row.find(".//billing_address.state_code") is not None else "",
+                                "zip": row.find(".//billing_address.code").text if row.find(".//billing_address.code") is not None else "",
+                                "country": row.find(".//billing_address.country").text if row.find(".//billing_address.country") is not None else "",
+                                "Fax": 1234,  # Replace with the actual fax number
+                                "phone": "1234"  # Replace with the actual phone number
+                            }
+                        row_data[custom_headers[column_name]] = element.text if element is not None else ""
+                    else:
+                        row_data[custom_headers[column_name]] = element.text if element is not None else ""
+                data.append(row_data)
+                
+                # Mark the XML file for deletion if the data extraction is successful
+                xml_file_to_delete = xml_file_path
+
+        except Exception as e:
+            # Handle exceptions more explicitly and consider logging errors
+            print(f"Error: {str(e)}")
+            xml_file_to_delete = None
+
+
+        if data:
+            # Convert the data to JSON
+            payload_json = json.dumps(data)
+            print(json.dumps(data))
+            print(payload_json)
+
+            # Get the access token dynamically
+            access_token = get_access_token()
+
+            # Add the access token to the headers
+            zoho_headers['Authorization'] = f"Zoho-oauthtoken {access_token}"
+
+            # Send the JSON payload as an HTTP POST request to Zoho API
+            zoho_conn.request("POST", "/invoice/v3/contacts", payload_json, zoho_headers)
+            zoho_res = zoho_conn.getresponse()
+            response_data = zoho_res.read()
+            print("Response from Zoho API:")
+            print(response_data.decode("utf-8"))
+
+            # Delete the XML file if it was marked for deletion
+            if xml_file_to_delete is not None:
+                try:
+                    os.remove(xml_file_to_delete)
+                    xml_file_path = rf"C:\path\Downloads\Customers\customer\custom_header.xml"
+                    os.remove(xml_file_path)
+                except Exception as e:
+                    # Handle exceptions more explicitly and consider logging errors
+                    print(f"Error deleting file: {str(e)}")
+
+    else:
+        pass  # No XML files found, no action needed
+
+    # Sleep for a while before checking again (e.g., every 5 minutes)
+    time.sleep(300)  # Adjust the sleep interval as needed
+
+    # Check if the access token has expired, and if so, refresh it
+    current_time = datetime.datetime.now()
+    if access_token is None or current_time >= access_token_expiration:
+        access_token = refresh_access_token(access_token)
+        access_token_expiration = current_time + datetime.timedelta(hours=1)  # Assuming an hour-long expiration
+        print(f'Access Token Refreshed: {access_token}')
