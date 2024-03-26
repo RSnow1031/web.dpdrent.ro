@@ -5,65 +5,42 @@ require_once './layout/header.php';
 $query = "SELECT * FROM categories JOIN cat_car ON categories.catID = cat_car.catID WHERE status = 'active' GROUP BY categories.catID ORDER BY 'order' ASC";
 $results = mysqli_query($db, $query);
 $cats = mysqli_fetch_all($results, MYSQLI_ASSOC);
-function getCarPriceBetweenTwoDatesWithDiscount($db,$carID, $days, $startDate = null, $cityID = '') {
-    switch ($days) {
-        case ($days >= 1 && $days <= 3):
-            $price = 'price1';
-            break;
-        case ($days >= 4 && $days <= 7):
-            $price = 'price2';
-            break;
-        case ($days >= 8 && $days <= 15):
-            $price = 'price3';
-            break;
-        case ($days >= 16 && $days <= 21):
-            $price = 'price4';
-            break;
-        case ($days > 21):
-            $price = 'price5';
-            break;
-        default:
-            $price = 'price1';
-    }
-
-    $query = "SELECT * FROM cars WHERE carID = " . $carID;
-    $results = mysqli_query($db, $query);
-    $row = mysqli_fetch_object($results);
-
-    $standardPrice = $row->$price;
-    if ($startDate != null) {
-        //check current month & year for both dates
-        $new_start = date("n", strtotime($startDate));
-
-        $query = "SELECT * FROM prices JOIN pickup ON prices.cityID = pickup.pickID WHERE pickup.pickUpName = '" . $cityID ."' AND prices.month = " . $new_start;
-        $results = mysqli_query($db, $query);
-        $customPrice = mysqli_fetch_object($results);
-
-        if ($customPrice->price > 0) {
-            $pret_nou = $standardPrice + $customPrice->price;
-            $pret_nou = number_format($pret_nou, 2, '.', '');
-            return $pret_nou;
-        } else {
-            return $standardPrice;
-        }
-
-    } else {
-        return $standardPrice;
-    }
-}
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    Session::put('step', 2);
     $pickup = $_POST['pickup_location'];
     $pickup_date = $_POST['pickup_date'];
     $pickup_time = $_POST['pickup_time'];
     $dropoff_date = $_POST['return_date'];
     $dropoff_time = $_POST['return_time'];
+    if (isset($_POST['same_location']))
+    {
+        $return_location = $_POST['pickup_location'];
+        $same_location = $_POST['same_location'];
+    }
+    else
+    {
+        $return_location = $_POST['return_location'];
+        $same_location = 0;
+    }
     Session::put('pickup_location', $pickup);
+    Session::put('return_location', $return_location);
     Session::put('pickup_date', $pickup_date);
     Session::put('pickup_time', $pickup_time);
     Session::put('return_date', $dropoff_date);
     Session::put('return_time', $dropoff_time);
+    Session::put('same_location', $same_location);
 }
+else
+{
+    Session::put('step', 1);
+    if ($_SESSION['pickup_location'] != null && $_SESSION['return_location'] != null && $_SESSION['pickup_date'] != null 
+        && $_SESSION['pickup_time'] != null && $_SESSION['return_date'] != null && $_SESSION['return_time'] != null)
+    {
+        Session::put('step', 2);
+    }
+}
+
 ?>
 
 <style>
@@ -74,7 +51,130 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
     
 </style>
-<div class="sortby-sec" id="visible-tab">
+<!-- Breadscrumb Section -->
+<div class="breadcrumb-bar section services" style="padding: 10px">
+    <div class="container">
+        <div class="row align-items-center text-center">
+            <div class="col-md-12 col-12">
+                <div class="container">	
+                    <!-- /Heading title -->
+                    <div class="services-work">
+                        <div class="row">
+                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                                <div class="services-group">
+                                    <div class="services-icon" style="border: 2px dashed #0db02b">
+                                        <img class="icon-img" style="background-color: #0db02b" src="assets/img/icons/services-icon-01.svg" alt="Choose Locations">
+                                    </div>
+                                    <div class="services-content">
+                                        <h3 style="color: #0db02b">1. Choose Location</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                                <div class="services-group">
+                                    <div class="services-icon" <?php if ($_SESSION['step'] > 1) { ?> style="border: 2px dashed #0db02b" <?php } else { ?> style="border: 2px dashed #201F1D" <?php } ?>>
+                                        <img class="icon-img" <?php if ($_SESSION['step'] > 1) { ?> style="background-color: #0db02b" <?php } else { ?> style="background-color: #201F1D"  <?php } ?> src="assets/img/icons/services-icon-02.svg" alt="Choose Locations">
+                                    </div>
+                                    <div class="services-content">
+                                        <h3 <?php if ($_SESSION['step'] > 1) { ?> style="color: #0db02b" <?php } else { ?> style="color: #FFFFFF" <?php } ?>> 2. Choose Car</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                                <div class="services-group">
+                                    <div class="services-icon" <?php if ($_SESSION['step'] > 2) { ?> style="border: 2px dashed #0db02b" <?php } else { ?> style="border: 2px dashed #201F1D" <?php } ?>>
+                                        <img class="icon-img" <?php if ($_SESSION['step'] > 2) { ?> style="background-color: #0db02b" <?php } else { ?> style="background-color: #201F1D"  <?php } ?> src="assets/img/icons/services-icon-03.svg" alt="Choose Locations">
+                                    </div>
+                                    <div class="services-content">
+                                        <h3 <?php if ($_SESSION['step'] > 2) { ?> style="color: #0db02b" <?php } else { ?> style="color: #FFFFFF" <?php } ?>> 3. Book a Car</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /Breadscrumb Section -->
+
+<div class="section-search"> 
+    <div class="container">	  
+        <div class="search-box-banner1" >
+            <form action="listing-grid.html">
+                <ul class="align-items-center">
+                    <li class="column-group-main">
+                        <div class="input-block">
+                            <label>Pickup Location</label>												
+                            <div class="group-img">
+                                <input type="text" class="form-control" name="pickup_location" placeholder="Enter City, Airport, or Address">
+                                <span><i class="feather-map-pin"></i></span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="column-group-main">
+                        <div class="input-block">
+                            <label>Return Location</label>												
+                            <div class="group-img">
+                                <input type="text" class="form-control" name="return_location" placeholder="Enter City, Airport, or Address">
+                                <span><i class="feather-map-pin"></i></span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="column-group-main">						
+                        <div class="input-block">																	
+                            <label>Pickup Date</label>
+                        </div>
+                        <div class="input-block-wrapp">
+                            <div class="input-block date-widget">												
+                                <div class="group-img">
+                                <input type="text" class="form-control" id="pickup_date" name="pickup_date" value="10-10-2024">
+                                <span><i class="feather-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="input-block time-widge">											
+                                <div class="group-img">
+                                <input type="text" class="form-control timepicker" name="pickup_time">
+                                <span><i class="feather-clock"></i></span>
+                                </div>
+                            </div>
+                        </div>	
+                    </li>
+                    <li class="column-group-main">						
+                        <div class="input-block">																	
+                            <label>Return Date</label>
+                        </div>
+                        <div class="input-block-wrapp">
+                            <div class="input-block date-widge">												
+                                <div class="group-img">
+                                <input type="text" class="form-control" id="return_date" name="return_date">
+                                <span><i class="feather-calendar"></i></span>
+                                </div>
+                            </div>
+                            <div class="input-block time-widge">											
+                                <div class="group-img">
+                                <input type="text" class="form-control timepicker" name="return_time">
+                                <span><i class="feather-clock"></i></span>
+                                </div>
+                            </div>
+                        </div>	
+                    </li>
+                    <li class="column-group-last">
+                        <div class="input-block">
+                            <div class="search-btn">
+                                <button class="btn search-button" type="submit"> <i class="fa fa-search" aria-hidden="true"></i>Search</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </form>	
+        </div>
+    </div>	
+</div>	
+
+
+<div class="" id="visible-tab" style="background-color: #fcfbfb; margin-top: 10px">
     <div class="container">
         <div class="sorting-div">
             <div class="row d-flex align-items-center">
@@ -219,7 +319,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <?php } ?>
                                 </div>
                                 <div class="listing-button">
-                                    <form action="rezervare.php" method="post">
+                                    <form action="alege-masina.php" method="post">
                                         <input type="hidden" name="carId" id="carId" value="<?= $car['carID'] ?>" />
                                         <button type="submit" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</button>
                                     </form>
@@ -387,7 +487,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <script>
     $(document).ready(function() {
         $('#list-content').css('display', 'none')
-        $('#grid-content').show()
+        $('#grid-content').show();
+
+        var currentDate = moment(); // Get the current date
+        var futureDate = currentDate.add(2, 'days'); // Add 7 days to the current date
+
+        console.log(moment(new Date(), 'DD-MM-YYYY'),'==+++'); 
+        var today = new Date();
+
+        var day = String(today.getDate()).padStart(2, '0');
+        var month = String(today.getMonth() + 1).padStart(2, '0');
+        var year = today.getFullYear();
+
+        var formattedDate = day + '-' + month + '-' + year;
+        
+        var pickup_date = $('#pickup_date').datetimepicker({
+            minDate: moment(formattedDate, 'DD-MM-YYYY'),
+			format: 'DD-MM-YYYY',
+			icons: {
+				up: "fas fa-angle-up",
+				down: "fas fa-angle-down",
+				next: 'fas fa-angle-right',
+				previous: 'fas fa-angle-left'
+			},
+
+		})
+
+        var return_date = $('#return_date').datetimepicker({
+			minDate: moment(futureDate, 'DD-MM-YYYY'),
+			format: 'DD-MM-YYYY',
+			icons: {
+				up: "fas fa-angle-up",
+				down: "fas fa-angle-down",
+				next: 'fas fa-angle-right',
+				previous: 'fas fa-angle-left'
+			},
+		})
+
+        $('#pickup_date').blur(function() {
+            $('#return_date').datetimepicker('destroy');
+
+            $('#return_date').datetimepicker({
+            minDate: moment('11-12-2024', 'DD-MM-YYYY'),
+			format: 'DD-MM-YYYY',
+			icons: {
+				up: "fas fa-angle-up",
+				down: "fas fa-angle-down",
+				next: 'fas fa-angle-right',
+				previous: 'fas fa-angle-left'
+			},
+
+		})
+        })
     });
     // Add event listeners to the tabs
     $('#grid-tab').on('click', function() {
@@ -395,6 +546,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $('#grid-content').show()
         $('#list-tab').removeClass('active')
         $(this).addClass('active')
+
+
     });
 
     $('#list-tab').on('click', function() {
@@ -403,4 +556,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $('#grid-tab').removeClass('active')
         $(this).addClass('active')
     });
+
+    // var startDatePicker = $('#pickup_date').datetimepicker({
+    //     format: 'DD-MM-YYYY',
+    //     icons: {
+    //         up: "fas fa-angle-up",
+    //         down: "fas fa-angle-down",
+    //         next: 'fas fa-angle-right',
+    //         previous: 'fas fa-angle-left'
+    //     }
+    // });
+
+    // var endDatePicker = $('#return_date').datetimepicker({
+    //     format: 'DD-MM-YYYY',
+    //     icons: {
+    //         up: "fas fa-angle-up",
+    //         down: "fas fa-angle-down",
+    //         next: 'fas fa-angle-right',
+    //         previous: 'fas fa-angle-left'
+    //     }
+    // });
+
+    // // Set minDate for the endDatePicker based on the selected date of the startDatePicker
+    // startDatePicker.on('change.datetimepicker', function (e) {
+    //     console.log('=====')
+    //     endDatePicker.datetimepicker('minDate', e.date);
+    // });
+
 </script>

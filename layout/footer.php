@@ -195,7 +195,7 @@
 		</svg>
 	</div>
 	<!-- scrollToTop end -->
-	
+	<input type="text" id="datetime" readonly>
 	
 	<!-- jQuery -->
 	<script src="assets/js/jquery-3.7.1.min.js"></script>
@@ -232,6 +232,5 @@
 	
 	<!-- Custom JS -->
 	<script src="assets/js/script.js"></script>
-	
 </body>
 </html>

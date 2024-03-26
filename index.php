@@ -16,13 +16,13 @@ $current_time = date("H:i");
 
 // if (Session::get('pickup_date') == null)
 // {
-	Session::put('pickup_date', $current_date);
-	Session::put('pickup_time', $current_time);
+	// Session::put('pickup_date', $current_date);
+	// Session::put('pickup_time', $current_time);
 // }
 // if (Session::get('return_date') == null)
 // {
-	Session::put('return_date', $current_date);
-	Session::put('return_time', $current_time);
+	// Session::put('return_date', $current_date);
+	// Session::put('return_time', $current_time);
 // }
 
 ?>
@@ -103,7 +103,7 @@ $current_time = date("H:i");
 </style>
 
 <!-- Banner -->
-<section class="banner-section show-banner">
+<!-- <section class="banner-section show-banner">
 	<div class="">
 		<div class="home-banner">		
 			<div class="row align-items-center">
@@ -133,20 +133,31 @@ $current_time = date("H:i");
 						<span class="visually-hidden">Next</span>
 					</button>
 				</div>
-				<!-- <div class="col-lg-6" data-aos="fade-down">
-					<p class="explore-text"> <span><i class="fa-solid fa-thumbs-up me-2"></i></span>100% Trusted car rental platform in the World</p>
-					<h1>Find Your Best <br>
+			</div>
+		</div>	
+	</div>
+</section> -->
+<!-- /Banner -->
+
+<!-- Banner -->
+<section class="banner-section banner-slider">		
+	<div class="container">
+		<div class="home-banner">		
+			<div class="row align-items-center">					    
+				<div class="col-lg-6" data-aos="fade-down">
+					<!-- <p class="explore-text"> <span><i class="fa-solid fa-thumbs-up me-2"></i></span>100% Trusted car rental platform in the World</p>
+					<h1>Find Your Best <br>									
 					<span>Dream Car for Rental</span></h1>
 					<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s</p>
 					<div class="view-all">
 						<a href="listing-grid.html" class="btn btn-view d-inline-flex align-items-center">View all Cars <span><i class="feather-arrow-right ms-2"></i></span></a>
-					</div>
+					</div> -->
 				</div>
 				<div class="col-lg-6" data-aos="fade-down">
 					<div class="banner-imgs">
 						<img src="assets/img/car-right.png" class="img-fluid aos" alt="bannerimage">							
 					</div>
-				</div> -->
+				</div>
 			</div>
 		</div>	
 	</div>
@@ -177,7 +188,7 @@ $current_time = date("H:i");
 					<li class="column-group-main">
 						<div class="input-block">
 							<div class="form-check">
-								<input class="form-check-input" type="checkbox" value="" id="same_location" checked>
+								<input class="form-check-input" type="checkbox" value="1" id="same_location" name="same_location" checked>
 								<label class="form-check-label" for="same_location">
 									Returnare la aceeasi locatie
 								</label>
@@ -186,7 +197,7 @@ $current_time = date("H:i");
 					</li>
 					<li class="column-group-main" id="show_return_location">
 						<div class="input-block">
-							<label>Pickup Location</label>												
+							<label>Dropoff Location</label>												
 							<div class="group-img">
 								<input type="text" id="return_location" name="return_location" class="form-control" placeholder="Enter City, Airport, or Address">
 								<span><i class="feather-map-pin"></i></span>
@@ -244,59 +255,6 @@ $current_time = date("H:i");
 	</div>	
 </div>	
 <!-- /Search -->
-
-<!-- services -->
-<section class="section services">
-	<div class="service-right">
-		<img src="assets/img/bg/service-right.svg" class="img-fluid" alt="services right">
-	</div>		
-	<div class="container">	
-		<!-- Heading title-->
-		<div class="section-heading" data-aos="fade-down">
-			<h2>How It Works</h2>
-			<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-		</div>
-		<!-- /Heading title -->
-		<div class="services-work">
-			<div class="row">
-				<div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
-					<div class="services-group">
-						<div class="services-icon border-secondary">
-							<img class="icon-img bg-secondary" src="assets/img/icons/services-icon-01.svg" alt="Choose Locations">
-						</div>
-						<div class="services-content">
-							<h3>1. Choose Locations</h3>
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
-					<div class="services-group">
-						<div class="services-icon border-warning">
-							<img class="icon-img bg-warning" src="assets/img/icons/services-icon-02.svg" alt="Choose Locations">
-						</div>
-						<div class="services-content">
-							<h3>2. Pick-Up Locations</h3>
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-						</div>
-					</div>
-				</div>
-				<div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
-					<div class="services-group">
-						<div class="services-icon border-dark">
-							<img class="icon-img bg-dark" src="assets/img/icons/services-icon-03.svg" alt="Choose Locations">
-						</div>
-						<div class="services-content">
-							<h3>3. Book your Car</h3>
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-</section>
-<!-- /services -->
 
 <!-- Popular Services -->
 <section class="section popular-services popular-explore">		
@@ -375,7 +333,7 @@ $current_time = date("H:i");
 														
 							<div class="listing-img">
 								<a href="listing-details.html">
-									<img src="assets/uploads/cars/<?php echo $item['carPhoto'];?>"  class="img-fluid" style="height: 250px">
+									<img src="https://dpdrent.ro/uploads/cars/<?php echo $item['carPhoto'];?>"  class="img-fluid" style="height: 250px">
 								</a>
 								
 							</div>										
@@ -628,35 +586,33 @@ require_once './layout/footer.php';
 			$('#return_location').val($('#pickup_location').val());
 		}
 
-		$('#pickup_date').datetimepicker({
-			startDate: '-2m',
-			endDate: '+2d'
-		});
 	});
 
 	$(document).ready(function() {
-		var dateToday = new Date();
-		$("#pickup_date").datetimepicker({
-			format: 'DD-MM-YYYY',
-			icons: {
-				up: "fas fa-angle-up",
-				down: "fas fa-angle-down",
-				next: 'fas fa-angle-right',
-				previous: 'fas fa-angle-left'
-			},
-			minDate: moment().startOf('day'),
-		});
+		// var dateToday = new Date();
+		// $("#pickup_date").datetimepicker({
+		// 	format: 'DD-MM-YYYY',
+		// 	icons: {
+		// 		up: "fas fa-angle-up",
+		// 		down: "fas fa-angle-down",
+		// 		next: 'fas fa-angle-right',
+		// 		previous: 'fas fa-angle-left'
+		// 	},
+		// 	minDate: moment().startOf('day'),
+		// });
 
-		$("#return_date").datetimepicker({
-			format: 'DD-MM-YYYY',
-			icons: {
-				up: "fas fa-angle-up",
-				down: "fas fa-angle-down",
-				next: 'fas fa-angle-right',
-				previous: 'fas fa-angle-left'
-			},
-			minDate: moment().add(2, 'days').startOf($('#pickup_date').val())
-		});
+		// $("#return_date").datetimepicker({
+		// 	format: 'DD-MM-YYYY',
+		// 	icons: {
+		// 		up: "fas fa-angle-up",
+		// 		down: "fas fa-angle-down",
+		// 		next: 'fas fa-angle-right',
+		// 		previous: 'fas fa-angle-left'
+		// 	},
+		// 	minDate: moment().startOf('day'),
+
+		// 	// minDate: moment().add(2, 'days').startOf($('#pickup_date').val())
+		// });
 	});
 
 	$('#same_location').click(function() {

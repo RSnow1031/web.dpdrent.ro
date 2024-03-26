@@ -103,23 +103,24 @@ Version      : 1.0
 	
 	// Datepicker	
 
-	// if($('.datetimepicker').length > 0 ){
-	// 	$('.datetimepicker').datetimepicker({
-	// 		format: 'DD-MM-YYYY',
-	// 		icons: {
-	// 			up: "fas fa-angle-up",
-	// 			down: "fas fa-angle-down",
-	// 			next: 'fas fa-angle-right',
-	// 			previous: 'fas fa-angle-left'
-	// 		},
-	// 	});
-	// }
+	if($('.datetimepicker').length > 0 ){
+		$('.datetimepicker').datetimepicker({
+			minDate: new Date(),
+			format: 'DD-MM-YYYY',
+			icons: {
+				up: "fas fa-angle-up",
+				down: "fas fa-angle-down",
+				next: 'fas fa-angle-right',
+				previous: 'fas fa-angle-left'
+			},
+		});
+	}
 
 	// Timepicker
 
 	if($('.timepicker').length > 0) {
 		$('.timepicker').datetimepicker({
-			format: "hh:mm:ss",
+			format: "HH:mm",
 			icons: {
 				up: "fa fa-angle-up",
 				down: "fa fa-angle-down",
