@@ -12,29 +12,26 @@
 								<div class="col-lg-4 col-md-6">
 									<!-- Footer Widget -->
 									<div class="footer-widget footer-menu">
-										<h5 class="footer-title">About Company</h5>
+										<h5 class="footer-title">Pagini</h5>
 										<ul>
 											<li>
-												<a href="about.html">Our Company</a>
+												<a href="/inchirieri-masini.php">Masini si Preturi</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)">Shop Toyota</a>
+												<a href="/servicii.php">Servicii</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)">Dreamsrentals USA</a>
+												<a href="/extra.php">Extra</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)">Dreamsrentals Worldwide</a>
+												<a href="http://blog.dpdrent.ro/">Blog</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)">Dreamsrentals Racing</a>
+												<a href="/contact.php">Contact</a>
+											</li>
+											<li>
+												<a href="/">Rent a car Brasov</a>
 											</li>	
-											<li>
-												<a href="javascript:void(0)">Dreamsrentals Racing</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">Virtual Auto Show</a>
-											</li>									
 										</ul>
 									</div>
 									<!-- /Footer Widget -->
@@ -42,29 +39,18 @@
 								<div class="col-lg-4 col-md-6">
 									<!-- Footer Widget -->
 									<div class="footer-widget footer-menu">
-										<h5 class="footer-title">Vehicles Type</h5>
+										<h5 class="footer-title">Pagini</h5>
 										<ul>
 											<li>
-												<a href="javascript:void(0)">All  Vehicles</a>
+												<a href="https://anpc.ro/ce-este-sal/" target="blank">
+													<img width="200px" src="https://dpdrent.ro/anpc-sal.png">
+												</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)">SUVs</a>
+												<a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO/" target="blank">
+												<img width="200px" src="https://dpdrent.ro/anpc-sol.png">
+												</a>
 											</li>
-											<li>
-												<a href="javascript:void(0)">Trucks</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">Cars</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">Crossovers</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">Electrified Vehicles</a>
-											</li>	
-											<li>
-												<a href="javascript:void(0)">Hybrids</a>
-											</li>								
 										</ul>
 									</div>
 									<!-- /Footer Widget -->
@@ -72,29 +58,18 @@
 								<div class="col-lg-4 col-md-6">
 									<!-- Footer Widget -->
 									<div class="footer-widget footer-menu">
-										<h5 class="footer-title">Quick links</h5>
+										<h5 class="footer-title">Adresa</h5>
 										<ul>
 											<li>
-												<a href="javascript:void(0)">My Account</a>
+												<a> B-dul Eroilor Nr.118,<br />
+              										Voluntari, Ilfov</a>
 											</li>
 											<li>
-												<a href="javascript:void(0)">Champaigns</a>
+												<img src="https://dpdrent.ro/images/visa_master.png" alt="Visa - Mastercard" />
+												<p>
+													<a href="http://www.anpc.gov.ro/" target="_blank">ANPC</a>
+												</p>
 											</li>
-											<li>
-												<a href="javascript:void(0)">Dreamsrental Dealers</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">Deals and Incentive</a>
-											</li>
-											<li>
-												<a href="javascript:void(0)">Financial Services</a>
-											</li>	
-											<li>
-												<a href="javascript:void(0)">Dreamsrental Insurance</a>
-											</li>	
-											<li>
-												<a href="javascript:void(0)">Dreamsrental Care</a>
-											</li>								
 										</ul>
 									</div>
 									<!-- /Footer Widget -->
@@ -103,45 +78,32 @@
 						</div>
 						<div class="col-lg-5">
 							<div class="footer-contact footer-widget">
-								<h5 class="footer-title">Contact Info</h5>
+								<h5 class="footer-title">Contact</h5>
 								<div class="footer-contact-info">									
 									<div class="footer-address">											
 										<span><i class="feather-phone-call"></i></span>
 										<div class="addr-info">
-											<a href="tel:+1(888)7601940">+ 1 (888) 760 1940</a>
+											<a href="tel:+1(888)7601940">(+4)0722.33.25.49</a>
 										</div>
 									</div>
 									<div class="footer-address">
 										<span><i class="feather-mail"></i></span>
 										<div class="addr-info">
-											<a href="mailto:support@example.com">support@example.com</a>
+											<a href="mailto:support@example.com"><?=$site_email?></a>
 										</div>
-									</div>
-									<div class="update-form">
-										<form action="#">
-											<span><i class="feather-mail"></i></span> 
-											<input type="email" class="form-control" placeholder="Enter You Email Here">
-											<button type="submit" class="btn btn-subscribe"><span><i class="feather-send"></i></span></button>
-										</form>
 									</div>
 								</div>								
 								<div class="footer-social-widget">
 									<h6>Connect with us</h6>
 									<ul class="nav-social">
 										<li>
-											<a href="javascript:void(0)"><i class="fa-brands fa-facebook-f fa-facebook fi-icon"></i></a>
+											<a href="https://www.facebook.com/Rentacardpd"><i class="fa-brands fa-facebook-f fa-facebook fi-icon"></i></a>
 										</li>
 										<li>
-											<a href="javascript:void(0)"><i class="fab fa-instagram fi-icon"></i></a>
+											<a href="https://plus.google.com/105882145213565917055/posts"><i class="fab fa-instagram fi-icon"></i></a>
 										</li>
 										<li>
-											<a href="javascript:void(0)"><i class="fab fa-behance fi-icon"></i></a>
-										</li>
-										<li>
-											<a href="javascript:void(0)"><i class="fab fa-twitter fi-icon"></i> </a>
-										</li>
-										<li>
-											<a href="javascript:void(0)"><i class="fab fa-linkedin fi-icon"></i></a>
+											<a href="https://plus.google.com/105882145213565917055/posts"><i class="fab fa-twitter fi-icon"></i> </a>
 										</li>
 									</ul>
 								</div>
@@ -160,7 +122,7 @@
 						<div class="row align-items-center">
 							<div class="col-md-6">
 								<div class="copyright-text">
-									<p>© 2024 Dreams Rent. All Rights Reserved.</p>
+									<p>© 2024 DPD Rent. All Rights Reserved.</p>
 								</div>
 							</div>
 							<div class="col-md-6">
@@ -195,7 +157,6 @@
 		</svg>
 	</div>
 	<!-- scrollToTop end -->
-	<input type="text" id="datetime" readonly>
 	
 	<!-- jQuery -->
 	<script src="assets/js/jquery-3.7.1.min.js"></script>
@@ -232,5 +193,48 @@
 	
 	<!-- Custom JS -->
 	<script src="assets/js/script.js"></script>
+
+	<script>
+		(function () {
+		'use strict'
+
+		// Fetch all the forms we want to apply custom Bootstrap validation styles to
+		var forms = document.querySelectorAll('.needs-validation')
+
+		// Loop over them and prevent submission
+		Array.prototype.slice.call(forms)
+			.forEach(function (form) {
+			form.addEventListener('submit', function (event) {
+				if (!form.checkValidity()) {
+				event.preventDefault()
+				event.stopPropagation()
+				}
+				form.classList.add('was-validated')
+			}, false)
+			})
+		})()
+	</script>
+	<link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
+  	<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
+	<script>
+		window.addEventListener("load", function() {
+		window.cookieconsent.initialise({
+			"palette": {
+			"popup": {
+				"background": "#f79200"
+			},
+			"button": {
+				"background": "#14a7d0"
+			}
+			},
+			"content": {
+			"message": "<span style=''>Acest site folosește cookie. Navigând în continuare, vă exprimați acordul asupra folosiri cookie-urilor.</span>",
+			"dismiss": "Am inteles",
+			"link": "Mai multe detalii",
+			"href": "/informatii-cookie.php"
+			}
+		})
+		});
+  </script>
 </body>
 </html>

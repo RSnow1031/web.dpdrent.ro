@@ -6,50 +6,24 @@ $query = "SELECT * FROM categories JOIN cat_car ON categories.catID = cat_car.ca
 $results = mysqli_query($db, $query);
 $cats = mysqli_fetch_all($results, MYSQLI_ASSOC);
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    Session::put('step', 2);
-    $pickup = $_POST['pickup_location'];
-    $pickup_date = $_POST['pickup_date'];
-    $pickup_time = $_POST['pickup_time'];
-    $dropoff_date = $_POST['return_date'];
-    $dropoff_time = $_POST['return_time'];
-    if (isset($_POST['same_location']))
-    {
-        $return_location = $_POST['pickup_location'];
-        $same_location = $_POST['same_location'];
-    }
-    else
-    {
-        $return_location = $_POST['return_location'];
-        $same_location = 0;
-    }
-    Session::put('pickup_location', $pickup);
-    Session::put('return_location', $return_location);
-    Session::put('pickup_date', $pickup_date);
-    Session::put('pickup_time', $pickup_time);
-    Session::put('return_date', $dropoff_date);
-    Session::put('return_time', $dropoff_time);
-    Session::put('same_location', $same_location);
-}
-else
+if (Session::exists('pickup_location') != true && Session::exists('return_location') != true && Session::exists('pickup_date') != true 
+    && Session::exists('pickup_time') != true && Session::exists('return_date') != true && Session::exists('return_time') != true)
 {
     Session::put('step', 1);
-    if ($_SESSION['pickup_location'] != null && $_SESSION['return_location'] != null && $_SESSION['pickup_date'] != null 
-        && $_SESSION['pickup_time'] != null && $_SESSION['return_date'] != null && $_SESSION['return_time'] != null)
-    {
-        Session::put('step', 2);
-    }
 }
+
+$query = "SELECT * FROM content WHERE pageURL = 'inchirieri-masini'";
+$results = mysqli_query($db, $query);
+$page = mysqli_fetch_object($results);
 
 ?>
 
 <style>
-    @media (max-width: 767.98px) {
-        #visible-tab {
-            display: none;
-        }
+@media (max-width: 767.98px) {
+    #visible-tab {
+        display: none;
     }
-    
+}
 </style>
 <!-- Breadscrumb Section -->
 <div class="breadcrumb-bar section services" style="padding: 10px">
@@ -65,6 +39,7 @@ else
                                     <div class="services-icon" style="border: 2px dashed #0db02b">
                                         <img class="icon-img" style="background-color: #0db02b" src="assets/img/icons/services-icon-01.svg" alt="Choose Locations">
                                     </div>
+                                    <div class="<?php if (Session::exists('step') && Session::get('step') > 1) { ?>line-progress<?php } else { ?>line<?php } ?>"></div>
                                     <div class="services-content">
                                         <h3 style="color: #0db02b">1. Choose Location</h3>
                                     </div>
@@ -75,6 +50,7 @@ else
                                     <div class="services-icon" <?php if ($_SESSION['step'] > 1) { ?> style="border: 2px dashed #0db02b" <?php } else { ?> style="border: 2px dashed #201F1D" <?php } ?>>
                                         <img class="icon-img" <?php if ($_SESSION['step'] > 1) { ?> style="background-color: #0db02b" <?php } else { ?> style="background-color: #201F1D"  <?php } ?> src="assets/img/icons/services-icon-02.svg" alt="Choose Locations">
                                     </div>
+                                    <div class="<?php if (Session::exists('step') && Session::get('step') > 2) { ?>line-progress<?php } else { ?>line<?php } ?>"></div>
                                     <div class="services-content">
                                         <h3 <?php if ($_SESSION['step'] > 1) { ?> style="color: #0db02b" <?php } else { ?> style="color: #FFFFFF" <?php } ?>> 2. Choose Car</h3>
                                     </div>
@@ -98,17 +74,35 @@ else
     </div>
 </div>
 <!-- /Breadscrumb Section -->
-
+<!-- <div class="container">
+<?= $page->pageContent;?>
+</div> -->
+<!-- <br><br><br> -->
 <div class="section-search"> 
     <div class="container">	  
         <div class="search-box-banner1" >
-            <form action="listing-grid.html">
+            <form action="/inchirieri-ajax.php" method="POST">
                 <ul class="align-items-center">
                     <li class="column-group-main">
                         <div class="input-block">
                             <label>Pickup Location</label>												
                             <div class="group-img">
-                                <input type="text" class="form-control" name="pickup_location" placeholder="Enter City, Airport, or Address">
+                                <!-- <input type="text" class="form-control" name="pickup_location" > -->
+                                <?php if (Session::exists('pickup_location') && Session::get('pickup_location')) { ?>
+                                    <select class="form-control" id="pickup_location" name="pickup_location" style="padding-left: 35px">
+                                        <option <?php if($_SESSION['pickup_location'] == 'Bucuresti') echo 'selected'; ?>>Bucuresti</option>
+                                        <option <?php if($_SESSION['pickup_location'] == 'Aeroport Otopeni') echo 'selected'; ?>>Aeroport Otopeni</option>
+                                        <option <?php if($_SESSION['pickup_location'] == 'Brasov') echo 'selected'; ?>>Brasov</option>
+                                        <option <?php if($_SESSION['pickup_location'] == 'Aeroport Brasov') echo 'selected'; ?>>Aeroport Brasov</option>
+                                    </select>
+                                <?php } else { ?>
+                                    <select class="form-control" id="pickup_location" name="pickup_location" style="padding-left: 35px">
+                                        <option>Bucuresti</option>
+                                        <option>Aeroport Otopeni</option>
+                                        <option>Brasov</option>
+                                        <option>Aeroport Brasov</option>
+                                    </select>
+                                <?php } ?>
                                 <span><i class="feather-map-pin"></i></span>
                             </div>
                         </div>
@@ -117,7 +111,11 @@ else
                         <div class="input-block">
                             <label>Return Location</label>												
                             <div class="group-img">
-                                <input type="text" class="form-control" name="return_location" placeholder="Enter City, Airport, or Address">
+                                <?php if (Session::exists('return_location') && Session::get('return_location')) { ?>
+                                <input type="text" class="form-control" name="return_location" value="<?= $_SESSION['return_location']?>">
+                                <?php } else { ?>
+                                    <input type="text" class="form-control" name="return_location" value="Bucuresti">
+                                <?php }?>
                                 <span><i class="feather-map-pin"></i></span>
                             </div>
                         </div>
@@ -129,13 +127,22 @@ else
                         <div class="input-block-wrapp">
                             <div class="input-block date-widget">												
                                 <div class="group-img">
-                                <input type="text" class="form-control" id="pickup_date" name="pickup_date" value="10-10-2024">
+                                <input type="text" class="form-control" id="pickup_date" name="pickup_date" 
+                                    value="<?php if (Session::exists('pickup_date') && Session::get('pickup_date')) echo $_SESSION['pickup_date'];
+                                    else  {
+                                        echo date('d-m-YYYY');
+                                    }
+                                    ?>">
                                 <span><i class="feather-calendar"></i></span>
                                 </div>
                             </div>
                             <div class="input-block time-widge">											
                                 <div class="group-img">
-                                <input type="text" class="form-control timepicker" name="pickup_time">
+                                <input type="text" class="form-control timepicker" name="pickup_time" value="<?php if (Session::exists('pickup_time') && Session::get('pickup_time')) echo $_SESSION['pickup_time'];
+                                    else  {
+                                        echo date('H:i');
+                                    }
+                                    ?>">
                                 <span><i class="feather-clock"></i></span>
                                 </div>
                             </div>
@@ -148,13 +155,22 @@ else
                         <div class="input-block-wrapp">
                             <div class="input-block date-widge">												
                                 <div class="group-img">
-                                <input type="text" class="form-control" id="return_date" name="return_date">
+                                <input type="text" class="form-control" id="return_date" name="return_date" 
+                                    value="<?php if (Session::exists('return_date') && Session::get('return_date')) echo $_SESSION['return_date'];
+                                    else  {
+                                        echo date('d-m-YYYY');
+                                    }
+                                    ?>">
                                 <span><i class="feather-calendar"></i></span>
                                 </div>
                             </div>
                             <div class="input-block time-widge">											
                                 <div class="group-img">
-                                <input type="text" class="form-control timepicker" name="return_time">
+                                <input type="text" class="form-control timepicker" name="return_time" value="<?php if (Session::exists('return_time') && Session::get('return_time')) echo $_SESSION['return_time'];
+                                    else  {
+                                        echo date('H:i');
+                                    }
+                                    ?>">
                                 <span><i class="feather-clock"></i></span>
                                 </div>
                             </div>
@@ -163,7 +179,7 @@ else
                     <li class="column-group-last">
                         <div class="input-block">
                             <div class="search-btn">
-                                <button class="btn search-button" type="submit"> <i class="fa fa-search" aria-hidden="true"></i>Search</button>
+                                <button class="btn search-button" type="submit">Calculator</button>
                             </div>
                         </div>
                     </li>
@@ -206,7 +222,9 @@ else
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
-                <?php foreach($cats as $cat) { ?>
+                <?php
+                $i = 0;
+                foreach($cats as $cat) { ?>
                 <div class="clear"></div>
                 <h3><?= $cat['catName']; ?></h3>
                 <div class="row">
@@ -214,36 +232,43 @@ else
                         $query = "SELECT * FROM cat_car JOIN cars ON cat_car.carID = cars.carID WHERE status = 'active' AND cat_car.catID = " . $cat['catID'] . " ORDER BY 'order' ASC";
                         $results = mysqli_query($db, $query);
                         $cars = mysqli_fetch_all($results, MYSQLI_ASSOC);
+                        $rent_list = [];
                         foreach ($cars as $car) {
                             $cID = $car['carID'];
-                            $pickup_date  = $_SESSION['pickup_date'] . ' ' . $_SESSION['pickup_time'];
-                            $dropoff_date  = $_SESSION['return_date'] . ' ' . $_SESSION['return_time'];
-                            $days = 0;
-                            $hours = (strtotime($dropoff_date) - strtotime($pickup_date)) / 3600;
-                            if ($hours > 0) {
-                                if ($hours > 24) {
-                                    if ((($hours) % 24) >= 4) {
-                                        $d = ceil($hours / 24);
-                                        $days = $d . ' x ' . getCarPriceBetweenTwoDatesWithDiscount($db, $cID, $d, $pickup_date, $_SESSION['pickup_location']);
+                            if (Session::exists('pickup_date') && Session::get('pickup_date')!= null) {
+                                
+                                $pickup_date  = $_SESSION['pickup_date'] . ' ' . $_SESSION['pickup_time'];
+                                $dropoff_date  = $_SESSION['return_date'] . ' ' . $_SESSION['return_time'];
+
+                                $days = 0;
+                                $hours = (strtotime($dropoff_date) - strtotime($pickup_date)) / 3600;
+                                if ($hours > 0) {
+                                    if ($hours > 24) {
+                                        if ((($hours) % 24) >= 4) {
+                                            $d = ceil($hours / 24);
+                                            $days = $d . ' x ' . getCarPriceBetweenTwoDatesWithDiscount($db, $cID, $d, $pickup_date, $_SESSION['pickup_location']);
+                                        } else {
+                                            $d = floor($hours / 24);
+                                            $days = $d . ' x ' . getCarPriceBetweenTwoDatesWithDiscount($db, $cID, $d, $pickup_date, $_SESSION['pickup_location']);
+                                        }
                                     } else {
-                                        $d = floor($hours / 24);
+                                        $d = 1;
                                         $days = $d . ' x ' . getCarPriceBetweenTwoDatesWithDiscount($db, $cID, $d, $pickup_date, $_SESSION['pickup_location']);
                                     }
-                                } else {
-                                    $d = 1;
-                                    $days = $d . ' x ' . getCarPriceBetweenTwoDatesWithDiscount($db, $cID, $d, $pickup_date, $_SESSION['pickup_location']);
                                 }
-                            }
-                            if ($_SESSION['pickup_location'] == null) $_SESSION['pickup_location'] = "Bucuresti";
-                            $query = "SELECT * FROM pickup WHERE pickUpName = '" . $_SESSION['pickup_location'] . "'";
-                            $results = mysqli_query($db, $query);
-                            $location = mysqli_fetch_object($results);
 
-                            $rent_list  = explode(' x ', $days);
-                            if (count($rent_list) > 1) {
-                                $high_price_per_day = $rent_list[1] + $rent_list[1] * $location->discount_percent / 100;
-                                $high_price = round($high_price_per_day * $rent_list[0]);
-                                $r_price    = round($rent_list[0] * $rent_list[1]);
+                                if ($_SESSION['pickup_location'] == null) $_SESSION['pickup_location'] = "Bucuresti";
+                                $query = "SELECT * FROM pickup WHERE pickUpName = '" . $_SESSION['pickup_location'] . "'";
+                                $results = mysqli_query($db, $query);
+                                $location = mysqli_fetch_object($results);
+
+                                $rent_list  = explode(' x ', $days);
+
+                                if (count($rent_list) > 1) {
+                                    $high_price_per_day = $rent_list[1] + $rent_list[1] * $location->discount_percent / 100;
+                                    $high_price = round($high_price_per_day * $rent_list[0]);
+                                    $r_price    = round($rent_list[0] * $rent_list[1]);
+                                }
                             }
 
                     ?>
@@ -251,7 +276,7 @@ else
                     <div class="col-xl-4 col-lg-4 col-md-4 col-12">
                         <div class="listing-item">										
                             <div class="listing-img">
-                                <a href="listing-details.html">
+                                <a href="/inchirieri.php?carID=<?=$car['carID']?>">
                                     <img src="https://dpdrent.ro/uploads/cars/<?=$car['carPhoto']?>" style="height: 220px" alt="Toyota">
                                 </a>
                                 
@@ -260,7 +285,7 @@ else
                                 <div class="listing-features">
                                     
                                     <h3 class="listing-title">
-                                        <a href="listing-details.html"><?php echo $car['carName'];?></a>
+                                        <a href="/inchirieri.php?carID=<?=$car['carID']?>"><?php echo $car['carName'];?></a>
                                     </h3>																	  
                                     <div class="list-rating">							
                                         <i class="fas fa-star filled"></i>
@@ -272,41 +297,21 @@ else
                                     </div>
                                 </div>
                                 <div class="listing-details-group">
-                                    <ul>
-                                        <?php if ($car['automatic']) { ?>
-											<li>
-												<span><img src="assets/img/icons/car-parts-01.svg" alt="Auto"></span>
-												<p>Auto</p>
-											</li>
-										<?php } else { ?>
-											<li>
-												<span><img src="assets/img/icons/car-parts-05.svg" alt="Manual"></span>
-												<p>Manual</p>
-											</li>
-										<?php } ?>
-                                        <li>
-											<span><img src="assets/img/icons/car-parts-02.svg" alt="10 KM"></span>
-											<p><?php echo $car['limit_km']; ?> KM</p>
-										</li>
-                                        <li>
-											<span><img src="assets/img/icons/car-parts-03.svg" alt="Petrol"></span>
-											<p><?php echo $car['fuel']?></p>
-										</li>
+                                    <ul style="display: ruby-text">
+
+                                    <?php $equip = explode(';', $car['equip']);
+                                        foreach ($equip as $eqId) {
+                                            $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
+                                            $results = mysqli_query($db, $query);
+                                            $eqInfo = mysqli_fetch_object($results);
+                                        ?>
+                                            <li>
+                                                <span><img src="https://dpdrent.ro/uploads/equip/<?= $eqInfo->equipPhoto ?>"></span>
+                                                <p><?= $eqInfo->equipName; ?></p>
+                                            </li>
+                                    <?php } ?>
+                                        
                                     </ul>	
-                                    <ul>
-                                        <li>
-                                            <span><img src="assets/img/icons/car-parts-04.svg" alt="Power"></span>
-                                            <p>Power</p>
-                                        </li>
-                                        <li>
-                                            <span><img src="assets/img/icons/car-parts-05.svg" alt="2018"></span>
-                                            <p>2018</p>	
-                                        </li>
-                                        <li>
-                                            <span><img src="assets/img/icons/car-parts-06.svg" alt="Persons"></span>
-                                            <p>5 Persons</p>
-                                        </li>
-                                    </ul>
                                 </div>																 
                                 <div class="listing-location-details">
                                     <div class="listing-price">
@@ -319,16 +324,16 @@ else
                                     <?php } ?>
                                 </div>
                                 <div class="listing-button">
-                                    <form action="alege-masina.php" method="post">
-                                        <input type="hidden" name="carId" id="carId" value="<?= $car['carID'] ?>" />
-                                        <button type="submit" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</button>
+                                    <form action="rezervare-ajax.php" method="post" id="rent_form_<?= $i?>">
+                                        <input type="hidden" name="carId" id="carId_<?= $i?>" value="<?= $car['carID'] ?>" />
                                     </form>
+                                    <button onclick="submit_form(<?=$i?>)" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</button>
                                 </div>	
                             </div>
                         </div>		 
                     </div>
                     <!-- /col -->
-                    <?php } ?>
+                    <?php $i++; } ?>
                 </div>
                 <?php } ?>
             </div>		
@@ -343,7 +348,9 @@ else
         <div class="row">
             <div class="col-lg-12">
                 <div class="row">
-                    <?php foreach($cats as $cat) { ?>
+                 
+                    <?php
+                    foreach($cats as $cat) { ?>
                     <div class="clear"></div>
                     <h3><?= $cat['catName']; ?></h3>
                     <?php 
@@ -352,6 +359,7 @@ else
                         $cars = mysqli_fetch_all($results, MYSQLI_ASSOC);
                         foreach ($cars as $car) {
                             $cID = $car['carID'];
+                            if (Session::exists('pickup_date') && Session::get('pickup_date')!= null) {
                             $pickup_date  = $_SESSION['pickup_date'] . ' ' . $_SESSION['pickup_time'];
                             $dropoff_date  = $_SESSION['return_date'] . ' ' . $_SESSION['return_time'];
                             $days = 0;
@@ -380,13 +388,14 @@ else
                                 $high_price = round($high_price_per_day * $rent_list[0]);
                                 $r_price    = round($rent_list[0] * $rent_list[1]);
                             }
+                        }
 
                     ?>
                     <div class="listview-car">
                         <div class="card">
                             <div class="blog-widget d-flex">
                                 <div class="blog-img" style="overflow: unset">
-                                    <a href="listing-details.html">
+                                    <a href="/inchirieri.php?carID=<?=$car['carID']?>">
                                         <img src="https://dpdrent.ro/uploads/cars/<?=$car['carPhoto']?>" style="height: 180px;width:250px" alt="blog-img">
                                     </a>														    
                                 </div>
@@ -394,7 +403,7 @@ else
                                     <div class="card-body">
                                         <div class="blog-list-head d-flex">
                                             <div class="blog-list-title">
-                                                <h3><a href="listing-details.html"><?= $car['carName']?></a></h3>
+                                                <h3><a href="/inchirieri.php?carID=<?=$car['carID']?>"><?= $car['carName']?></a></h3>
                                                 <h6>Category : <span>Ferrarai</span></h6>		
                                             </div>
                                             <div class="blog-list-rate">
@@ -416,56 +425,27 @@ else
                                         </div>	
                                         <div class="listing-details-group">
                                             <ul>
-                                                <?php if ($car['automatic']) { ?>
+                                            <?php $equip = explode(';', $car['equip']);
+                                                foreach ($equip as $eqId) {
+                                                    $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
+                                                    $results = mysqli_query($db, $query);
+                                                    $eqInfo = mysqli_fetch_object($results);
+                                                ?>
                                                     <li>
-                                                        <span><img src="assets/img/icons/car-parts-01.svg" alt="Auto"></span>
-                                                        <p>Auto</p>
+                                                        <span><img src="https://dpdrent.ro/uploads/equip/<?= $eqInfo->equipPhoto ?>"></span>
+                                                        <p><?= $eqInfo->equipName; ?></p>
                                                     </li>
-                                                <?php } else { ?>
-                                                    <li>
-                                                        <span><img src="assets/img/icons/car-parts-05.svg" alt="Manual"></span>
-                                                        <p>Manual</p>
-                                                    </li>
-                                                <?php } ?>
-                                                <li>
-                                                    <span><img src="assets/img/icons/car-parts-02.svg" alt="10 KM"></span>
-                                                    <p><?php echo $car['limit_km']; ?> KM</p>
-                                                </li>
-                                                <li>
-                                                    <span><img src="assets/img/icons/car-parts-03.svg" alt="Petrol"></span>
-                                                    <p><?php echo $car['fuel']?></p>
-                                                </li>
-                                                <li>
-                                                    <span><img src="assets/img/icons/car-parts-04.svg" alt="Power"></span>
-                                                    <p>Power</p>
-                                                </li>
-                                                <li>
-                                                    <span><img src="assets/img/icons/car-parts-05.svg" alt="2018"></span>
-                                                    <p>2018</p>	
-                                                </li>
-                                                <li>
-                                                    <span><img src="assets/img/icons/car-parts-06.svg" alt="Persons"></span>
-                                                    <p>5 Persons</p>
-                                                </li>
+                                            <?php } ?>
                                             </ul>	
                                         </div>	
                                         <div class="blog-list-head list-head-bottom d-flex">
                                             <div class="blog-list-title">
-                                                <div class="title-bottom">
-                                                    <div class="car-list-icon">
-                                                        <img src="assets/img/cars/car-list-icon-01.png" alt="car">
-                                                    </div>
-                                                    <div class="address-info">
-                                                        <h5><a href="#">Toyota Of Lincoln Park</a></h5>
-                                                        <h6><i class="feather-map-pin me-2"></i>Newyork, USA</h6>
-                                                    </div>
-                                                </div>	
                                             </div>
                                             <div class="listing-button">
-                                                <form action="rezervare.php" method="post">
+                                                <form action="rezervare.php" method="post" id="rent_form_<?=$i?>">
                                                     <input type="hidden" name="carId" id="carId" value="<?= $car['carID']; ?>" >
-                                                    <button type="submit" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</button>
                                                 </form>
+                                                <button onclick="submit_form(2)" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</button>
                                             </div>
                                         </div>	
                                     </div>					 
@@ -473,14 +453,34 @@ else
                             </div> 
                         </div>
                     </div>
-                    <?php } ?>
+                    <?php $i++; } ?>
                     <?php } ?>
                 </div>
             </div>		
         </div>
     </div>
-</section>	
+</section>
+
 <!-- /Car List View -->	
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">AVERTIZARE</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h6>Vă rugăm să alegeți mai întâi locația și data</h6>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <?php require_once './layout/footer.php'; ?>
 
@@ -502,7 +502,6 @@ else
         var formattedDate = day + '-' + month + '-' + year;
         
         var pickup_date = $('#pickup_date').datetimepicker({
-            minDate: moment(formattedDate, 'DD-MM-YYYY'),
 			format: 'DD-MM-YYYY',
 			icons: {
 				up: "fas fa-angle-up",
@@ -510,11 +509,10 @@ else
 				next: 'fas fa-angle-right',
 				previous: 'fas fa-angle-left'
 			},
-
+            minDate: moment().startOf('day'),
 		})
 
         var return_date = $('#return_date').datetimepicker({
-			minDate: moment(futureDate, 'DD-MM-YYYY'),
 			format: 'DD-MM-YYYY',
 			icons: {
 				up: "fas fa-angle-up",
@@ -522,32 +520,53 @@ else
 				next: 'fas fa-angle-right',
 				previous: 'fas fa-angle-left'
 			},
+			minDate: moment().add(2, 'days').startOf('day'),
 		})
 
         $('#pickup_date').blur(function() {
-            $('#return_date').datetimepicker('destroy');
 
-            $('#return_date').datetimepicker({
-            minDate: moment('11-12-2024', 'DD-MM-YYYY'),
-			format: 'DD-MM-YYYY',
-			icons: {
-				up: "fas fa-angle-up",
-				down: "fas fa-angle-down",
-				next: 'fas fa-angle-right',
-				previous: 'fas fa-angle-left'
-			},
+            var pickup_date = $(this).val();
+            var return_date = $('#return_date').val();
 
-		})
+            var startDate = moment(pickup_date, 'DD-MM-YYYY');
+            var endDate = moment(return_date, 'DD-MM-YYYY');
+
+            var duration = endDate.diff(startDate, 'days');
+
+            if (duration < 2) {
+                $("#return_date").datetimepicker('destroy');
+
+                $('#return_date').datetimepicker({
+                    minDate: moment(pickup_date, 'DD-MM-YYYY').add(2, 'days').startOf('day'),
+                    format: 'DD-MM-YYYY',
+                    icons: {
+                        up: "fas fa-angle-up",
+                        down: "fas fa-angle-down",
+                        next: 'fas fa-angle-right',
+                        previous: 'fas fa-angle-left'
+                    },
+                })
+            }
         })
     });
+
+    function submit_form(id)
+    {
+        var step = <?= $_SESSION['step']?>;
+
+        if (step > 1)
+            $('#rent_form_' + id).unbind('submit').submit();
+        else if (step == 1)
+        {
+            $('#exampleModal').modal('show');
+        }
+    }
     // Add event listeners to the tabs
     $('#grid-tab').on('click', function() {
         $('#list-content').css('display', 'none')
         $('#grid-content').show()
         $('#list-tab').removeClass('active')
         $(this).addClass('active')
-
-
     });
 
     $('#list-tab').on('click', function() {

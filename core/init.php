@@ -55,11 +55,11 @@ function getCarPriceBetweenTwoDatesWithDiscount($db,$carID, $days, $startDate = 
 
         $query = "SELECT * FROM prices JOIN pickup ON prices.cityID = pickup.pickID WHERE pickup.pickUpName = '" . $cityID ."' AND prices.month = " . $new_start;
         $results = mysqli_query($db, $query);
-        $customPrice = mysqli_fetch_object($results);
-
-        if ($customPrice->price > 0) {
-            $pret_nou = $standardPrice + $customPrice->price;
+        $customPrice = mysqli_fetch_all($results, MYSQLI_ASSOC);
+        if (isset($customPrice[0]['price'])) {
+            $pret_nou = $standardPrice + $customPrice[0]['price'];
             $pret_nou = number_format($pret_nou, 2, '.', '');
+
             return $pret_nou;
         } else {
             return $standardPrice;
@@ -123,6 +123,14 @@ $results = mysqli_query($db, $query);
 $commision_set = mysqli_fetch_object($results);
 
 $commision = $commision_set->set;
+
+$query = "SELECT * FROM settings WHERE settingsID = 2";
+$results = mysqli_query($db, $query);
+$site_email_set = mysqli_fetch_object($results);
+
+$site_email = $site_email_set->set;
+
+$taxa_livrare = 10;
 
 spl_autoload_register(function($class){
 	require_once 'classes/' . $class . '.php';
