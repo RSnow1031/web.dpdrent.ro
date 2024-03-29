@@ -1,152 +1,152 @@
 
 <?php
 ?>
-<!-- Footer -->
-<footer class="footer">	
-			<!-- Footer Top -->	
-			<div class="footer-top aos" data-aos="fade-up">
-				<div class="container">
-					<div class="row">
-						<div class="col-lg-7">
-							<div class="row">
-								<div class="col-lg-4 col-md-6">
-									<!-- Footer Widget -->
-									<div class="footer-widget footer-menu">
-										<h5 class="footer-title">Pagini</h5>
-										<ul>
-											<li>
-												<a href="/inchirieri-masini.php">Masini si Preturi</a>
-											</li>
-											<li>
-												<a href="/servicii.php">Servicii</a>
-											</li>
-											<li>
-												<a href="/extra.php">Extra</a>
-											</li>
-											<li>
-												<a href="http://blog.dpdrent.ro/">Blog</a>
-											</li>
-											<li>
-												<a href="/contact.php">Contact</a>
-											</li>
-											<li>
-												<a href="/">Rent a car Brasov</a>
-											</li>	
-										</ul>
-									</div>
-									<!-- /Footer Widget -->
+	<!-- Footer -->
+	<footer class="footer">	
+		<!-- Footer Top -->	
+		<div class="footer-top aos" data-aos="fade-up">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-7">
+						<div class="row">
+							<div class="col-lg-4 col-md-6">
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<h5 class="footer-title">Pagini</h5>
+									<ul>
+										<li>
+											<a href="/inchirieri-masini.php">Masini si Preturi</a>
+										</li>
+										<li>
+											<a href="/servicii.php">Servicii</a>
+										</li>
+										<li>
+											<a href="/extra.php">Extra</a>
+										</li>
+										<li>
+											<a href="http://blog.dpdrent.ro/">Blog</a>
+										</li>
+										<li>
+											<a href="/contact.php">Contact</a>
+										</li>
+										<li>
+											<a href="/">Rent a car Brasov</a>
+										</li>	
+									</ul>
 								</div>
-								<div class="col-lg-4 col-md-6">
-									<!-- Footer Widget -->
-									<div class="footer-widget footer-menu">
-										<h5 class="footer-title">Pagini</h5>
-										<ul>
-											<li>
-												<a href="https://anpc.ro/ce-este-sal/" target="blank">
-													<img width="200px" src="https://dpdrent.ro/anpc-sal.png">
-												</a>
-											</li>
-											<li>
-												<a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO/" target="blank">
-												<img width="200px" src="https://dpdrent.ro/anpc-sol.png">
-												</a>
-											</li>
-										</ul>
-									</div>
-									<!-- /Footer Widget -->
-								</div>
-								<div class="col-lg-4 col-md-6">
-									<!-- Footer Widget -->
-									<div class="footer-widget footer-menu">
-										<h5 class="footer-title">Adresa</h5>
-										<ul>
-											<li>
-												<a> B-dul Eroilor Nr.118,<br />
-              										Voluntari, Ilfov</a>
-											</li>
-											<li>
-												<img src="https://dpdrent.ro/images/visa_master.png" alt="Visa - Mastercard" />
-												<p>
-													<a href="http://www.anpc.gov.ro/" target="_blank">ANPC</a>
-												</p>
-											</li>
-										</ul>
-									</div>
-									<!-- /Footer Widget -->
-								</div>
+								<!-- /Footer Widget -->
 							</div>
-						</div>
-						<div class="col-lg-5">
-							<div class="footer-contact footer-widget">
-								<h5 class="footer-title">Contact</h5>
-								<div class="footer-contact-info">									
-									<div class="footer-address">											
-										<span><i class="feather-phone-call"></i></span>
-										<div class="addr-info">
-											<a href="tel:+1(888)7601940">(+4)0722.33.25.49</a>
-										</div>
-									</div>
-									<div class="footer-address">
-										<span><i class="feather-mail"></i></span>
-										<div class="addr-info">
-											<a href="mailto:support@example.com"><?=$site_email?></a>
-										</div>
-									</div>
-								</div>								
-								<div class="footer-social-widget">
-									<h6>Connect with us</h6>
-									<ul class="nav-social">
+							<div class="col-lg-4 col-md-6">
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<h5 class="footer-title">Utile</h5>
+									<ul>
 										<li>
-											<a href="https://www.facebook.com/Rentacardpd"><i class="fa-brands fa-facebook-f fa-facebook fi-icon"></i></a>
+											<a href="https://anpc.ro/ce-este-sal/" target="blank">
+												<img width="200px" src="https://dpdrent.ro/anpc-sal.png">
+											</a>
 										</li>
 										<li>
-											<a href="https://plus.google.com/105882145213565917055/posts"><i class="fab fa-instagram fi-icon"></i></a>
-										</li>
-										<li>
-											<a href="https://plus.google.com/105882145213565917055/posts"><i class="fab fa-twitter fi-icon"></i> </a>
+											<a href="https://ec.europa.eu/consumers/odr/main/index.cfm?event=main.home2.show&lng=RO/" target="blank">
+											<img width="200px" src="https://dpdrent.ro/anpc-sol.png">
+											</a>
 										</li>
 									</ul>
 								</div>
+								<!-- /Footer Widget -->
 							</div>
-						</div>
-					</div>					
-				</div>
-			</div>
-			<!-- /Footer Top -->
-
-			<!-- Footer Bottom -->
-			<div class="footer-bottom">
-				<div class="container">
-					<!-- Copyright -->
-					<div class="copyright">
-						<div class="row align-items-center">
-							<div class="col-md-6">
-								<div class="copyright-text">
-									<p>© 2024 DPD Rent. All Rights Reserved.</p>
+							<div class="col-lg-4 col-md-6">
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<h5 class="footer-title">Adresa</h5>
+									<ul>
+										<li>
+											<a> B-dul Eroilor Nr.118,<br />
+												Voluntari, Ilfov</a>
+										</li>
+										<li>
+											<img src="https://dpdrent.ro/images/visa_master.png" alt="Visa - Mastercard" />
+											<p>
+												<a href="http://www.anpc.gov.ro/" target="_blank">ANPC</a>
+											</p>
+										</li>
+									</ul>
 								</div>
-							</div>
-							<div class="col-md-6">
-								<!-- Copyright Menu -->
-								<div class="copyright-menu">
-									<div class="vistors-details">
-										<ul class="d-flex">											
-											<li><a href="javascript:void(0)"><img class="img-fluid" src="assets/img/icons/paypal.svg" alt="Paypal"></a></li>											
-											<li><a href="javascript:void(0)"><img class="img-fluid" src="assets/img/icons/visa.svg" alt="Visa"></a></li>
-											<li><a href="javascript:void(0)"><img class="img-fluid" src="assets/img/icons/master.svg" alt="Master"></a></li>
-											<li><a href="javascript:void(0)"><img class="img-fluid" src="assets/img/icons/applegpay.svg" alt="applegpay"></a></li>
-										</ul>										   								
-									</div>
-								</div>
-								<!-- /Copyright Menu -->
+								<!-- /Footer Widget -->
 							</div>
 						</div>
 					</div>
-					<!-- /Copyright -->
-				</div>
+					<div class="col-lg-5">
+						<div class="footer-contact footer-widget">
+							<h5 class="footer-title">Contact</h5>
+							<div class="footer-contact-info">									
+								<div class="footer-address">											
+									<span><i class="feather-phone-call"></i></span>
+									<div class="addr-info">
+										<a href="tel:+40 722 332 549">(+4)0722.33.25.49</a>
+									</div>
+								</div>
+								<div class="footer-address">
+									<span><i class="feather-mail"></i></span>
+									<div class="addr-info">
+										<a href="mailto:support@example.com"><?=$site_email?></a>
+									</div>
+								</div>
+							</div>								
+							<div class="footer-social-widget">
+								<h6>Connect with us</h6>
+								<ul class="nav-social">
+									<li>
+										<a href="https://www.facebook.com/Rentacardpd"><i class="fa-brands fa-facebook-f fa-facebook fi-icon"></i></a>
+									</li>
+									<li>
+										<a href="https://plus.google.com/105882145213565917055/posts"><i class="fab fa-instagram fi-icon"></i></a>
+									</li>
+									<li>
+										<a href="https://plus.google.com/105882145213565917055/posts"><i class="fab fa-twitter fi-icon"></i> </a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>					
 			</div>
-			<!-- /Footer Bottom -->			
-		</footer>
-		<!-- /Footer -->	
+		</div>
+		<!-- /Footer Top -->
+
+		<!-- Footer Bottom -->
+		<div class="footer-bottom">
+			<div class="container">
+				<!-- Copyright -->
+				<div class="copyright">
+					<div class="row align-items-center">
+						<div class="col-md-6">
+							<div class="copyright-text">
+								<p>© 2024 DPD Rent. All Rights Reserved.</p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<!-- Copyright Menu -->
+							<div class="copyright-menu">
+								<div class="vistors-details">
+									<ul class="d-flex">											
+										<!-- <li><a href="javascript:void(0)"><img class="img-fluid" src="assets/img/icons/paypal.svg" alt="Paypal"></a></li>											 -->
+										<li><a href="javascript:void(0)"><img class="img-fluid" src="assets/img/icons/visa.svg" alt="Visa"></a></li>
+										<li><a href="javascript:void(0)"><img class="img-fluid" src="assets/img/icons/master.svg" alt="Master"></a></li>
+										<!-- <li><a href="javascript:void(0)"><img class="img-fluid" src="assets/img/icons/applegpay.svg" alt="applegpay"></a></li> -->
+									</ul>										   								
+								</div>
+							</div>
+							<!-- /Copyright Menu -->
+						</div>
+					</div>
+				</div>
+				<!-- /Copyright -->
+			</div>
+		</div>
+		<!-- /Footer Bottom -->			
+	</footer>
+	<!-- /Footer -->	
 		
 	</div>
 
@@ -236,5 +236,6 @@
 		})
 		});
   </script>
+
 </body>
 </html>

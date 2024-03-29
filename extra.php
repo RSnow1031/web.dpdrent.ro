@@ -6,7 +6,7 @@ $query = "SELECT * FROM content WHERE pageURL = 'extra'";
 $results = mysqli_query($db, $query);
 $page = mysqli_fetch_object($results);
 
-$query = "SELECT * FROM extras WHERE status = 'active' ORDER BY 'extraID' ASC";
+$query = "SELECT * FROM extras WHERE status = 'active' ORDER BY extras.extraID ASC";
 $results = mysqli_query($db, $query);
 $extras = mysqli_fetch_all($results, MYSQLI_ASSOC);
 ?>
@@ -20,7 +20,7 @@ $extras = mysqli_fetch_all($results, MYSQLI_ASSOC);
                     <!-- /Heading title -->
                     <div class="services-work">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                            <div class="col-lg-4 col-md-4 col-4" data-aos="fade-down">
                                 <div class="services-group">
                                     <div class="services-icon" style="border: 2px dashed #0db02b">
                                         <img class="icon-img" style="background-color: #0db02b" src="assets/img/icons/services-icon-01.svg" alt="Choose Locations">
@@ -31,7 +31,7 @@ $extras = mysqli_fetch_all($results, MYSQLI_ASSOC);
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                            <div class="col-lg-4 col-md-4 col-4" data-aos="fade-down">
                                 <div class="services-group">
                                     <div class="services-icon" style="border: 2px dashed #0db02b">
                                         <img class="icon-img" style="background-color: #0db02b" src="assets/img/icons/services-icon-02.svg" alt="Choose Locations">
@@ -42,7 +42,7 @@ $extras = mysqli_fetch_all($results, MYSQLI_ASSOC);
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                            <div class="col-lg-4 col-md-4 col-4" data-aos="fade-down">
                                 <div class="services-group">
                                     <div class="services-icon" style="border: 2px dashed #0db02b">
                                         <img class="icon-img" style="background-color: #0db02b" src="assets/img/icons/services-icon-03.svg" alt="Choose Locations">

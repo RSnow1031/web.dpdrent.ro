@@ -18,7 +18,7 @@
                     $d = floor($hours / 24);
                     $days = $d . ' x ' . getCarPriceBetweenTwoDatesWithDiscount($db, $car_type, $d, $pickupdate, $pick);
                 }
-            } else {
+            } else {    
                 $d = 1;
                 $days = $d . ' x ' . getCarPriceBetweenTwoDatesWithDiscount($db, $car_type, $d, $pickupdate, $pick);
             }

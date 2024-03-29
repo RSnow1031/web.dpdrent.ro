@@ -5,7 +5,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $cID = $_POST['carId'];
     Session::put('carID', $cID);
     Session::put('step', 3);
-
     
     // $pickup = $_POST['pickup_location'];
     // $pickup_date = $_POST['pickup_date'];

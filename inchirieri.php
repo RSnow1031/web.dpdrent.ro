@@ -83,7 +83,7 @@ $car_photos = mysqli_fetch_all($results, MYSQLI_ASSOC);
                                         </div>
                                     <?php } else if (!Session::exists('step') || Session::get('step') == 1) { ?>
                                         <div class="col-md-4 col-sm-4 pickup-address">
-                                            <h5>23+ zile</h5>
+                                            <h5>21+ zile</h5>
                                             <span>&euro;<?=$car->price5?></span>
                                         </div>
                                         <div class="col-md-4 col-sm-4 drop-address">

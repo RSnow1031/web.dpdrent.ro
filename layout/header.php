@@ -37,12 +37,12 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 	
 </head>
-<body >
+<body style="background-color: #d5d5d5">
 	
 	<div class="main-wrapper">
 		
 		<!-- Header -->
-		<header class="header">
+		<header class="header" id="fixed-header">
 			<div class="container-fluid">
 				<nav class="navbar navbar-expand-lg header-nav">
 					<div class="navbar-header">
@@ -81,20 +81,20 @@
 							<li><a href="/servicii.php">SERVICII</a></li>
 							<li><a href="/extra.php">EXTRA</a></li>
 							<li><a href="/contact.php">CONTACT</a></li>
-							<li class="login-link">
+							<!-- <li class="login-link">
 								<a href="/">Sign Up</a>
 							</li>
 							<li class="login-link">
 								<a href="/">Sign In</a>
-							</li>
+							</li> -->
 						</ul>
 					</div>
 					<ul class="nav header-navbar-rht">
 						<li class="nav-item">
-							<a class="nav-link header-login" href="/"><span><i class="fa-regular fa-user"></i></span>Sign In</a>
+							<!-- <a class="nav-link header-login" href="/"><span><i class="fa-regular fa-user"></i></span>Sign In</a> -->
 						</li>
 						<li class="nav-item">
-							<a class="nav-link header-reg" href="/"><span><i class="fa-solid fa-lock"></i></span>Sign Up</a>
+							<!-- <a class="nav-link header-reg" href="/"><span><i class="fa-solid fa-lock"></i></span>Sign Up</a> -->
 						</li>
 					</ul>
 				</nav>

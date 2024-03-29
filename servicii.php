@@ -27,7 +27,7 @@ $services3 = mysqli_fetch_object($results);
                     <!-- /Heading title -->
                     <div class="services-work">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                            <div class="col-lg-4 col-md-4 col-4" data-aos="fade-down">
                                 <div class="services-group">
                                     <div class="services-icon" style="border: 2px dashed #0db02b">
                                         <img class="icon-img" style="background-color: #0db02b" src="assets/img/icons/services-icon-01.svg" alt="Choose Locations">
@@ -38,7 +38,7 @@ $services3 = mysqli_fetch_object($results);
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                            <div class="col-lg-4 col-md-4 col-4" data-aos="fade-down">
                                 <div class="services-group">
                                     <div class="services-icon" style="border: 2px dashed #0db02b">
                                         <img class="icon-img" style="background-color: #0db02b" src="assets/img/icons/services-icon-02.svg" alt="Choose Locations">
@@ -49,7 +49,7 @@ $services3 = mysqli_fetch_object($results);
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                            <div class="col-lg-4 col-md-4 col-4" data-aos="fade-down">
                                 <div class="services-group">
                                     <div class="services-icon" style="border: 2px dashed #0db02b">
                                         <img class="icon-img" style="background-color: #0db02b" src="assets/img/icons/services-icon-03.svg" alt="Choose Locations">
@@ -67,185 +67,192 @@ $services3 = mysqli_fetch_object($results);
     </div>
 </div>
 <!-- /Breadscrumb Section -->
-
-
-<section class="section product-details">
-    <div class="container">
-        <div class="col-md-12">
-            <table>
-                <tr>
-                    <td class="vt align-left">
-                        <div style="margin-right: 30px !important"><?= $page->pageContent?></div>
-                    </td>
-                    <td class="vt align-left">
-                        <!-- <i class="fa fa-plane stm-service-primary-color" style="font-size:100px;color: #000000"></i> -->
-                        <img style="width: 200px" alt="Transfer Aeroport Otopeni"  src="/assets/img/home-cars-bg.jpeg" class="img-grey"/>
-                    </td>
-                </tr>
-            </table>
-            <hr>
-            <table>
-                <tr>
-                    <td class="vt align-left">
-                        <div  style="margin-right: 30px !important"><?= $services1->pageContent; ?></div>
-                    </td>
-                    <td class="vt align-left">
-                        <i class="fa fa-plane stm-service-primary-color" style="font-size:100px;color: #000000"></i>
-                        <!-- <img  alt="Transfer Aeroport Otopeni"  src="https://dpdrent.ro/images/airport_transfer.jpg" class="img-grey"/> -->
-                    </td>
-                </tr>
-            </table>
-            <hr>
-            <table>
-                <tr>
-                    <td class="mr-1 align-left">
-                        <i class="fa fa-id-card stm-service-primary-color" style="font-size:100px;color: #000000"></i>
-                        <!-- <img alt="Inchirieri auto cu Sofer"  src="https://dpdrent.ro/images/private-driver.jpg" class="img-grey"/> -->
-                    </td>
-                    <td class="vt align-left">
-                        <div  style="margin-left: 30px !important"><?= $services2->pageContent; ?></div>
-                    </td>
-                </tr>
-            </table>
-            <hr>
-            <table>
-                <tr>
-                    <td class="vt align-left">
-                    <div  style="margin-right: 30px !important"><?= $services3->pageContent; ?></div>
-                    </td>
-                    <td class="vt align-left">
-                        <img  alt="Leasing Operational pentru auto noi si rulate"  src="https://dpdrent.ro/images/long_term.jpg" class="img-grey" style="margin-right:-5px;" />
-                    </td>
-                </tr>
-            </table>
-            
-            <!-- <div class="review-sec extra-service">
-                <div class="review-header">
-                    <h4>Extra Service</h4>
-                </div>
-                <div class="wishlist-wrap container">
-                    <div class="listview-car">
-                        <div class="card">
-                            <div class="blog-widget d-flex">
-                                <div class="blog-img">
-                                    <a href="listing-details.html">
-                                        <img src="assets/img/car-list-2.jpg" class="img-fluid" alt="blog-img">
-                                    </a>		
+		<!-- Contact us -->
+		<section class="contact-section pt-5" >
+			<div class="container">
+				<div class="form-info-area" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="0.5">
+                <section class="">
+                    <div class="container">
+                        <div class="col-md-12">
+                            <table>
+                                <tr>
+                                    <td class="vt align-left">
+                                        <div style="margin-right: 30px !important"><?= $page->pageContent?></div>
+                                    </td>
+                                    <td class="vt align-left">
+                                        <!-- <i class="fa fa-plane stm-service-primary-color" style="font-size:100px;color: #000000"></i> -->
+                                        <img style="width: 200px" alt="Transfer Aeroport Otopeni"  src="/assets/img/home-cars-bg.jpeg" class="img-grey"/>
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr>
+                            <table>
+                                <tr>
+                                    <td class="vt align-left">
+                                        <div  style="margin-right: 30px !important"><?= $services1->pageContent; ?></div>
+                                    </td>
+                                    <td class="vt align-left">
+                                        <i class="fa fa-plane stm-service-primary-color" style="font-size:100px;color: #000000"></i>
+                                        <!-- <img  alt="Transfer Aeroport Otopeni"  src="https://dpdrent.ro/images/airport_transfer.jpg" class="img-grey"/> -->
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr>
+                            <table>
+                                <tr>
+                                    <td class="mr-1 align-left">
+                                        <i class="fa fa-id-card stm-service-primary-color" style="font-size:100px;color: #000000"></i>
+                                        <!-- <img alt="Inchirieri auto cu Sofer"  src="https://dpdrent.ro/images/private-driver.jpg" class="img-grey"/> -->
+                                    </td>
+                                    <td class="vt align-left">
+                                        <div  style="margin-left: 30px !important"><?= $services2->pageContent; ?></div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <hr>
+                            <table>
+                                <tr>
+                                    <td class="vt align-left">
+                                    <div  style="margin-right: 30px !important"><?= $services3->pageContent; ?></div>
+                                    </td>
+                                    <td class="vt align-left">
+                                        <img  alt="Leasing Operational pentru auto noi si rulate"  src="https://dpdrent.ro/images/long_term.jpg" class="img-grey" style="margin-right:-5px;" />
+                                    </td>
+                                </tr>
+                            </table>
+                            
+                            <!-- <div class="review-sec extra-service">
+                                <div class="review-header">
+                                    <h4>Extra Service</h4>
                                 </div>
-                                <div class="bloglist-content w-100">
-                                <div class="card-body">
-                                    <div class="blog-list-head d-flex">
-                                        <div class="blog-list-title">
-                                            <h3><a href="listing-details.html">BMW 640 XI Gran Turismo</a></h3>
-                                                
+                                <div class="wishlist-wrap container">
+                                    <div class="listview-car">
+                                        <div class="card">
+                                            <div class="blog-widget d-flex">
+                                                <div class="blog-img">
+                                                    <a href="listing-details.html">
+                                                        <img src="assets/img/car-list-2.jpg" class="img-fluid" alt="blog-img">
+                                                    </a>		
+                                                </div>
+                                                <div class="bloglist-content w-100">
+                                                <div class="card-body">
+                                                    <div class="blog-list-head d-flex">
+                                                        <div class="blog-list-title">
+                                                            <h3><a href="listing-details.html">BMW 640 XI Gran Turismo</a></h3>
+                                                                
+                                                        </div>
+                                                    </div>	
+                                                    
+                                                </div>			 
+                                            </div> 
                                         </div>
-                                    </div>	
-                                    
-                                </div>			 
-                            </div> 
+                                    </div>
+                                </div>	
+                            </div> -->
                         </div>
                     </div>
-                </div>	
-            </div> -->
-        </div>
-    </div>
-    <br><br><br>
-    <div class="container">
-        <h4>Interesat de unul din serviciile de mai sus?</h4>
-        <div class="booking-form mt-5">
-            <form class="mb-5 needs-validation" method="POST" id="service-form" action="/ajax/service-ajax.php" novalidate>
-                <div class="row">
-                    <div class="col-lg-4">						
-                        <div class="input-block">														
-                            <label>Nume <span class="text-danger">*</span></label>	
-                            <input type="text" class="form-control" id="nume" name="nume" required>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">													
-                        <div class="input-block">
-                            <label>Prenume: <span class="text-danger">*</span></label>	
-                            <input type="text" class="form-control" id="prenume" name="prenume" required>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">												
-                        <div class="input-block">														
-                            <label>Telefon: (ex: +40726616161)<span class="text-danger">*</span></label>	
-                            <input type="text" class="form-control" id="telefon" name="telefon" required>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">													
-                        <div class="input-block">
-                            <label>Serviciu: <span class="text-danger">*</span></label>	
-                            <select name="serviciu" id="serviciu" class="form-control" required>
-                                <option value="">alege...</option>
-                                <option value="Transfer Aeroport">Transfer Aeroport</option>
-                                <option value="Inchirieri Auto cu Sofer">Inchiriere Auto cu Sofer</option>
-                                <option value="Leasing Operational">Leasing Operational</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">													
-                        <div class="input-block">
-                            <label>Locatie Preluare: <span class="text-danger">*</span></label>	
-                            <select class="form-control" name="locatie_preluare" id="locatie_preluare" required>
-                                <option value="">alege...</option>
-                                <option value="Bucuresti">Bucuresti</option>
-                                <option value="Aeroport Otopeni">Aeroport Otopeni</option>
-                                <option value="Brasov">Brasov</option>
-                                <option value="Aeroport Brasov">Aeroport Brasov</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">												    
-                        <div class="input-block">
-                            <label>Destinatie:  <span class="text-danger">*</span></label>	
-                            <input type="text" class="form-control" id="destinatie" name="destinatie" required>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="input-block">
-                            <label>Data Preluare: <span class="text-danger">*</span></label>	
-                            <div class="input-block-wrapp d-flex">
-                                <div class="input-block date-widget">
-                                    <div class="group-img">
-                                    <input type="text" class="form-control " id="data_preluare" name="data_preluare" value="" required>
+                    <br><br><br>
+                    <div class="container">
+                        <h4>Interesat de unul din serviciile de mai sus?</h4>
+                        <div class="booking-form mt-5">
+                            <form class="mb-5 needs-validation" method="POST" id="service-form" action="/ajax/service-ajax.php" novalidate>
+                                <div class="row">
+                                    <div class="col-lg-4">						
+                                        <div class="input-block">														
+                                            <label>Nume <span class="text-danger">*</span></label>	
+                                            <input type="text" class="form-control" id="nume" name="nume" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">													
+                                        <div class="input-block">
+                                            <label>Prenume: <span class="text-danger">*</span></label>	
+                                            <input type="text" class="form-control" id="prenume" name="prenume" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">												
+                                        <div class="input-block">														
+                                            <label>Telefon: (ex: +40726616161)<span class="text-danger">*</span></label>	
+                                            <input type="text" class="form-control" id="telefon" name="telefon" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">													
+                                        <div class="input-block">
+                                            <label>Serviciu: <span class="text-danger">*</span></label>	
+                                            <select name="serviciu" id="serviciu" class="form-control" required>
+                                                <option value="">alege...</option>
+                                                <option value="Transfer Aeroport">Transfer Aeroport</option>
+                                                <option value="Inchirieri Auto cu Sofer">Inchiriere Auto cu Sofer</option>
+                                                <option value="Leasing Operational">Leasing Operational</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">													
+                                        <div class="input-block">
+                                            <label>Locatie Preluare: <span class="text-danger">*</span></label>	
+                                            <select class="form-control" name="locatie_preluare" id="locatie_preluare" required>
+                                                <option value="">alege...</option>
+                                                <option value="Bucuresti">Bucuresti</option>
+                                                <option value="Aeroport Otopeni">Aeroport Otopeni</option>
+                                                <option value="Brasov">Brasov</option>
+                                                <option value="Aeroport Brasov">Aeroport Brasov</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">												    
+                                        <div class="input-block">
+                                            <label>Destinatie:  <span class="text-danger">*</span></label>	
+                                            <input type="text" class="form-control" id="destinatie" name="destinatie" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">
+                                        <div class="input-block">
+                                            <label>Data Preluare: <span class="text-danger">*</span></label>	
+                                            <div class="input-block-wrapp d-flex">
+                                                <div class="input-block date-widget">
+                                                    <div class="group-img">
+                                                    <input type="text" class="form-control " id="data_preluare" name="data_preluare" value="" required>
+                                                    </div>
+                                                </div>
+                                                <div class="input-block time-widge">											
+                                                    <div class="group-img">
+                                                    <input type="text" class="form-control timepicker" name="pickup_time" value="" required>
+                                                    </div>
+                                                </div>
+                                            </div>	
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">													
+                                        <div class="input-block">
+                                            <label>Numar zbor: <span class="text-danger">*</span></label>	
+                                            <input type="text" class="form-control" id="nr_zbor" name="nr_zbor" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-4">													
+                                        <div class="input-block">
+                                            <label>Email: <span class="text-danger">*</span></label>	
+                                            <input type="email" class="form-control" id="email" name="email" required>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="input-block">
+                                            <label>Detalii: <span class="text-danger"> </span> </label>	
+                                            <textarea rows="4" class="form-control" id="detalii" name="detalii"></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="input-block time-widge">											
-                                    <div class="group-img">
-                                    <input type="text" class="form-control timepicker" name="pickup_time" value="" required>
-                                    </div>
+                                <div class="payment-btn" style="float: right">
+                                    <button class="btn btn-danger submit-review" type="submit">TRIMITE<i class="fa-solid fa-arrow-right ms-2"></i></button>
                                 </div>
-                            </div>	
+                            </form>
                         </div>
                     </div>
-                    <div class="col-lg-4">													
-                        <div class="input-block">
-                            <label>Numar zbor: <span class="text-danger">*</span></label>	
-                            <input type="text" class="form-control" id="nr_zbor" name="nr_zbor" required>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">													
-                        <div class="input-block">
-                            <label>Email: <span class="text-danger">*</span></label>	
-                            <input type="email" class="form-control" id="email" name="email" required>
-                        </div>
-                    </div>
-                    <div class="col-lg-12">
-                        <div class="input-block">
-                            <label>Detalii: <span class="text-danger"> </span> </label>	
-                            <textarea rows="4" class="form-control" id="detalii" name="detalii"></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="payment-btn" style="float: right">
-                    <button class="btn btn-danger submit-review" type="submit">TRIMITE<i class="fa-solid fa-arrow-right ms-2"></i></button>
-                </div>
-            </form>
-        </div>
-    </div>
 
-</section>
+                </section>
+				</div>	
+		    </div>	
+		</section>	
+		<!-- /Contact us -->	
+
 <?php 
 require_once './layout/footer.php';
 ?>

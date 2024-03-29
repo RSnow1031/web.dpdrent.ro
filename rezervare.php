@@ -6,6 +6,10 @@ if (!Session::exists('carID')) {
     echo '<script>window.location.href = "/inchirieri-masini.php";</script>';
     exit();
 }
+
+if (Session::exists('step') && Session::get('step') > 1)
+    Session::put('step', 3);
+
 $query = "SELECT * FROM cars WHERE carID = '" . $_SESSION['carID'] . "'";
 $results = mysqli_query($db, $query);
 $car = mysqli_fetch_object($results);
@@ -129,38 +133,38 @@ Session::put('total_price', $total_price);
     <div class="container">
         <div class="row align-items-center text-center">
             <div class="col-md-12 col-12">
-                <div class="container">	
+                <div class="container ">	
                     <!-- /Heading title -->
                     <div class="services-work">
                         <div class="row">
-                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                            <div class="col-lg-4 col-md-4 col-4 " data-aos="fade-down" >
                                 <div class="services-group">
-                                    <div class="services-icon" style="border: 2px dashed #0db02b">
+                                    <div class="services-icon <?php if (Session::exists('step') && Session::get('step') == 1) { ?>teeter-element<?php } ?>" style="border: 2px dashed #0db02b" >
                                         <img class="icon-img" style="background-color: #0db02b" src="assets/img/icons/services-icon-01.svg" alt="Choose Locations">
                                     </div>
                                     <div class="<?php if (Session::exists('step') && Session::get('step') > 1) { ?>line-progress<?php } else { ?>line<?php } ?>"></div>
-                                    <div class="services-content">
+                                    <div class="services-content <?php if (Session::exists('step') && Session::get('step') == 1) { ?>teeter-element<?php } ?>">
                                         <h3 style="color: #0db02b">1. Choose Location</h3>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                            <div class="col-lg-4 col-md-4 col-4" data-aos="fade-down">
                                 <div class="services-group">
-                                    <div class="services-icon" <?php if ($_SESSION['step'] > 1) { ?> style="border: 2px dashed #0db02b" <?php } else { ?> style="border: 2px dashed #201F1D" <?php } ?>>
+                                    <div class="services-icon <?php if (Session::exists('step') && Session::get('step') == 2) { ?>teeter-element<?php } ?>" <?php if ($_SESSION['step'] > 1) { ?> style="border: 2px dashed #0db02b" <?php } else { ?> style="border: 2px dashed #201F1D" <?php } ?>>
                                         <img class="icon-img" <?php if ($_SESSION['step'] > 1) { ?> style="background-color: #0db02b" <?php } else { ?> style="background-color: #201F1D"  <?php } ?> src="assets/img/icons/services-icon-02.svg" alt="Choose Locations">
                                     </div>
                                     <div class="<?php if (Session::exists('step') && Session::get('step') > 2) { ?>line-progress<?php } else { ?>line<?php } ?>"></div>
-                                    <div class="services-content">
+                                    <div class="services-content <?php if (Session::exists('step') && Session::get('step') == 2) { ?>teeter-element<?php } ?>">
                                         <h3 <?php if ($_SESSION['step'] > 1) { ?> style="color: #0db02b" <?php } else { ?> style="color: #FFFFFF" <?php } ?>> 2. Choose Car</h3>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-md-4 col-12" data-aos="fade-down">
+                            <div class="col-lg-4 col-md-4 col-4" data-aos="fade-down">
                                 <div class="services-group">
-                                    <div class="services-icon" <?php if ($_SESSION['step'] > 2) { ?> style="border: 2px dashed #0db02b" <?php } else { ?> style="border: 2px dashed #201F1D" <?php } ?>>
+                                    <div class="services-icon <?php if (Session::exists('step') && Session::get('step') == 3) { ?>teeter-element<?php } ?>" <?php if ($_SESSION['step'] > 2) { ?> style="border: 2px dashed #0db02b" <?php } else { ?> style="border: 2px dashed #201F1D" <?php } ?>>
                                         <img class="icon-img" <?php if ($_SESSION['step'] > 2) { ?> style="background-color: #0db02b" <?php } else { ?> style="background-color: #201F1D"  <?php } ?> src="assets/img/icons/services-icon-03.svg" alt="Choose Locations">
                                     </div>
-                                    <div class="services-content">
+                                    <div class="services-content <?php if (Session::exists('step') && Session::get('step') == 3) { ?>teeter-element<?php } ?>">
                                         <h3 <?php if ($_SESSION['step'] > 2) { ?> style="color: #0db02b" <?php } else { ?> style="color: #FFFFFF" <?php } ?>> 3. Book a Car</h3>
                                     </div>
                                 </div>
@@ -172,6 +176,7 @@ Session::put('total_price', $total_price);
         </div>
     </div>
 </div>
+<!-- /Breadscrumb Section -->
 
 <div class="container"></div>
 
@@ -257,18 +262,7 @@ Session::put('total_price', $total_price);
                                                             <label id="text_casco" class="pull-right">&euro;0</label>											
                                                         </div>
                                                     </li>
-                                                    <li class="column-group-main">
-                                                        <div class="input-block">
-                                                            Depozit:
-                                                            <label id="text_depozit" class="pull-right">
-                                                            <?php if (intval($_SESSION['casco_price']) == 0) { ?>
-                                                                <?= $car->deposit;?>
-                                                            <?php } else { ?>
-                                                                0
-                                                            <?php }?>  
-                                                            </label>												
-                                                        </div>
-                                                    </li>
+                                                    
                                                 </ul>
                                                 <hr>
                                                 <ul>
@@ -283,8 +277,18 @@ Session::put('total_price', $total_price);
                                                     <li class="column-group-main">
                                                         <div class="input-block">
                                                             TOTAL PRICE:
-                                                            <label id="text_total" class="pull-right" style="color: red; font-size: 25px"><?= $_SESSION['total_price'];?></label>
-                                                            <label class="pull-right" style="color: red; font-size: 25px">&euro;</label>											
+                                                            <label id="text_total" class="pull-right" style="color: red; font-size: 25px; margin: 0px"><?= $_SESSION['total_price'];?></label>
+                                                            <label class="pull-right" style="color: red; font-size: 25px; margin: 0px">&euro;</label>
+                                                            <br>											
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                                <hr>
+                                                <ul>
+                                                    <li class="column-group-main">
+                                                        <div class="input-block">
+                                                            Depozit:
+                                                            <label id="text_depozit" class="pull-right">0</label><label class="pull-right">&euro;</label>
                                                         </div>
                                                     </li>
                                                 </ul>
@@ -346,7 +350,14 @@ Session::put('total_price', $total_price);
                                                                                 </ul>	
                                                                             </div>	
                                                                             <div class="clear"></div>
-                                                                            <p style="margin-top: 10px;"><?= $car->carText; ?></p>
+                                                                            <div class="review_wrap">
+                                                                                <div class="review_comment">
+                                                                                    <p>
+                                                                                        <?= $car->carText; ?>
+                                                                                    </p>
+                                                                                    <a href="#" class="read_more"></a>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>					 
                                                                     </div>			 
                                                                 </div> 
@@ -420,6 +431,49 @@ Session::put('total_price', $total_price);
                                                                 </div>
                                                             </div>
                                                         </div>	
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="review-sec extra-service">
+                                                <div class="review-header">
+                                                    <h4>Alege tipul de asigurare potrivit pentru tine !</h4>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                                        <div class="input-block">
+                                                            <label class="custom_radio">
+                                                                <!-- <input type="text" hidden name="casco_add" id="casco_add" value="1" required> -->
+                                                                <a class="btn" style="width: 200px; background-color: #FFFFFF; border: 2px solid #FFA633">FULL CASCO €<?= $_SESSION['casco'][1]?>/zi</a>
+                                                                <div class="help-tip1">
+                                                                    <p>No tienes proteccion para tu auto.<br> Podria perder el varlor total del deposito si el automovil se dana durante su arrendamiento.</p>
+                                                                </div>
+                                                                <!-- <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip">
+                                                                <i class="feather-info" title="Do you like my fa-cog icon?"></i>
+                                                                </span> -->
+                                                            </label>
+                                                            <!-- <span class="pull-right" id="casco_pe_zi"><?= $_SESSION['casco'][1]?></span><span class="pull-right">&euro;</span> -->
+                                                        </div>
+                                                        <div class="input-block">
+                                                            <label class="custom_radio">
+                                                                <!-- <input type="radio" name="casco_add" id="deposit" value="2" required> -->
+                                                                <a class="btn" id="btn-add-casco" style="width: 200px; background-color: #FFFFFF; border: 2px solid #FFA633">Depozit <?=$car->deposit?></a>
+                                                                <div class="help-tip">
+                                                                <p>Exento al cliente por la cantidad que tiene que pagar en caso de danos.<br />
+                                                                </p>
+                                                            </div>
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-sm-6 col-lg-6 col-12 mb-3">✅️ Toate taxele incluse</div>
+                                                            <div class="col-md-6 col-sm-6 col-lg-6 col-12 mb-3">✅️ Kilometri Nelimitati</div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6 col-sm-6 col-lg-6 col-12 mb-3">✅️ Asistenta Non-Stop</div>
+                                                            <div class="col-md-6 col-sm-6 col-lg-6 col-12 mb-3">✅️ Inlocuire auto gratuit</div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -518,32 +572,6 @@ Session::put('total_price', $total_price);
                                                                 </div>
                                                             </div>
                                                         </div>	
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="review-sec extra-service">
-                                                <div class="review-header">
-                                                    <h4>Alege tipul de asigurare potrivit pentru tine !</h4>
-                                                </div>
-                                                <div class="col-12">
-                                                    <div class="input-block">
-                                                        <label class="custom_radio">
-															<input type="radio" name="casco_add" id="casco_add" value="1" checked="">
-															<span class="checkmark"></span> 
-															Casco pe zi
-                                                            <!-- <span class="d-inline-block" tabindex="0" data-toggle="tooltip" title="Disabled tooltip"> -->
-                                                            <!-- <i class="feather-info" title="Do you like my fa-cog icon?"></i> -->
-                                                            <!-- </span> -->
-														</label>
-                                                        <span class="pull-right" id="casco_pe_zi"><?= $_SESSION['casco'][1]?></span><span class="pull-right">&euro;</span>
-                                                    </div>
-                                                    <div class="input-block">
-                                                        <label class="custom_radio">
-															<input type="radio" name="casco_add" id="deposit" value="2" CHECKED>
-															<span class="checkmark"></span> 
-															Depozit
-														</label>
-                                                        <span class="pull-right"><?=$car->deposit?></span><span class="pull-right">&euro;</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -667,37 +695,43 @@ Session::put('total_price', $total_price);
                                             <div class="review-sec extra-service">
                                                 <div class="booking-details" style="padding: 0px">
                                                     <div class="booking-form">
-                                                        <div class="col-12">
-                                                            <label class="custom_check" ><strong style="color: red">Sunt deacord cu</strong><a href="/termeni-conditii.php">Termenii si Conditiile</a>
-                                                                <input type="checkbox" name="terms_check" id="terms_check" value="1" required>
-                                                                <span class="checkmark"></span> 
-                                                            </label>
-                                                        </div>
+                                                        
                                                         <!-- <div class="row"> -->
-                                                            <div class="col-12">
-                                                                <div class="input-block">
-                                                                    <label class="custom_radio">
-                                                                        <input type="radio" name="plata" id="platesc_preluare" value="cash" CHECKED>
-                                                                        <span class="checkmark"></span> 
-                                                                        Platesc la preluare cu cash sau cu card
-                                                                    </label>
-                                                                </div>
-                                                                <div class="input-block" >
-                                                                    <label class="custom_radio">
-                                                                        <input type="radio" name="plata" id="platesc_online" value="online" disabled="disabled">
-                                                                        <span class="checkmark" disabled></span> 
-                                                                        <span style="color: #c0c0c0">Platesc online cu cardul</span> <img src="https://dpdrent.ro/images/credit_cards.png" alt="" class="ml10 vm">
-                                                                    </label>
-                                                                </div>
-                                                                <div class="input-block">
-                                                                    <label class="custom_radio">
-                                                                        <input type="radio" name="plata" id="platesc_op" value="OP">
-                                                                        <span class="checkmark"></span> 
-                                                                        Platesc prin OP
-                                                                    </label>
-                                                                </div>
+                                                        <div class="col-12">
+                                                            <div class="input-block">
+                                                                <label class="custom_radio">
+                                                                    <input type="radio" name="plata" id="platesc_preluare" value="cash" CHECKED>
+                                                                    <span class="checkmark"></span> 
+                                                                    Platesc la preluare cu cash sau cu card
+                                                                </label>
                                                             </div>
+                                                            <div class="input-block" >
+                                                                <label class="custom_radio">
+                                                                    <input type="radio" name="plata" id="platesc_online" value="online" disabled="disabled">
+                                                                    <span class="checkmark" disabled></span> 
+                                                                    <span style="color: #c0c0c0">Platesc online cu cardul</span> <img src="https://dpdrent.ro/images/credit_cards.png" alt="" class="ml10 vm">
+                                                                </label>
+                                                            </div>
+                                                            <div class="input-block">
+                                                                <label class="custom_radio">
+                                                                    <input type="radio" name="plata" id="platesc_op" value="OP">
+                                                                    <span class="checkmark"></span> 
+                                                                    Platesc prin OP
+                                                                </label>
+                                                            </div>
+                                                        </div>
                                                         <!-- </div> -->
+                                                        <div class="row">
+                                                            <div class="col-6">
+                                                                <label class="custom_check" ><strong style="color: red">Sunt deacord cu</strong><a href="/termeni-conditii.php">Termenii si Conditiile</a>
+                                                                    <input type="checkbox" name="terms_check" id="terms_check" value="1" required>
+                                                                    <span class="checkmark"></span> 
+                                                                </label>
+                                                            </div>
+                                                            <div class="col-6">
+                                                                <button type="submit" class="btn btn-primary pull-right teeter-element" id="sent">REZERVARE</button>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -1286,14 +1320,14 @@ function calculTotal() {
         casco_per_day.innerHTML = cas[1];
 
         if (casco_add.checked == true) {
-            depozit.innerHTML = "&euro;" + '0';
+            depozit.innerHTML = 0;
             depozit_price.value = 0;
             text_casco.innerHTML = "&euro;" + (parseInt(cas[0] * cas[1]));
             casco_total.value = Math.round(parseInt(cas[0] * cas[1]));
             tot = Math.round(parseInt(car[0] * car[1]) + (parseInt(cas[0] * cas[1])) + parseInt(drop_off_price.value) + parseInt(total_extras.value));
             total_tax_price = parseInt(taxa_livrare.value);
         } else {
-            depozit.innerHTML = '&euro;' + depozit_standard.value ;
+            depozit.innerHTML = depozit_standard.value ;
             text_casco.innerHTML = "&euro;" + 0;
             casco_total.value = 0;
             tot = Math.round(parseInt(car[0] * car[1]) + parseInt(drop_off_price.value) + parseInt(total_extras.value));
@@ -1426,6 +1460,53 @@ function callback(response, status) {
         }
     }
 }
+
+    function read_more() {
+        var readmore = $('.read_more');
+        var comment = $('.review_comment p').text();
+
+        //goes through each index of the array of 'review_comment p'
+        $('.review_comment p').each(function(i){
+        //calculates height of comment variable
+        var commentheight = $(this).height();
+        //calculates scroll height of comment on each div
+        var scrollcommentheight =  $('.review_comment p')[i].scrollHeight;
+        console.log("This is the comment height" + ' - ' + commentheight);
+        console.log("This is the scroll height" + ' - ' + scrollcommentheight);
+
+        //if comment height is same as scroll height then hide read more button
+        if (commentheight == scrollcommentheight){
+            $(this).siblings(readmore).hide();
+        }
+        //otherwise read more button shows
+        else {
+            $(this).siblings(readmore).text("Read More");
+        }
+    });
+
+
+  readmore.on('click', function() {
+    var $this = $(this);
+    event.preventDefault();
+    
+    $this.siblings('.review_comment p').toggleClass('active');
+
+    if ($this.siblings('.review_comment p').text().length < 230) {
+      $this.text("Read More");
+    }
+    if ($('.review_comment p').hasClass('active')) {
+      $this.text("Read Less");
+    } else {
+      $this.text("Read More");
+    }
+  });
+};
+
+$(function() {
+  //Calling function after Page Load
+  read_more();
+});
+
 
 
 
