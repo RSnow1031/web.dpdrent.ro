@@ -1,7 +1,7 @@
 <?php 
 require_once 'core/init.php';
+Session::put('url', 'extra');
 require_once './layout/header.php';
-
 $query = "SELECT * FROM content WHERE pageURL = 'extra'";
 $results = mysqli_query($db, $query);
 $page = mysqli_fetch_object($results);
@@ -61,8 +61,9 @@ $extras = mysqli_fetch_all($results, MYSQLI_ASSOC);
 </div>
 <!-- /Breadscrumb Section -->
 
-<section class="section product-details">
+<section class="contact-section pt-5">
     <div class="container">
+    <div class="form-info-area" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="0.5">
         <div class="col-md-12">
             <?= $page->pageContent?>
             <hr>

@@ -68,19 +68,19 @@
 							<a id="menu_close" class="menu-close" href="javascript:void(0);"> <i class="fas fa-times"></i></a>
 						</div>
 						<ul class="main-nav">
-							<li class="active"><a href="/">ACASA</a></li>
-							<li><a href="/inchirieri-masini.php">MASINI SI PRETURI</a></li>
-							<li class="has-submenu">
+							<li <?php if (Session::get('url') == 'index') { ?>class="active"<?php } ?>><a href="/">ACASA</a></li>
+							<li <?php if (Session::get('url') == 'inchirieri-masini') { ?>class="active"<?php } ?>><a href="/inchirieri-masini.php">MASINI SI PRETURI</a></li>
+							<li class="has-submenu <?php if (Session::get('url') == 'Brasov' || Session::get('url') == 'Aeroport Otopeni' || Session::get('url') == 'Bucuresti') { ?> active <?php } ?>">
 								<a href="#">Locatii <i class="fas fa-chevron-down"></i></a>
 								<ul class="submenu">
-								    <li><a href="/inchirieri-auto-bucuresti.php">Inchirieri auto Bucuresti</a></li>
-								    <li><a href="/inchirieri-auto-otopeni.php">Inchirieri auto Otopeni</a></li>					
-								    <li><a href="/inchirieri-auto-brasov.php">Inchirieri auto Brasov</a></li>								
+								    <li <?php if (Session::get('url') == 'Bucuresti') { ?>class="active"<?php } ?>><a href="/inchirieri-auto-bucuresti.php">Inchirieri auto Bucuresti</a></li>
+								    <li <?php if (Session::get('url') == 'Aeroport Otopeni') { ?>class="active"<?php } ?>><a href="/inchirieri-auto-otopeni.php">Inchirieri auto Otopeni</a></li>					
+								    <li <?php if (Session::get('url') == 'Brasov') { ?>class="active"<?php } ?>><a href="/inchirieri-auto-brasov.php">Inchirieri auto Brasov</a></li>								
 								</ul>
 							</li>
-							<li><a href="/servicii.php">SERVICII</a></li>
-							<li><a href="/extra.php">EXTRA</a></li>
-							<li><a href="/contact.php">CONTACT</a></li>
+							<li <?php if (Session::get('url') == 'servicii') { ?>class="active"<?php } ?>><a href="/servicii.php">SERVICII</a></li>
+							<li <?php if (Session::get('url') == 'extra') { ?>class="active"<?php } ?>><a href="/extra.php">EXTRA</a></li>
+							<li <?php if (Session::get('url') == 'contact') { ?>class="active"<?php } ?>><a href="/contact.php">CONTACT</a></li>
 							<!-- <li class="login-link">
 								<a href="/">Sign Up</a>
 							</li>

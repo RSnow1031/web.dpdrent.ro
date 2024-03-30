@@ -1,5 +1,6 @@
 <?php
 require_once 'core/init.php';
+Session::put('url', 'Aeroport Otopeni');
 require_once './layout/header.php';
 
 Session::put('pickup_location', 'Aeroport Otopeni');
@@ -13,12 +14,17 @@ $query = "SELECT * FROM cars WHERE status = 'active' ORDER BY RAND() LIMIT 4";
 $results = mysqli_query($db, $query);
 $recommend_cars = mysqli_fetch_all($results, MYSQLI_ASSOC);
 
+$query = "SELECT count(*) FROM calendar_cars";
+$results = mysqli_query($db, $query);
+$car_count = mysqli_fetch_row($results);
+
 // if (!Session::exists('calcutor_check') && !Session::get('calcutor_check'))
 // 	Session::put('recommand_cars', $recommend_cars);
 
 Session::put('recommand_cars', $recommend_cars);
 $current_date = date('d-m-Y');
 $current_time = date("H:i");
+
 ?>
 
 <style>
@@ -93,6 +99,19 @@ $current_time = date("H:i");
 		z-index: 1;
 		width: 200px;
 	}
+}
+
+@media (max-width: 767.98px) {
+	.why-content img {
+		height: 30px !important;
+		width: 
+		30px !important;
+	}
+
+	#why-us-section {
+		display: none;
+	}
+
 }
 </style>
 
@@ -281,10 +300,9 @@ $current_time = date("H:i");
 <section class="section popular-services popular-explore">		
 	<div class="container">	
 		<!-- Heading title-->
-		<!-- <div class="section-heading" data-aos="fade-down">
-			<h2>Explore Most Popular Cars</h2>
-			<p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-		</div> -->
+		<div class="section-heading" data-aos="fade-down">
+			<h2>Sepecial offer!!</h2>
+		</div>
 		<!-- /Heading title -->
 		<!-- <div class="row justify-content-center">
 			<div class="col-lg-12" data-aos="fade-down">
@@ -359,10 +377,10 @@ $current_time = date("H:i");
 								
 							</div>										
 							<div class="listing-content">
-								<div class="listing-features">
-									<h3 class="listing-title">
-										<a href="listing-details.html"><?php echo $item['carName'];?></a>
-									</h3>																	  
+								<div class="listing-features rental-car-item">												
+									<div class="fav-item-rental">
+										<span class="featured-text">De la &euro;<?php echo $item['price5']?>/zi</span>									
+									</div>																  
 									<div class="list-rating">							
 										<i class="fas fa-star filled"></i>
 										<i class="fas fa-star filled"></i>
@@ -370,13 +388,28 @@ $current_time = date("H:i");
 										<i class="fas fa-star filled"></i>
 										<i class="fas fa-star filled"></i>
 										<span>(5.0)</span>
-									</div>
-								</div>
+									</div>													
+									<h3 class="listing-title">
+										<a href="/inchirieri.php?carID=<?=$item['carID']?>"><?php echo $item['carName'];?></a>
+									</h3>
+								</div> 
 								<div class="listing-details-group">
                                     <ul style="display: ruby-text">
 
                                     <?php $equip = explode(';', $item['equip']);
-                                        foreach ($equip as $eqId) {
+										$searchValue = ['24','23'];
+										$matchingValues = array_intersect($equip, $searchValue);
+										$remainingValues = array_diff($equip, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+
+										$searchValue = ['27','34'];
+										$matchingValues = array_intersect($modifiedArray, $searchValue);
+										$remainingValues = array_diff($modifiedArray, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+										
+										foreach ($modifiedArray as $eqId) {
                                             $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
                                             $results = mysqli_query($db, $query);
                                             $eqInfo = mysqli_fetch_object($results);
@@ -420,7 +453,7 @@ $current_time = date("H:i");
 										$rent_list  = explode(' x ', $days);	
 									}
 									?>
-										<h6><?php echo '<b>Incepand cu</b>&nbsp;€' . $item['price5']?>/Zi</h6>
+										<!-- <h6><?php echo '<b>Pret de la</b>&nbsp;€' . $item['price5']?>/Zi</h6> -->
 									</div>
 								</div>
 								<div class="listing-button">
@@ -441,11 +474,13 @@ $current_time = date("H:i");
 	</div>
 </section>
 
-<section class="section popular-services popular-explore pt-0">		
+<section class="section popular-services popular-explore pt-0" id="why-us-section">		
 	<div class="container">	
 		<div class="tab-content">
-			<div class="tab-pane active" id="Carmazda">	
-				<div class="row text-center mb-5"><h4>DE CE NOI?</h4></div>
+			<div class="tab-pane active why-content" id="Carmazda">	
+				<div class="section-heading" data-aos="fade-down">
+					<h2>DE CE NOI?</h2>
+				</div>
 				<div class="row">
 					<div class="col-lg-6 col-md-6 col-12 d-flex">
 						<img src="/assets/uploads/1.png" style="height: 64px; width: 64px; background-color: #f8aa00; border-radius: 50%; margin-right: 10px"/>
@@ -495,14 +530,14 @@ $current_time = date("H:i");
 					<div class="rental-car-item">
 						<div class="listing-item mb-0">										
 							<div class="listing-img">
-								<a href="listing-details.html">
+								<a href="/inchirieri.php?carID=<?=$car['carID']?>">
 									<img src="https://dpdrent.ro/uploads/cars/<?php echo $car['carPhoto']?>" style="height: 250px !important">
 								</a>
 							</div>										
 							<div class="listing-content">
 								<div class="listing-features">												
 									<div class="fav-item-rental">
-										<span class="featured-text">&euro;<?php echo $car['price1']?>/zi</span>									
+										<span class="featured-text">De la &euro;<?php echo $car['price5']?>/zi</span>									
 									</div>																  
 									<div class="list-rating">							
 										<i class="fas fa-star filled"></i>
@@ -513,14 +548,26 @@ $current_time = date("H:i");
 										<span>(5.0)</span>
 									</div>													
 									<h3 class="listing-title">
-										<a href="listing-details.html"><?php echo $car['carName'];?></a>
+										<a href="/inchirieri.php?carID=<?=$car['carID']?>"><?php echo $car['carName'];?></a>
 									</h3>
 								</div> 
 								<div class="listing-details-group">
                                     <ul style="display: ruby-text">
 
                                     <?php $equip = explode(';', $car['equip']);
-                                        foreach ($equip as $eqId) {
+                                        $searchValue = ['24','23'];
+										$matchingValues = array_intersect($equip, $searchValue);
+										$remainingValues = array_diff($equip, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+
+										$searchValue = ['27','34'];
+										$matchingValues = array_intersect($modifiedArray, $searchValue);
+										$remainingValues = array_diff($modifiedArray, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+										
+										foreach ($modifiedArray as $eqId) {
                                             $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
                                             $results = mysqli_query($db, $query);
                                             $eqInfo = mysqli_fetch_object($results);
@@ -534,7 +581,7 @@ $current_time = date("H:i");
                                     </ul>	
                                 </div>
 								<div class="listing-button">
-									<a href="listing-details.html" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</a>
+									<a href="/inchirieri.php?carID=<?=$car['carID']?>" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</a>
 								</div>	
 							</div>
 						</div>
@@ -578,7 +625,8 @@ $current_time = date("H:i");
 								<img src="assets/img/icons/bx-car.svg" alt="Icon">
 							</div>
 							<div class="count-content">
-								<h4><span class="counterUp">2547</span>+</h4>
+								
+								<h4><span class="counterUp"><?=$car_count[0]?></span>+</h4>
 								<p>Count of Cars</p>
 							</div>
 						</div>
@@ -591,7 +639,7 @@ $current_time = date("H:i");
 								<img src="assets/img/icons/bx-headphone.svg" alt="Icon">
 							</div>
 							<div class="count-content">
-								<h4><span class="counterUp">625</span>K+</h4>
+								<h4><span class="counterUp">25</span>K+</h4>
 								<p>Car Center Solutions</p>
 							</div>
 						</div>
@@ -715,11 +763,3 @@ require_once './layout/footer.php';
 		})
 	}
 </script>
-
-		
-
-
-		
-
-
-		

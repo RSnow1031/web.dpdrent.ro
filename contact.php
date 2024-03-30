@@ -1,8 +1,8 @@
 <?php 
 require_once 'core/init.php';
+Session::put('url', 'contact');
 require_once './layout/header.php';
 ?>
-
 		
 <!-- Contact us -->
 <section class="contact-section">

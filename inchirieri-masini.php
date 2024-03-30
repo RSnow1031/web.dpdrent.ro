@@ -1,5 +1,7 @@
 <?php
 require_once 'core/init.php';
+Session::put('url', 'inchirieri-masini');
+
 require_once './layout/header.php';
 
 $query = "SELECT * FROM categories JOIN cat_car ON categories.catID = cat_car.catID WHERE status = 'active' GROUP BY categories.catID ORDER BY categories.order ASC";
@@ -30,6 +32,11 @@ if (Session::exists('step') && Session::get('step') > 1)
 }
 .mobile-calcutor-toggle {
     display: none;
+}
+
+#visible-tab
+{
+    margin-top: 85px;
 }
 @media (max-width: 767.98px) {
     #visible-tab {
@@ -64,6 +71,15 @@ if (Session::exists('step') && Session::get('step') > 1)
             display: block;
         <?php } ?>
     }
+}
+
+.offer-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    z-index: 9999;
+    top: 70px;
 }
 
 
@@ -116,6 +132,29 @@ if (Session::exists('step') && Session::get('step') > 1)
         </div>
     </div>
 </div>
+
+<style>
+    .border-pulse {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 red;
+      }
+      50% {
+        box-shadow: 0 0 0 2px red;
+      }
+      100% {
+        box-shadow: 0 0 0 0 red;
+      }
+    }
+  </style>
+
+<!-- <div class="border-pulse"></div> -->
+
+
+
 <!-- /Breadscrumb Section -->
 <?php if (Session::exists('step') && Session::get('step') > 1) { ?>
     <div class="container mobile-calcutor-toggle">
@@ -123,9 +162,10 @@ if (Session::exists('step') && Session::get('step') > 1)
     </div>
     <br>
 <?php } ?>
+
 <div class="section-search mt-4" id="calculator-section"> 
     <div class="container">	  
-        <div class="search-box-banner1">
+        <div class="search-box-banner1 ">
             <form action="/inchirieri-ajax.php" method="POST" class="needs-validation" novalidate>
                 <ul class="align-items-center">
                     <li class="column-group-main pickup-main">
@@ -261,7 +301,7 @@ if (Session::exists('step') && Session::get('step') > 1)
     </div>
 </div> -->
 
-<div class="mt-3" id="visible-tab" style="background-color: #d5d5d5; ">
+<div class="mt-3" id="visible-tab">
     <div class="container">
         <div class="sorting-div">
             <div class="row d-flex align-items-center">
@@ -359,9 +399,7 @@ if (Session::exists('step') && Session::get('step') > 1)
                             </div>										
                             <div class="listing-content">
                                 <div class="listing-features rental-car-item">												
-									<div class="fav-item-rental">
-										<span class="featured-text">De la &euro;<?php echo $car['price5']?>/zi</span>									
-									</div>																  
+																								  
 									<div class="list-rating">							
 										<i class="fas fa-star filled"></i>
 										<i class="fas fa-star filled"></i>
@@ -378,7 +416,19 @@ if (Session::exists('step') && Session::get('step') > 1)
                                     <ul style="display: ruby-text">
 
                                     <?php $equip = explode(';', $car['equip']);
-                                        foreach ($equip as $eqId) {
+                                        $searchValue = ['24','23'];
+                                        $matchingValues = array_intersect($equip, $searchValue);
+                                        $remainingValues = array_diff($equip, $searchValue);
+
+                                        $modifiedArray = array_merge($matchingValues, $remainingValues);
+
+                                        $searchValue = ['27','34'];
+                                        $matchingValues = array_intersect($modifiedArray, $searchValue);
+                                        $remainingValues = array_diff($modifiedArray, $searchValue);
+
+                                        $modifiedArray = array_merge($matchingValues, $remainingValues);
+                                        
+                                        foreach ($modifiedArray as $eqId) {
                                             $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
                                             $results = mysqli_query($db, $query);
                                             $eqInfo = mysqli_fetch_object($results);
@@ -391,22 +441,22 @@ if (Session::exists('step') && Session::get('step') > 1)
                                         
                                     </ul>	
                                 </div>																 
-                                <div class="listing-location-details">
+                                <div class="listing-location-details"   style="background-color: #FFA633;">
                                     <?php
                                     if (count($rent_list) > 1) { ?>
-                                        <div class="col-6 pickup-address text-center">
-                                           
-                                        </div>
-                                        <div class="col-6 drop-address">
-                                            <h5 style="color: #0db02b; text-align: right">&euro;<?=$rent_list[1] * $rent_list[0]?>/<?= $rent_list[0]?> zile</h5>
+                                        <div class="col-12 drop-address">
+                                            <div class="fav-item-rental  text-center">
+                                                <h5 class="featured-text" style="color: #FFFFFF"><b>&euro;<?=$rent_list[1] * $rent_list[0]?>/<?= $rent_list[0]?> zile</b><h5>								
+                                            </div>	
+                                            <!-- <h5 style="color: #0db02b; text-align: right">&euro;<?=$rent_list[1] * $rent_list[0]?>/<?= $rent_list[0]?> zile</h5> -->
                                         </div>
                                         <!-- <h6><span style="color:red;font-size: 25px">&euro;<?= $r_price ?>/ <?=$rent_list[0]?>Zi</span><br></h6> -->
                                     <?php } else { ?>
-                                        <div class="col-6 pickup-address text-center">
+                                        <div class="col-6 pickup-address text-center" style="color: #FFFFFF">
                                             <span>21+ zile</span>
                                             <h5>&euro;<?=$car['price5']?></h5>
                                         </div>
-                                        <div class="col-6 drop-address text-center">
+                                        <div class="col-6 drop-address text-center" style="color: #FFFFFF">
                                             <span>1-3 zile</span>
                                             <h5>&euro;<?=$car['price1']?></h5>
                                         </div>
@@ -507,12 +557,12 @@ if (Session::exists('step') && Session::get('step') > 1)
                                                 </div>
                                                 <?php
                                                 if (count($rent_list) > 1) { ?>
-                                                    <h5 style="color: #0db02b; text-align: right">&euro;<?=$rent_list[1] * $rent_list[0]?>/<?= $rent_list[0]?> zile</h5>
+                                                    <h5 style="color: #FFFFFF; text-align: center; padding: 3px; border-radius: 2%; background-color: #FFA633">&euro;<?=$rent_list[1] * $rent_list[0]?>/<?= $rent_list[0]?> zile</h5>
                                                 <?php } else { ?>
-                                                    <div class="pickup-address text-center mb-2">
+                                                    <div class="pickup-address text-center mb-2" style="color: #FFFFFF">
                                                         <h5>21+ zile - &euro;<?=$car['price5']?></h5>
                                                     </div>
-                                                    <div class="drop-address text-center">
+                                                    <div class="drop-address text-center" style="color: #FFFFFF">
                                                         <h5>1-3 zile - &euro;<?=$car['price1']?></h5>
                                                     </div>
                                                 <?php } ?>
@@ -521,7 +571,19 @@ if (Session::exists('step') && Session::get('step') > 1)
                                         <div class="listing-details-group">
                                             <ul>
                                             <?php $equip = explode(';', $car['equip']);
-                                                foreach ($equip as $eqId) {
+                                                $searchValue = ['24','23'];
+                                                $matchingValues = array_intersect($equip, $searchValue);
+                                                $remainingValues = array_diff($equip, $searchValue);
+        
+                                                $modifiedArray = array_merge($matchingValues, $remainingValues);
+        
+                                                $searchValue = ['27','34'];
+                                                $matchingValues = array_intersect($modifiedArray, $searchValue);
+                                                $remainingValues = array_diff($modifiedArray, $searchValue);
+        
+                                                $modifiedArray = array_merge($matchingValues, $remainingValues);
+                                                
+                                                foreach ($modifiedArray as $eqId) {
                                                     $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
                                                     $results = mysqli_query($db, $query);
                                                     $eqInfo = mysqli_fetch_object($results);
@@ -672,6 +734,7 @@ if (Session::exists('step') && Session::get('step') > 1)
             $('#rent_form_' + id).unbind('submit').submit();
         else if (step == 1)
         {
+            $('.search-box-banner1').addClass('border-pulse')
             const section = document.getElementById('calculator-section');
             const headerHeight = document.getElementById('fixed-header').offsetHeight;
             const sectionTop = section.offsetTop - headerHeight;
@@ -723,5 +786,22 @@ if (Session::exists('step') && Session::get('step') > 1)
     //     console.log('=====')
     //     endDatePicker.datetimepicker('minDate', e.date);
     // });
+    $(document).ready(function() {
+        $(window).scroll(function() {
+            var headerHeight = $('#fixed-header').outerHeight();
+            var topDistance = $('#visible-tab').offset().top;
+            var scrollTop = $(window).scrollTop();
+            // var contentMarginTop = headerHeight;
+            console.log(topDistance,scrollTop,'===========')
 
+            if (scrollTop > 355) {
+                console.log('====fix====')
+                $('#visible-tab').addClass('offer-section');
+            }
+            else {
+                $('#visible-tab').removeClass('offer-section');
+            }
+
+        })
+    });
 </script>

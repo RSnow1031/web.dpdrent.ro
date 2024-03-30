@@ -1,5 +1,6 @@
 <?php
 require_once 'core/init.php';
+Session::put('url', 'index');
 require_once './layout/header.php';
 
 $query = "SELECT * FROM cars WHERE special = 1 LIMIT 6";
@@ -20,6 +21,7 @@ $car_count = mysqli_fetch_row($results);
 Session::put('recommand_cars', $recommend_cars);
 $current_date = date('d-m-Y');
 $current_time = date("H:i");
+
 ?>
 
 <style>
@@ -296,7 +298,7 @@ $current_time = date("H:i");
 	<div class="container">	
 		<!-- Heading title-->
 		<div class="section-heading" data-aos="fade-down">
-			<h2>Sepecial offer!!</h2>
+			<h2>Pret Special !</h2>
 		</div>
 		<!-- /Heading title -->
 		<!-- <div class="row justify-content-center">
@@ -392,7 +394,19 @@ $current_time = date("H:i");
                                     <ul style="display: ruby-text">
 
                                     <?php $equip = explode(';', $item['equip']);
-                                        foreach ($equip as $eqId) {
+										$searchValue = ['24','23'];
+										$matchingValues = array_intersect($equip, $searchValue);
+										$remainingValues = array_diff($equip, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+
+										$searchValue = ['27','34'];
+										$matchingValues = array_intersect($modifiedArray, $searchValue);
+										$remainingValues = array_diff($modifiedArray, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+										
+										foreach ($modifiedArray as $eqId) {
                                             $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
                                             $results = mysqli_query($db, $query);
                                             $eqInfo = mysqli_fetch_object($results);
@@ -538,7 +552,19 @@ $current_time = date("H:i");
                                     <ul style="display: ruby-text">
 
                                     <?php $equip = explode(';', $car['equip']);
-                                        foreach ($equip as $eqId) {
+                                        $searchValue = ['24','23'];
+										$matchingValues = array_intersect($equip, $searchValue);
+										$remainingValues = array_diff($equip, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+
+										$searchValue = ['27','34'];
+										$matchingValues = array_intersect($modifiedArray, $searchValue);
+										$remainingValues = array_diff($modifiedArray, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+										
+										foreach ($modifiedArray as $eqId) {
                                             $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
                                             $results = mysqli_query($db, $query);
                                             $eqInfo = mysqli_fetch_object($results);
@@ -583,7 +609,7 @@ $current_time = date("H:i");
 								<img src="assets/img/icons/bx-heart.svg" alt="Icon">
 							</div>
 							<div class="count-content">
-								<h4><span class="counterUp">16</span>K+</h4>
+								<h4><span class="counterUp">280</span>K+</h4>
 								<p>Happy Customers</p>
 							</div>
 						</div>
@@ -597,7 +623,7 @@ $current_time = date("H:i");
 							</div>
 							<div class="count-content">
 								
-								<h4><span class="counterUp"><?=$car_count[0]?></span>+</h4>
+								<h4><span class="counterUp">250</span>+</h4>
 								<p>Count of Cars</p>
 							</div>
 						</div>
@@ -610,7 +636,7 @@ $current_time = date("H:i");
 								<img src="assets/img/icons/bx-headphone.svg" alt="Icon">
 							</div>
 							<div class="count-content">
-								<h4><span class="counterUp">25</span>K+</h4>
+								<h4><span class="counterUp">300</span>K+</h4>
 								<p>Car Center Solutions</p>
 							</div>
 						</div>
@@ -623,7 +649,7 @@ $current_time = date("H:i");
 								<img src="assets/img/icons/bx-history.svg" alt="Icon">
 							</div>
 							<div class="count-content">
-								<h4><span class="counterUp">200</span>K+</h4>
+								<h4><span class="counterUp">1mil</span>km</h4>
 								<p>Total Kilometer</p>
 							</div>
 						</div>

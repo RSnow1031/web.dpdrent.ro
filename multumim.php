@@ -24,7 +24,7 @@ Session::delete('total_price');
 
 		
 <!-- Breadscrumb Section -->
-<div class="breadcrumb-bar">
+<!-- <div class="breadcrumb-bar">
     <div class="container">
         <div class="row align-items-center text-center">
             <div class="col-md-12 col-12">
@@ -32,7 +32,7 @@ Session::delete('total_price');
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <style>
     .payment-success .check {
         display: inline-block;
@@ -46,21 +46,23 @@ Session::delete('total_price');
 </style>
 <!-- /Breadscrumb Section -->
 <!-- Main Wrapper -->
-<div class="container">
-    <div class="text-center mt-5 mb-5">
-        <div class="payment-success">
-            <span class="check"><i class="fa-solid fa-check-double" style="font-size: 120px;color: #FFFFFF;margin-top: 10px"></i></span>
-        </div>						
-        <h2 class="coming-soon"><?= $page_content->pageContent?></h2>
-        <br>
-        <br>
-        <br>
-        <br>
-        <br>
-        <a href="/" class="btn-maintance btn btn-primary">Back to Home</a>
+<section class="contact-section pt-5" >
+    <div class="container">
+        <div class="form-info-area" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="0.5">
+        <div class="text-center mt-5 mb-5">
+            <div class="payment-success">
+                <span class="check"><i class="fa-solid fa-check-double" style="font-size: 120px;color: #FFFFFF;margin-top: 10px"></i></span>
+            </div>						
+            <h2 class="coming-soon" style="font-size: 28px !important"><?= $page_content->pageContent?></h2>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <a href="/" class="btn-maintance btn btn-primary">Back to Home</a>
+        </div>
     </div>
-
-</div>
+</section>
 <!-- /Main Wrapper -->
 <h4 class="bold">
     

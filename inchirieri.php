@@ -10,6 +10,9 @@ $car = mysqli_fetch_object($results);
 $query = "SELECT * FROM car_photos WHERE carID = '" . $cID . "' ORDER BY primary_photo DESC";
 $results = mysqli_query($db, $query);
 $car_photos = mysqli_fetch_all($results, MYSQLI_ASSOC);
+
+Session::put('url', 'inchirieri');
+
 ?>
 
 <section class="section product-details">

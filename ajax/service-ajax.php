@@ -13,12 +13,12 @@
 
         $response = curl_exec($cURL);
         curl_close($cURL);
-
-        if ($response == 1)
-        {
-            header('Location: servicii.php');
-            die();
-        }
+        echo 1;
+        // if ($response == 1)
+        // {
+        //     header('Location: servicii.php');
+        //     die();
+        // }
 
     }
 

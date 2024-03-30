@@ -1,5 +1,6 @@
 <?php
 require_once 'core/init.php';
+Session::put('url', 'rezervare');
 require_once './layout/header.php';
 
 if (!Session::exists('carID')) {
@@ -128,6 +129,23 @@ Session::put('total_price', $total_price);
 
 ?>
 <link rel="stylesheet" href="assets/css/alege-masina.css">
+<style>
+    .border-pulse {
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 red;
+      }
+      50% {
+        box-shadow: 0 0 0 2px red;
+      }
+      100% {
+        box-shadow: 0 0 0 0 red;
+      }
+    }
+</style>
 <!-- Breadscrumb Section -->
 <div class="breadcrumb-bar section services" style="padding: 10px">
     <div class="container">
@@ -186,10 +204,11 @@ Session::put('total_price', $total_price);
             <div class="col-md-12">
                 <div class="wizard">
                     <!-- <form role="form" action="" class=" needs-validation" method="POST" id="rezervare_form" novalidate> -->
-                    <form role="form" action="/ajax/rezervare-form.php" class=" needs-validation" method="POST"  novalidate>
+                    <form role="form" id="rezervare-form" action="/ajax/rezervare-form.php" onsubmit="validate(event)" class=" needs-validation" method="POST"  novalidate>
+                    <!-- <form role="form" action="/ajax/rezervare-form.php" class=" needs-validation" method="POST"  novalidate> -->
                         <div class="tab-content" id="main_form">
                             <div class="tab-pane active" role="tabpanel" id="step1">
-                            <section class="section product-details">
+                            <section class="section product-details pt-1" style="">
                                 
                                 <div class="container">
                                     <div class="row">
@@ -208,7 +227,7 @@ Session::put('total_price', $total_price);
                                                         </li>
                                                         <li class="column-group-main">
                                                             <div class="input-block">
-                                                                Pickup Date: 
+                                                                Date Preluare:
                                                                 <label id="text_data_preluare" class="pull-right"><?= $_SESSION['pickup_date'] . ' ' . $_SESSION['pickup_time']; ?></label>												
                                                             </div>
                                                         </li>
@@ -222,7 +241,7 @@ Session::put('total_price', $total_price);
                                                         </li>
                                                         <li class="column-group-main">
                                                             <div class="input-block">
-                                                                Dropoff Date: 
+                                                                Date Returnare: 
                                                                 <label id="text_data_returnare" class="pull-right"><?= $_SESSION['return_date'] . ' ' . $_SESSION['return_time']; ?></label>												
                                                             </div>
                                                         </li>
@@ -230,7 +249,7 @@ Session::put('total_price', $total_price);
                                                         <li class="column-group-main">
                                                             <div class="input-block">
                                                                 Pret pe zi:
-                                                                <label class="pull-right">&euro;</label><label id="text_pret_zi" class="pull-right"><?= $_SESSION['rent_list'][1]; ?></label>												
+                                                                <label id="text_pret_zi" class="pull-right"><?= round($_SESSION['rent_list'][1]); ?></label><label class="pull-right">&euro;</label>											
                                                             </div>
                                                         </li>
                                                         <li class="column-group-main">
@@ -337,7 +356,19 @@ Session::put('total_price', $total_price);
                                                                             <div class="listing-details-group">
                                                                                 <ul>
                                                                                 <?php $equip = explode(';', $car->equip);
-                                                                                foreach ($equip as $eqId) {
+                                                                                $searchValue = ['24','23'];
+                                                                                $matchingValues = array_intersect($equip, $searchValue);
+                                                                                $remainingValues = array_diff($equip, $searchValue);
+
+                                                                                $modifiedArray = array_merge($matchingValues, $remainingValues);
+
+                                                                                $searchValue = ['27','34'];
+                                                                                $matchingValues = array_intersect($modifiedArray, $searchValue);
+                                                                                $remainingValues = array_diff($modifiedArray, $searchValue);
+
+                                                                                $modifiedArray = array_merge($matchingValues, $remainingValues);
+                                                                                foreach ($modifiedArray as $eqId) {
+                                                                                    
                                                                                     $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
                                                                                     $results = mysqli_query($db, $query);
                                                                                     $eqInfo = mysqli_fetch_object($results);
@@ -405,7 +436,7 @@ Session::put('total_price', $total_price);
                                                         <div class="input-block-wrapp d-flex">
                                                             <div class="input-block date-widget" style="margin-right: 5px;">												
                                                                 <div class="group-img">
-                                                                <input type="text" class="form-control " id="data_preluare" name="data_preluare" value="<?= (Session::exists('pickup_date')) ? Session::get('pickup_date') : date("d-m-Y"); ?>" id="pickup_date">
+                                                                <input type="text" class="form-control " id="data_preluare" name="data_preluare" value="<?= (Session::exists('pickup_date')) ? Session::get('pickup_date') : date("d-m-Y"); ?>">
                                                                 </div>
                                                             </div>
                                                             <div class="input-block time-widge">											
@@ -435,16 +466,17 @@ Session::put('total_price', $total_price);
                                                 </div>
                                             </div>
 
-                                            <div class="review-sec extra-service">
+                                            <div class="review-sec extra-service casco-part">
                                                 <div class="review-header">
-                                                    <h4>Alege tipul de asigurare potrivit pentru tine !</h4>
+                                                    <h4>Alege tipul de asigurare potrivit pentru tine !</span></h4>
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-lg-6 col-sm-6 col-md-6">
                                                         <div class="input-block">
                                                             <label class="custom_radio">
                                                                 <!-- <input type="text" hidden name="casco_add" id="casco_add" value="1" required> -->
-                                                                <a class="btn" style="width: 200px; background-color: #FFFFFF; border: 2px solid #FFA633">FULL CASCO €<?= $_SESSION['casco'][1]?>/zi</a>
+                                                                <input class="pull-right bold" style="display:none;" type="checkbox" id="casco_add" name="casco_add" value="1">
+                                                                <a class="btn teeter-element" id="btn-add-casco" style="width: 200px; background-color: #FFFFFF; border: 2px solid #FFA633">FULL CASCO €<?= $_SESSION['casco'][1]?>/zi</a>
                                                                 <div class="help-tip1">
                                                                     <p>No tienes proteccion para tu auto.<br> Podria perder el varlor total del deposito si el automovil se dana durante su arrendamiento.</p>
                                                                 </div>
@@ -452,12 +484,13 @@ Session::put('total_price', $total_price);
                                                                 <i class="feather-info" title="Do you like my fa-cog icon?"></i>
                                                                 </span> -->
                                                             </label>
-                                                            <!-- <span class="pull-right" id="casco_pe_zi"><?= $_SESSION['casco'][1]?></span><span class="pull-right">&euro;</span> -->
+                                                            <span class="pull-right" id="casco_pe_zi" style="display: none"><?= $_SESSION['casco'][1]?></span>
                                                         </div>
                                                         <div class="input-block">
                                                             <label class="custom_radio">
                                                                 <!-- <input type="radio" name="casco_add" id="deposit" value="2" required> -->
-                                                                <a class="btn" id="btn-add-casco" style="width: 200px; background-color: #FFFFFF; border: 2px solid #FFA633">Depozit <?=$car->deposit?></a>
+                                                                <input class="pull-right bold" style="display:none;" type="checkbox" id="deposit_add" name="deposit_add" value="2">
+                                                                <a class="btn teeter-element" id="btn-add-deposit" style="width: 200px; background-color: #FFFFFF; border: 2px solid #FFA633">Depozit <?=$car->deposit?>&euro;</a>
                                                                 <div class="help-tip">
                                                                 <p>Exento al cliente por la cantidad que tiene que pagar en caso de danos.<br />
                                                                 </p>
@@ -577,17 +610,17 @@ Session::put('total_price', $total_price);
                                             </div>
                                             <div class="review-sec extra-service">
                                                 <!-- Booking  -->        
-                                                <section class="booking-section" style="padding:0px">
+                                                <section class="booking-section" style="padding:0px; margin-bottom: -40px">
                                                     <div class="container">
                                                         <ul class="nav nav-pills booking-tab" id="pills-tab" role="tablist">
                                                             <li class="nav-item">
-                                                            <a class="nav-link active" id="pills-booking-tab" data-bs-toggle="pill" href="#pills-booking" role="tab" aria-controls="pills-booking" aria-selected="true">
-                                                                <h5>Persoana Fizica</h5>
+                                                            <a class="nav-link active p-2 text-center" style="min-width: 140px" id="pills-booking-tab" data-bs-toggle="pill" href="#pills-booking" role="tab" aria-controls="pills-booking" aria-selected="true">
+                                                                <h5 style="font-size: 15px">Persoana Fizica</h5>
                                                             </a>
                                                             </li>
                                                             <li class="nav-item">
-                                                            <a class="nav-link" id="pills-payment-tab" data-bs-toggle="pill" href="#pills-payment" role="tab" aria-controls="pills-payment" aria-selected="false">
-                                                                <h5>Persoana Juridica</h5>
+                                                            <a class="nav-link p-2 text-center" style="min-width: 140px" id="pills-payment-tab" data-bs-toggle="pill" href="#pills-payment" role="tab" aria-controls="pills-payment" aria-selected="false">
+                                                                <h5 style="font-size: 15px">Persoana Juridica</h5>
                                                             </a>
                                                             </li>
                                                         </ul>
@@ -693,8 +726,8 @@ Session::put('total_price', $total_price);
                                                 <!-- /Booking  --> 
                                             </div>
                                             <div class="review-sec extra-service">
-                                                <div class="booking-details" style="padding: 0px">
-                                                    <div class="booking-form">
+                                                <div class="booking-details" style="padding: 0px;margin: 0px !important">
+                                                    <div class="booking-form" style="">
                                                         
                                                         <!-- <div class="row"> -->
                                                         <div class="col-12">
@@ -722,14 +755,16 @@ Session::put('total_price', $total_price);
                                                         </div>
                                                         <!-- </div> -->
                                                         <div class="row">
-                                                            <div class="col-6">
-                                                                <label class="custom_check" ><strong style="color: red">Sunt deacord cu</strong><a href="/termeni-conditii.php">Termenii si Conditiile</a>
-                                                                    <input type="checkbox" name="terms_check" id="terms_check" value="1" required>
-                                                                    <span class="checkmark"></span> 
-                                                                </label>
+                                                            <div class="col-6 agree_terms">
+                                                                <div class="form-check">
+                                                                    <input class="form-check-input" type="checkbox" id="terms_check" name="terms_check" value="1" required>
+                                                                    <label class="form-check-label" for="terms_check">
+                                                                        <strong style="color: red">Sunt deacord cu</strong>&nbsp;&nbsp;&nbsp;<a href="/termeni-conditii.php">Termenii si Conditiile</a>
+                                                                    </label>
+                                                                </div>
                                                             </div>
                                                             <div class="col-6">
-                                                                <button type="submit" class="btn btn-primary pull-right teeter-element" id="sent">REZERVARE</button>
+                                                                <button type="submit" style="width: 50%" class="btn btn-primary pull-right teeter-element" id="sent">REZERVARE</button>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -751,7 +786,7 @@ Session::put('total_price', $total_price);
                                                             <?php foreach ($extras as $extra) { ?>
                                                             <div class="featureslist d-flex align-items-center col-12">
                                                                 <div class="feature-img">
-                                                                    <img src="/assets/uploads/extras/<?= $extra['extraPhoto']?>" alt="Icon">
+                                                                    <img src="https://dpdrent.ro/uploads/extras/<?= $extra['extraPhoto']?>" alt="Icon">
                                                                 </div>
                                                                 <div class="featues-info">
                                                                     <span><?=$extra['extraTitle'];?>- <?= ((int)$extra['extraPrice'] == 0) ? 'Gratuit' : '&euro;' . $extra['extraPrice'] . '/per.'; ?> </span>
@@ -937,7 +972,7 @@ function sidebar() {
     } else {
       car = rent.split("x");
       rent_days.innerHTML = car[0];
-      rent_per_day.innerHTML = car[1];
+      rent_per_day.innerHTML = Math.round(car[1]);
     }
     if (casco == 0) {
     //   casco_days.innerHTML = 0;
@@ -974,7 +1009,93 @@ $(document).ready(function () {
     });
 });
 
+function validate(e)
+{
+    if ($('#casco_add').prop("checked") || $('#deposit_add').prop("checked")) {
+        const form = document.getElementById("rezervare-form");
+        const inputs = form.querySelectorAll("input");
 
+        for (let i = 0; i < inputs.length; i++) {
+            if (!inputs[i].value) {
+                inputs[i].focus(); // Set focus to the first uninputted field
+                break;
+            }
+        }
+
+        if ($('#terms_check').prop('checked') != true)
+        {
+            $('.agree_terms').css('border', '2px solid red')
+            $('.agree_terms').addClass('border-pulse')
+            $('.agree_terms').css('border-radius', '9px')
+        }
+        else
+        {
+            $('.agree_terms').removeClass('border-pulse')
+            $('.agree_terms').css('border', 'none')
+        }
+        return true;
+    }
+    else
+    {
+        e.preventDefault();
+
+        if (!$('#casco_add').prop("checked") && !$('#deposit_add').prop("checked")) {
+            $('.casco-part').css('border', '2px solid red');
+            $('.casco-part').addClass('border-pulse');
+            
+            const casco_section = document.getElementsByClassName('casco-part');
+            const headerHeight = document.getElementById('fixed-header').offsetHeight;
+            console.log(casco_section[0].offsetTop,'===========')
+            const sectionTop = casco_section[0].offsetTop - headerHeight;
+
+            window.scrollTo({
+                top: sectionTop,
+                behavior: 'smooth'
+            });
+        }
+
+        if (!$('#casco_add').prop("checked") && !$('#deposit_add').prop("checked")) {
+            $('.casco-part').css('border', '2px solid red');
+
+            const casco_section = document.getElementsByClassName('casco-part');
+            const headerHeight = document.getElementById('fixed-header').offsetHeight;
+            const sectionTop = casco_section[0].offsetTop - headerHeight;
+
+            window.scrollTo({
+                top: sectionTop,
+                behavior: 'smooth'
+            });
+        }
+        if ($('#terms_check').prop('checked') != true)
+        {
+            $('.agree_terms').css('border', '2px solid red')
+            $('.agree_terms').css('border-radius', '9px')
+            $('.agree_terms').addClass('border-pulse')
+        }
+        else
+        {
+            $('.agree_terms').css('border', 'none')
+            $('.agree_terms').removeClass('border-pulse')
+        }
+        
+        
+
+        // $('#btn-add-casco').css('border', 'none');
+        // $('#btn-add-deposit').css('border', 'none');
+        // $('#btn-add-casco').css('border', '2px solid red');
+        // $('#btn-add-deposit').css('border', '2px solid red');
+        return false;
+    }
+}
+
+$('#terms_check').click(function() {
+    console.log($(this).prop('checked'), '===sdsd')
+    if ($(this).prop('checked')) {
+        $('.agree_terms').css('border', 'none')
+        $('.agree_terms').removeClass('border-pulse')
+    }
+
+})
 
 $(document).ready(function() {
     // $('#rezervare_form').submit(function(e) {
@@ -1236,13 +1357,72 @@ $(document).ready(function() {
       return false;
     });
 
-    $('input[name="casco_add"]').click(function() {
-        calculTotal();
-    })
+    // $('input[name="casco_add"]').click(function() {
+    //     calculTotal();
+    // })
 
     $('#locatie_preluare').change(function() {
         calculTotal();
     })
+
+    var casco_clicked = false;
+    var deposit_clicked = false;
+    $("#btn-add-casco").on("click", function(e) {
+        var is_checked = $("#casco_add").prop("checked");
+        e.preventDefault();
+        if (!is_checked) {
+            $("#casco_add").prop("checked", !is_checked);
+            $("#deposit_add").prop("checked", is_checked);
+            $('.casco-part').removeClass('border-pulse')
+            $('.casco-part').css('border', 'none')
+            
+            // deposit_clicked = is_checked;
+            // casco_clicked = !is_checked;
+            $("#btn-add-casco").css('background-color', !is_checked ? '#FFA633' : '#FFFFFF')
+            $("#btn-add-casco").css('color', !is_checked ? '#FFFFFF' : '#000000')
+
+            $("#btn-add-deposit").css('background-color', is_checked ? '#FFA633' : '#FFFFFF')
+            $("#btn-add-deposit").css('color', is_checked ? '#FFFFFF' : '#000000')
+
+
+            $('#btn-add-casco').css('border', 'none');
+            $('#btn-add-deposit').css('border', 'none');
+            $('#btn-add-casco').css('border', '2px solid #ffa633');
+            $('#btn-add-deposit').css('border', '2px solid #ffa633');
+            // var washingService = document.getElementById('washing_service');
+            // washingService.style.visibility = clicked ? 'visible' : 'hidden';
+            calculTotal();
+        }
+    });
+
+    $("#btn-add-deposit").on("click", function(e) {
+        var is_checked = $("#deposit_add").is(":checked");
+
+        e.preventDefault();
+        if (!is_checked) {
+            $("#deposit_add").prop("checked", !is_checked);
+            $("#casco_add").prop("checked", is_checked);
+            $('.casco-part').removeClass('border-pulse')
+            $('.casco-part').css('border', 'none')
+            
+            // casco_clicked =deposit_clicked;
+            // deposit_clicked = !deposit_clicked;
+
+            $("#btn-add-casco").css('background-color', is_checked ? '#FFA633' : '#FFFFFF')
+            $("#btn-add-casco").css('color', is_checked ? '#FFFFFF' : '#000000')
+
+            $("#btn-add-deposit").css('background-color', !is_checked ? '#FFA633' : '#FFFFFF')
+            $("#btn-add-deposit").css('color', !is_checked ? '#FFFFFF' : '#000000')
+        
+            $('#btn-add-casco').css('border', 'none');
+            $('#btn-add-deposit').css('border', 'none');
+            $('#btn-add-casco').css('border', '2px solid #ffa633');
+            $('#btn-add-deposit').css('border', '2px solid #ffa633');
+            calculTotal();
+            // var washingService = document.getElementById('washing_service');
+            // washingService.style.visibility = clicked ? 'visible' : 'hidden';
+        }
+    });
 
     
 });
@@ -1266,6 +1446,7 @@ function calculTotal() {
     var casco = document.getElementById('casco').value;
     var casco_total = document.getElementById('casco_total');
     var casco_add = document.getElementById('casco_add');
+    var deposit_add = document.getElementById('deposit_add');
     var drop_off_price = document.getElementById('drop_off_price');
     var total_extras = document.getElementById('total_extras');
     var text_casco = document.getElementById('text_casco');
@@ -1311,8 +1492,10 @@ function calculTotal() {
 
     console.log(pick_up_date, drop_off_date)
 
-    var extra_price = 10;
+    var extra_price = <?=$office_extra_price;?>;
+
     casco_per_day.innerHTML = '';
+    console.log('=========pickup=========', casco_add.checked)
 
     if (rent != 0) {
         car = rent.split("x");
@@ -1326,8 +1509,34 @@ function calculTotal() {
             casco_total.value = Math.round(parseInt(cas[0] * cas[1]));
             tot = Math.round(parseInt(car[0] * car[1]) + (parseInt(cas[0] * cas[1])) + parseInt(drop_off_price.value) + parseInt(total_extras.value));
             total_tax_price = parseInt(taxa_livrare.value);
-        } else {
+            if ((new Date('2023-07-07 ' + pick_up_date) <  new Date('2023-07-07 ' +  office_start_time)) || (new Date('2023-07-07 ' + pick_up_date) >  new Date('2023-07-07 ' +  office_end_time)))
+            {
+            //   tot += extra_price;
+            total_tax_price += parseInt(extra_price);
+            }
+            
+            if ((new Date('2023-07-07 ' + drop_off_date) <  new Date('2023-07-07 ' +  office_start_time)) || (new Date('2023-07-07 ' + drop_off_date) >  new Date('2023-07-07 ' +  office_end_time)))
+            {
+            //   tot += extra_price;
+            console.log('=========dropoff=========')
+            total_tax_price += parseInt(extra_price);
+            }
+            
+            tot += total_tax_price;
+
+            if ((new Date('2023-07-07 ' + pick_up_date) <  new Date('2023-07-07 ' +  office_start_time)) || (new Date('2023-07-07 ' + pick_up_date) >  new Date('2023-07-07 ' +  office_end_time)) || (new Date('2023-07-07 ' + drop_off_date) <  new Date('2023-07-07 ' +  office_start_time)) || (new Date('2023-07-07 ' + drop_off_date) >  new Date('2023-07-07 ' +  office_end_time)))
+            {
+                document.getElementById('tax_hour').innerHTML = "Taxa extra hour";
+                document.getElementById('text_taxa_livrare').innerHTML = '&euro;' + total_tax_price;
+            }
+            else {
+                document.getElementById('tax_hour').innerHTML = "Taxa livrare";
+                document.getElementById('text_taxa_livrare').innerHTML = '&euro;' + taxa_livrare.value;
+            }
+            $('#taxa_livrare').val(total_tax_price);
+        } else if ( deposit_add.checked == true ) {
             depozit.innerHTML = depozit_standard.value ;
+            depozit_price.value = depozit_standard.value;
             text_casco.innerHTML = "&euro;" + 0;
             casco_total.value = 0;
             tot = Math.round(parseInt(car[0] * car[1]) + parseInt(drop_off_price.value) + parseInt(total_extras.value));
@@ -1336,6 +1545,39 @@ function calculTotal() {
             if ((new Date('2023-07-07 ' + pick_up_date) <  new Date('2023-07-07 ' +  office_start_time)) || (new Date('2023-07-07 ' + pick_up_date) >  new Date('2023-07-07 ' +  office_end_time)))
             {
             //   tot += extra_price;
+            console.log()
+            total_tax_price += parseInt(extra_price);
+            }
+            
+            if ((new Date('2023-07-07 ' + drop_off_date) <  new Date('2023-07-07 ' +  office_start_time)) || (new Date('2023-07-07 ' + drop_off_date) >  new Date('2023-07-07 ' +  office_end_time)))
+            {
+            //   tot += extra_price;
+            total_tax_price += parseInt(extra_price);
+            }
+            
+            tot += total_tax_price;
+
+            if ((new Date('2023-07-07 ' + pick_up_date) <  new Date('2023-07-07 ' +  office_start_time)) || (new Date('2023-07-07 ' + pick_up_date) >  new Date('2023-07-07 ' +  office_end_time)) || (new Date('2023-07-07 ' + drop_off_date) <  new Date('2023-07-07 ' +  office_start_time)) || (new Date('2023-07-07 ' + drop_off_date) >  new Date('2023-07-07 ' +  office_end_time)))
+            {
+                document.getElementById('tax_hour').innerHTML = "Taxa extra hour";
+                document.getElementById('text_taxa_livrare').innerHTML = '&euro;' + total_tax_price;
+            }
+            else {
+                document.getElementById('tax_hour').innerHTML = "Taxa livrare";
+                document.getElementById('text_taxa_livrare').innerHTML = '&euro;' + taxa_livrare.value;
+            }
+            $('#taxa_livrare').val(total_tax_price);
+        }
+        else {
+            text_casco.innerHTML = "&euro;" + 0;
+            casco_total.value = 0;
+            tot = Math.round(parseInt(car[0] * car[1]) + parseInt(drop_off_price.value) + parseInt(total_extras.value));
+            total_tax_price = parseInt(taxa_livrare.value);
+            console.log(tot,'======')
+            if ((new Date('2023-07-07 ' + pick_up_date) <  new Date('2023-07-07 ' +  office_start_time)) || (new Date('2023-07-07 ' + pick_up_date) >  new Date('2023-07-07 ' +  office_end_time)))
+            {
+            //   tot += extra_price;
+            console.log()
             total_tax_price += parseInt(extra_price);
             }
             
