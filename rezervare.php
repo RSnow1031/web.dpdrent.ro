@@ -145,6 +145,26 @@ Session::put('total_price', $total_price);
         box-shadow: 0 0 0 0 red;
       }
     }
+
+    .mobile-product-disable {
+        display: block;
+    }
+
+    @media (max-width: 767.98px) {
+        .mobile-product-disable {
+            display: none;
+        }   
+    }
+
+    .mobile-product-show {
+        display: none;
+    }
+
+    @media (max-width: 767.98px) {
+        .mobile-product-show {
+            display: block;
+        }   
+    }
 </style>
 <!-- Breadscrumb Section -->
 <div class="breadcrumb-bar section services" style="padding: 10px">
@@ -210,12 +230,141 @@ Session::put('total_price', $total_price);
                             <div class="tab-pane active" role="tabpanel" id="step1">
                             <section class="section product-details pt-1" style="">
                                 
-                                <div class="container">
+                                <div class="container p-0">
                                     <div class="row">
                                         <div class="col-lg-4 theiaStickySidebar">
-                                            <div class="review-sec mt-0">
+                                            <div class="detail-product mobile-product-show">
+                                                <div class="col-xl-12 col-lg-12 col-sm-12 col-12">
+                                                    <div class="row">
+                                                        <div class="listview-car">
+                                                            <div class="card">
+                                                                <div class="blog-widget d-flex">
+                                                                    <div class="blog-img" style="width: 30%">
+                                                                        <a href="listing-details.html">
+                                                                            <img src="https://dpdrent.ro/uploads/cars/<?= $car->carPhoto; ?>" class="img-fluid" alt="blog-img">
+                                                                        </a>														    
+                                                                    </div>
+                                                                    <div class="bloglist-content w-100">
+                                                                    <div class="card-body">
+                                                                            <div class="blog-list-head d-flex">
+                                                                                <div class="blog-list-title">
+                                                                                    <h3><a href="listing-details.html"><?= $car->carName?></a></h3>
+                                                                                </div>
+                                                                            </div>	
+                                                                            <div class="listing-details-group">
+                                                                                <ul>
+                                                                                <?php $equip = explode(';', $car->equip);
+                                                                                $searchValue = ['24','23'];
+                                                                                $matchingValues = array_intersect($equip, $searchValue);
+                                                                                $remainingValues = array_diff($equip, $searchValue);
+
+                                                                                $modifiedArray = array_merge($matchingValues, $remainingValues);
+
+                                                                                $searchValue = ['27','34'];
+                                                                                $matchingValues = array_intersect($modifiedArray, $searchValue);
+                                                                                $remainingValues = array_diff($modifiedArray, $searchValue);
+
+                                                                                $modifiedArray = array_merge($matchingValues, $remainingValues);
+                                                                                foreach ($modifiedArray as $eqId) {
+                                                                                    
+                                                                                    $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
+                                                                                    $results = mysqli_query($db, $query);
+                                                                                    $eqInfo = mysqli_fetch_object($results);
+                                                                                ?>
+                                                                                    <li>
+                                                                                        <span><img src="https://dpdrent.ro/uploads/equip/<?= $eqInfo->equipPhoto ?>"></span>
+                                                                                        <p><?= $eqInfo->equipName; ?></p>
+                                                                                    </li>
+                                                                                <?php } ?>
+                                                                                </ul>	
+                                                                            </div>	
+                                                                            <div class="clear"></div>
+                                                                            <div class="review_wrap">
+                                                                                <div class="review_comment">
+                                                                                    <p>
+                                                                                        <?= $car->carText; ?>
+                                                                                    </p>
+                                                                                    <a href="#" class="read_more"></a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>					 
+                                                                    </div>			 
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="review-sec extra-service mobile-product-show">
                                                 <div class="review-header">
-                                                    <h4>Detalii Comanda</h4>
+                                                    <h4>Detalii rezervare</h4>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="input-block">
+                                                            <label>Locatie Preluare:</label>												
+                                                            <div class="group-img">
+                                                                <!-- <input type="text" class="form-control" placeholder="Enter City, Airport, or Address"> -->
+                                                                <select class="form-control" name="locatie_preluare" id="locatie_preluare" onchange="calculateDistances();">
+                                                                    <option <?php if ($_SESSION['return_location'] == 'Bucuresti') echo 'selected';?>>Bucuresti</option>
+                                                                    <option <?php if ($_SESSION['return_location'] == 'Aeroport Otopeni') echo 'selected';?>>Aeroport Otopeni</option>
+                                                                    <option <?php if ($_SESSION['return_location'] == 'Brasov') echo 'selected';?>>Brasov</option>
+                                                                    <option <?php if ($_SESSION['return_location'] == 'Aeroport Brasov') echo 'selected';?>>Aeroport Brasov</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="input-block">
+                                                            <label>Locatie Returnare:</label>												
+                                                            <div class="group-img">
+                                                                <!-- <input type="text" class="form-control" id="locatie_returnare" name="locatie_returnare"> -->
+                                                                <input type="text" class="form-control" id="locatie_returnare" value="<?= $_SESSION['return_location']?>" name="locatie_returnare" onchange="calculateDistances();">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="input-block">																	
+                                                            <label>Data Preluare:</label>
+                                                        </div>
+                                                        <div class="input-block-wrapp d-flex">
+                                                            <div class="input-block date-widget" style="margin-right: 5px;">												
+                                                                <div class="group-img">
+                                                                <input type="text" class="form-control " id="data_preluare" name="data_preluare" value="<?= (Session::exists('pickup_date')) ? Session::get('pickup_date') : date("d-m-Y"); ?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="input-block time-widge">											
+                                                                <div class="group-img">
+                                                                <input type="text" class="form-control timepicker" name="pickup_time" id="pickup_time" value="<?= (Session::exists('pickup_time')) ? $_SESSION['pickup_time'] : $current_time; ?>">
+                                                                </div>
+                                                            </div>
+                                                        </div>	
+                                                    </div>
+                                                    <div class="col-lg-6 col-sm-6 col-12">
+                                                        <div class="input-block">																	
+                                                            <label>Data Returnare:</label>
+                                                        </div>
+                                                        <div class="input-block-wrapp d-flex">
+                                                            <div class="input-block date-widge" style="margin-right: 5px;">												
+                                                                <div class="group-img">
+                                                                <input type="text" class="form-control " id="data_returnare" name="data_returnare" value="<?= (Session::exists('return_date')) ? Session::get('return_date') : date("d-m-Y", strtotime("+2 days"))?>">
+                                                                </div>
+                                                            </div>
+                                                            <div class="input-block time-widge">											
+                                                                <div class="group-img">
+                                                                <input type="text" class="form-control timepicker" name="return_time" id="return_time" value="<?= (Session::exists('return_time')) ? $_SESSION['return_time'] : $current_time; ?>">
+                                                                </div>
+                                                            </div>
+                                                        </div>	
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="review-sec mt-2" style="margin-bottom: 10px">
+                                                <div class="review-header">
+                                                    <h4>Date rezervare </h4>
                                                 </div>
                                                 <div class="booking-info service-tax">		
                                                     <ul>
@@ -335,7 +484,7 @@ Session::put('total_price', $total_price);
                                             </div> -->
                                         </div>
                                         <div class="col-lg-8">
-                                            <div class="detail-product">
+                                            <div class="detail-product mobile-product-disable">
                                                 <div class="col-xl-12 col-lg-12 col-sm-12 col-12">
                                                     <div class="row">
                                                         <div class="listview-car">
@@ -399,7 +548,7 @@ Session::put('total_price', $total_price);
                                             </div>
                                             <form method="post" >
 
-                                            <div class="review-sec extra-service">
+                                            <div class="review-sec extra-service mobile-product-disable">
                                                 <div class="review-header">
                                                     <h4>Detalii rezervare</h4>
                                                 </div>
@@ -755,15 +904,19 @@ Session::put('total_price', $total_price);
                                                         </div>
                                                         <!-- </div> -->
                                                         <div class="row">
-                                                            <div class="col-6 agree_terms">
-                                                                <div class="form-check">
+                                                            <div class="col-lg-6 col-sm-6 col-md-6 col-12 agree_terms">
+                                                                <!-- <div class="form-check">
                                                                     <input class="form-check-input" type="checkbox" id="terms_check" name="terms_check" value="1" required>
                                                                     <label class="form-check-label" for="terms_check">
                                                                         <strong style="color: red">Sunt deacord cu</strong>&nbsp;&nbsp;&nbsp;<a href="/termeni-conditii.php">Termenii si Conditiile</a>
                                                                     </label>
-                                                                </div>
+                                                                </div> -->
+                                                                <label class="custom_check" > <strong style="color: red">Sunt deacord cu</strong>&nbsp;&nbsp;&nbsp;<a href="/termeni-conditii.php">Termenii si Conditiile</a>
+                                                                    <input type="checkbox" name="terms_check" id="terms_check" value="1" required>
+                                                                    <span class="checkmark"></span> 
+                                                                </label>
                                                             </div>
-                                                            <div class="col-6">
+                                                            <div class="col-lg-6 col-sm-6 col-md-6 col-12">
                                                                 <button type="submit" style="width: 50%" class="btn btn-primary pull-right teeter-element" id="sent">REZERVARE</button>
                                                             </div>
                                                         </div>
@@ -784,23 +937,64 @@ Session::put('total_price', $total_price);
                                                     <div class="lisiting-featues">
                                                         <div class="row">
                                                             <?php foreach ($extras as $extra) { ?>
-                                                            <div class="featureslist d-flex align-items-center col-12">
-                                                                <div class="feature-img">
-                                                                    <img src="https://dpdrent.ro/uploads/extras/<?= $extra['extraPhoto']?>" alt="Icon">
+                                                                <div class="col-md-12">
+                                                                    <div class="wishlist-wrap">
+                                                                        <div class="listview-car">
+                                                                            <div class="card">
+                                                                                <div class="blog-widget d-flex">
+                                                                                    <div class="blog-img">
+                                                                                        <a href="">
+                                                                                            <img src="https://dpdrent.ro/uploads/extras/<?= $extra['extraPhoto']?>" alt="Icon">
+                                                                                        </a>		
+                                                                                    </div>
+                                                                                    <div class="bloglist-content w-100">
+                                                                                    <div class="card-body">
+                                                                                            <div class="blog-list-head d-flex">
+                                                                                                <div class="blog-list-title">
+                                                                                                    <span><?=$extra['extraTitle'];?>- <?= ((int)$extra['extraPrice'] == 0) ? 'Gratuit' : '&euro;' . $extra['extraPrice'] . '/per.'; ?> </span>
+                                                                                                    <h6><?=substr($extra['extraText'], 0, 200) . "...";?></h6>	
+                                                                                                </div>
+                                                                                                <div class="blog-list-rate">
+                                                                                                    <div class="feature-img" style="border: none" onchange="extra(<?= $extra['extraID']?>)">
+                                                                                                        <label class="custom_check" > <strong>ADAUGA</strong>
+                                                                                                            <input type="checkbox" name="extra_input[]" id="input<?= $extra['extraID']; ?>" value="<?= $extra['extraID']?>" >
+                                                                                                            <input type="hidden" name="extra_title" id="extra_title<?= $extra['extraID'] ?>" value="<?= $extra['extraTitle']; ?>" />
+                                                                                                            <input type="hidden" name="extra_price" id="extra_price<?= $extra['extraID'] ?>" value="<?= $extra['extraPrice'] ?>" />
+                                                                                                            <span class="checkmark"></span> 
+                                                                                                        </label>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>	
+                                                                                        </div>					 
+                                                                                    </div>			 
+                                                                                </div> 
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="featues-info">
-                                                                    <span><?=$extra['extraTitle'];?>- <?= ((int)$extra['extraPrice'] == 0) ? 'Gratuit' : '&euro;' . $extra['extraPrice'] . '/per.'; ?> </span>
-                                                                    <h6><?=substr($extra['extraText'], 0, 200) . "...";?></h6>
+
+                                                            <!-- <div class="featureslist d-flex align-items-center row">
+                                                                <div class="col-12 col-lg-2 col-md-2 col-sm-2 text-center">
+                                                                    <div class="feature-img mb-1">
+                                                                        <img src="https://dpdrent.ro/uploads/extras/<?= $extra['extraPhoto']?>" alt="Icon">
+                                                                    </div>
                                                                 </div>
-                                                                <div class="feature-img" style="border: none" onchange="extra(<?= $extra['extraID']?>)">
-                                                                    <label class="custom_check" > <strong>ADAUGA</strong>
-                                                                        <input type="checkbox" name="extra_input[]" id="input<?= $extra['extraID']; ?>" value="<?= $extra['extraID']?>" >
-                                                                        <input type="hidden" name="extra_title" id="extra_title<?= $extra['extraID'] ?>" value="<?= $extra['extraTitle']; ?>" />
-                                                                        <input type="hidden" name="extra_price" id="extra_price<?= $extra['extraID'] ?>" value="<?= $extra['extraPrice'] ?>" />
-                                                                        <span class="checkmark"></span> 
-                                                                    </label>
+                                                                <div class="col-12 col-lg-8 col-md-8 col-sm-8">
+                                                                    <div class="featues-info">
+                                                                        
+                                                                    </div>
                                                                 </div>
-                                                            </div>
+                                                                <div class="col-12 col-lg-2 col-md-2 col-sm-2">
+                                                                    <div class="feature-img" style="border: none" onchange="extra(<?= $extra['extraID']?>)">
+                                                                        <label class="custom_check" > <strong>ADAUGA</strong>
+                                                                            <input type="checkbox" name="extra_input[]" id="input<?= $extra['extraID']; ?>" value="<?= $extra['extraID']?>" >
+                                                                            <input type="hidden" name="extra_title" id="extra_title<?= $extra['extraID'] ?>" value="<?= $extra['extraTitle']; ?>" />
+                                                                            <input type="hidden" name="extra_price" id="extra_price<?= $extra['extraID'] ?>" value="<?= $extra['extraPrice'] ?>" />
+                                                                            <span class="checkmark"></span> 
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div> -->
                                                             <?php } ?>
                                                         </div>
                                                         <hr>
@@ -1703,8 +1897,10 @@ function callback(response, status) {
     }
 }
 
+var readmore = $('.read_more');
+
+
     function read_more() {
-        var readmore = $('.read_more');
         var comment = $('.review_comment p').text();
 
         //goes through each index of the array of 'review_comment p'
@@ -1727,7 +1923,10 @@ function callback(response, status) {
     });
 
 
-  readmore.on('click', function() {
+};
+
+
+readmore.on('click', function() {
     var $this = $(this);
     event.preventDefault();
     
@@ -1742,7 +1941,6 @@ function callback(response, status) {
       $this.text("Read More");
     }
   });
-};
 
 $(function() {
   //Calling function after Page Load

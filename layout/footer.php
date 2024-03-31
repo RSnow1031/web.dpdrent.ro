@@ -182,7 +182,9 @@
 	
 	<!-- Datepicker Core JS -->
 	<script src="assets/plugins/moment/moment.min.js"></script>
-	<script src="assets/js/bootstrap-datetimepicker.min.js"></script>
+	<!-- <script src="assets/js/bootstrap-datetimepicker.min.js"></script> -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
 	
 	<!-- Owl Carousel JS -->
 	<script src="assets/js/owl.carousel.min.js"></script>

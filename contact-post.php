@@ -11,9 +11,10 @@
         curl_setopt($cURL, CURLOPT_RETURNTRANSFER, true);
 
         $response = curl_exec($cURL);
-        curl_close($cURL);
+        // curl_close($cURL);
     }
-    
-    header("Location: ../contact.php");
-    exit();
+    Session::put('sent_contact', 1);
+    // header("Location: ../contact.php");
+    // exit();
+    echo 1;
 ?>

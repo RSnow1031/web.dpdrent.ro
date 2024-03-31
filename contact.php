@@ -45,9 +45,9 @@ require_once './layout/header.php';
                     <iframe width="700" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=B-dul+Eroilor+Nr.118,+Voluntari+Ilfov&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=39.916234,79.013672&amp;ie=UTF8&amp;hq=&amp;hnear=Bulevardul+Eroilor,+Voluntari,+Ilfov,+Romania&amp;t=m&amp;z=14&amp;ll=44.492,26.171719&amp;output=embed"></iframe><br /><small><a href="https://maps.google.com/maps?f=q&amp;source=embed&amp;hl=en&amp;geocode=&amp;q=B-dul+Eroilor+Nr.118,+Voluntari+Ilfov&amp;aq=&amp;sll=37.0625,-95.677068&amp;sspn=39.916234,79.013672&amp;ie=UTF8&amp;hq=&amp;hnear=Bulevardul+Eroilor,+Voluntari,+Ilfov,+Romania&amp;t=m&amp;z=14&amp;ll=44.492,26.171719" style="color:#0000FF;text-align:left"></a></small>
                 </div>
                 <div class="col-lg-6">
-                    <form action="/contact-post.php" method="POST" novalidate class="needs-validation">
+                    <form action="/contact-post.php" method="POST" novalidate class="needs-validation" id="contact-form">
                         <div class="row">
-                            <h1>Get in touch!</h1>
+                            <h1>Contact</h1>
                             <div class="col-md-12"> 
                                 <div class="input-block">
                                     <label>Nume: <span class="text-danger">*</span></label>
@@ -73,7 +73,7 @@ require_once './layout/header.php';
                                 </div>
                             </div>
                         </div>		
-                        <button class="btn btn-danger w-100" type="submit">TRIMITE</button>					
+                        <button class="btn btn-danger w-100 submit-review" type="submit">TRIMITE</button>					
                     </form>
                 </div>
             </div>
@@ -82,6 +82,60 @@ require_once './layout/header.php';
 </section>	
 <!-- /Contact us -->	
 
+
+<!-- Modal -->
+<div class="modal custom-modal fade check-availability-modal payment-success-modal" id="sent_contact" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="payment-success">
+                    <span class="check"><i class="fa-solid fa-check-double"></i></span>
+                    <h5>Trimis cu succes</h5>
+                </div>						
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+    $sent_contact = 0;
+    if (Session::exists('sent_contact') && Session::get('sent_contact') == 1) {
+        $sent_contact = 1;
+    }
+?>
+
 <?php 
 require_once './layout/footer.php';
 ?>
+
+<script>
+    $(document).ready(function() {
+        $('#contact-form').submit(function(e) {
+            e.preventDefault();
+            var formData = $(this).serialize();
+            var formAction = '/contact-post.php'
+            $.ajax({
+                type: "POST",
+                url: formAction,
+                data: formData,
+                success: function(response) {
+                    if (response == true)
+                    {
+                        $('#sent_contact').modal('show');
+                        $('.submit-review').prop('disabled', true)
+
+                        $('#sent_contact').on('hidden.bs.modal', function() {
+                            window.location.replace('/contact.php');
+                        });
+
+                }
+            });
+        });
+        
+        var is_sent = <?php echo $sent_contact?>;
+        if (is_sent == 0)
+            $('.submit-review').prop('disabled', false)
+        else 
+            $('.submit-review').prop('disabled', true)
+    })
+</script>

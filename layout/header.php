@@ -22,7 +22,7 @@
 	<link rel="stylesheet" href="assets/plugins/select2/css/select2.min.css">
 
 	<!-- Datepicker CSS -->
-	<link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css">
+	<!-- <link rel="stylesheet" href="assets/css/bootstrap-datetimepicker.min.css"> -->
 
 	<!-- Aos CSS -->
 	<link rel="stylesheet" href="assets/plugins/aos/aos.css">
@@ -35,7 +35,10 @@
 
 	<!-- Main CSS -->
 	<link rel="stylesheet" href="assets/css/style.css">
-	
+
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
 </head>
 <body style="background-color: #d5d5d5">
 	

@@ -158,7 +158,7 @@ if (Session::exists('step') && Session::get('step') > 1)
 <!-- /Breadscrumb Section -->
 <?php if (Session::exists('step') && Session::get('step') > 1) { ?>
     <div class="container mobile-calcutor-toggle">
-        <button class="btn btn-primary w-100 mt-3">Calculator</button>
+        <button class="btn btn-primary w-100 mt-3">Modifica Datele</button>
     </div>
     <br>
 <?php } ?>
@@ -466,7 +466,7 @@ if (Session::exists('step') && Session::get('step') > 1)
                                     <form action="rezervare-ajax.php" method="post" id="rent_form_<?= $i?>">
                                         <input type="hidden" name="carId" id="carId_<?= $i?>" value="<?= $car['carID'] ?>" />
                                     </form>
-                                    <button onclick="submit_form(<?=$i?>)" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</button>
+                                    <button onclick="submit_form(<?=$i?>)" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rezerva acum</button>
                                 </div>	
                             </div>
                         </div>		 
@@ -602,7 +602,7 @@ if (Session::exists('step') && Session::get('step') > 1)
                                                 <form action="rezervare.php" method="post" id="rent_form_<?=$i?>">
                                                     <input type="hidden" name="carId" id="carId" value="<?= $car['carID']; ?>" >
                                                 </form>
-                                                <button onclick="submit_form(2)" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</button>
+                                                <button onclick="submit_form(2)" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rezerva acum</button>
                                             </div>
                                         </div>	
                                     </div>					 

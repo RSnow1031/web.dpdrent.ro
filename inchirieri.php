@@ -21,15 +21,41 @@ Session::put('url', 'inchirieri');
             <div class="col-lg-7">
                 <div class="detail-product">
                     <div class="slider detail-bigimg">
-                    <?php foreach ($car_photos as $photo) { ?>
+                        
+                    <?php 
+                    if (count($car_photos) < 6 && count($car_photos) > 2)
+                    {
+                        for ($i=1; (6-count($car_photos)); $i++)
+                        {
+                            array_push($car_photos, $car_photos[$i-1]);
+                        }
+                    }
+                    if (count($car_photos) == 1)
+                    {
+                        for ($i=1; (5-count($car_photos)); $i++)
+                        {
+                            array_push($car_photos, $car_photos[0]);
+                        }
+                    }
+                    if (count($car_photos) == 2)
+                    {
+                        array_push($car_photos, $car_photos[0]);
+                        array_push($car_photos, $car_photos[1]);
+                        array_push($car_photos, $car_photos[0]);
+                        array_push($car_photos, $car_photos[1]);
+                    }
+                    
+
+                    foreach ($car_photos as $photo) { 
+                    ?>
                         <div class="product-img">
-                            <img src="https://dpdrent.ro/uploads/carsinner/<?= $photo['photo']; ?>" alt="Slider">
+                            <img src="https://dpdrent.ro/uploads/carsinner/<?= $photo['photo']; ?>" style="width: 100%;height: 100%" alt="Slider">
                         </div>
                     <?php } ?>
                     </div>
                     <div class="slider slider-nav-thumbnails">
                         <?php foreach ($car_photos as $photo) { ?>
-                            <div><img src="https://dpdrent.ro/uploads/carsinner/<?= $photo['photo']; ?>" alt="Slider" style="height: 120px"></div>
+                            <div><img src="https://dpdrent.ro/uploads/carsinner/<?= $photo['photo']; ?>" alt="Slider" style="height: 100%"></div>
                         <?php } ?>
                     </div>
                 </div>

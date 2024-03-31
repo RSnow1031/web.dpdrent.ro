@@ -3033,7 +3033,7 @@ table .badge {
 }
 @media (max-width: 767.98px) {
   .search-box-banner1 .input-block-wrapp {
-    display: block;
+    display: flex;
   }
 }
 

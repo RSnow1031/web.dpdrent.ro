@@ -13,6 +13,7 @@
 
         $response = curl_exec($cURL);
         curl_close($cURL);
+        
         echo 1;
         // if ($response == 1)
         // {

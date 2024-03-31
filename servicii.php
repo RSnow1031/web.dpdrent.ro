@@ -19,10 +19,21 @@ $query = "SELECT * FROM content WHERE pageURL = 'services3'";
 $results = mysqli_query($db, $query);
 $services3 = mysqli_fetch_object($results);
 
-
 ?>
+<style>
+.content-image {
+    margin-right: 5px;
+}
+
+@media (max-width: 767.98px) {
+  .content-image {
+    display: none;
+    }   
+}
+</style>
+
 <!-- Breadscrumb Section -->
-<div class="breadcrumb-bar section services" style="padding: 10px">
+<div class="breadcrumb-bar section services">
     <div class="container">
         <div class="row align-items-center text-center">
             <div class="col-md-12 col-12">
@@ -73,28 +84,25 @@ $services3 = mysqli_fetch_object($results);
 
 <section class="contact-section pt-5" >
     <div class="container">
-        <div class="form-info-area" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="0.5">
+        <div class="form-info-area p-2" data-aos="fade-down" data-aos-duration="1200" data-aos-delay="0.5">
         <section class="">
             <div class="container">
                 <div class="col-md-12">
                     <table>
                         <tr>
                             <td class="vt align-left">
-                                <div style="margin-right: 30px !important"><?= $page->pageContent?></div>
+                                <div style=""><?= $page->pageContent?></div>
                             </td>
-                            <td class="vt align-left">
-                                <!-- <i class="fa fa-plane stm-service-primary-color" style="font-size:100px;color: #000000"></i> -->
-                                <img style="width: 200px" alt="Transfer Aeroport Otopeni"  src="/assets/img/home-cars-bg.jpeg" class="img-grey"/>
-                            </td>
+                           
                         </tr>
                     </table>
                     <hr>
                     <table>
                         <tr>
                             <td class="vt align-left">
-                                <div  style="margin-right: 30px !important"><?= $services1->pageContent; ?></div>
+                                <div><?= $services1->pageContent; ?></div>
                             </td>
-                            <td class="vt align-left">
+                            <td class="vt align-left content-image">
                                 <i class="fa fa-plane stm-service-primary-color" style="font-size:100px;color: #000000"></i>
                                 <!-- <img  alt="Transfer Aeroport Otopeni"  src="https://dpdrent.ro/images/airport_transfer.jpg" class="img-grey"/> -->
                             </td>
@@ -103,12 +111,12 @@ $services3 = mysqli_fetch_object($results);
                     <hr>
                     <table>
                         <tr>
-                            <td class="mr-1 align-left">
-                                <i class="fa fa-id-card stm-service-primary-color" style="font-size:100px;color: #000000"></i>
+                            <td class="align-left  content-image">
+                                <i class="fa fa-id-card stm-service-primary-color" style="font-size:100px;color: #000000; margin-right: 10px"></i>
                                 <!-- <img alt="Inchirieri auto cu Sofer"  src="https://dpdrent.ro/images/private-driver.jpg" class="img-grey"/> -->
                             </td>
                             <td class="vt align-left">
-                                <div  style="margin-left: 30px !important"><?= $services2->pageContent; ?></div>
+                                <div><?= $services2->pageContent; ?></div>
                             </td>
                         </tr>
                     </table>
@@ -116,9 +124,9 @@ $services3 = mysqli_fetch_object($results);
                     <table>
                         <tr>
                             <td class="vt align-left">
-                            <div  style="margin-right: 30px !important"><?= $services3->pageContent; ?></div>
+                            <div><?= $services3->pageContent; ?></div>
                             </td>
-                            <td class="vt align-left">
+                            <td class="ml-1 vt align-left content-image">
                                 <img  alt="Leasing Operational pentru auto noi si rulate"  src="https://dpdrent.ro/images/long_term.jpg" class="img-grey" style="margin-right:-5px;" />
                             </td>
                         </tr>
@@ -255,6 +263,28 @@ $services3 = mysqli_fetch_object($results);
     </div>	
 </section>	
 
+<!-- Modal -->
+<div class="modal custom-modal fade check-availability-modal payment-success-modal" id="pages_edit" role="dialog">
+    <div class="modal-dialog modal-dialog-centered modal-md">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="payment-success">
+                    <span class="check"><i class="fa-solid fa-check-double"></i></span>
+                    <h5>Trimis cu succes</h5>
+                </div>						
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php
+    $sent_service = 0;
+    if (Session::exists('sent_service') && Session::get('sent_service') == 1) {
+        $sent_service = 1;
+    }
+?>
+
+
 <?php 
 require_once './layout/footer.php';
 ?>
@@ -282,10 +312,22 @@ require_once './layout/footer.php';
                 success: function(response) {
                     if (response == true)
                     {
-                        window.location.replace('/servicii.php')
+                        $('#pages_edit').modal('show');
+                        $('.submit-review').prop('disabled', true)
+                        $('#sent_contact').on('hidden.bs.modal', function() {
+                            window.location.replace('/servicii.php');
+                        });
+                        // window.location.replace('/servicii.php')
+
                     }
                 }
             });
         })
+        
+        var is_sent = <?php echo $sent_service?>;
+        if (is_sent == 0)
+            $('.submit-review').prop('disabled', false)
+        else 
+            $('.submit-review').prop('disabled', true)
     })
 </script>

@@ -98,19 +98,105 @@ $current_time = date("H:i");
 	}
 }
 
+.hidden-mobile-text {
+	display: block;
+}
+
+.show-mobile-text {
+	display: none;
+}
+
+#readMoreBtn1 {
+	display: none;
+}
+
+#readMoreBtn2 {
+	display: none;
+}
+
+#readMoreBtn3 {
+	display: none;
+}
+
+#readMoreBtn4 {
+	display: none;
+}
+
+
 @media (max-width: 767.98px) {
+	body {
+		background-color: #f2f7f6 !important;
+	}
 	.why-content img {
 		height: 30px !important;
 		width: 
 		30px !important;
 	}
 
-	#why-us-section {
+
+	.hidden-mobile-text {
 		display: none;
+	}  
+	.show-mobile-text {
+		display: block;
 	}
 
+	.content1 {
+		max-height: 63px;
+		/* Set the maximum height for the content */
+		overflow: hidden;
+	}
+
+	.content2 {
+		max-height: 63px;
+		/* Set the maximum height for the content */
+		overflow: hidden;
+	}
+
+	.content3 {
+		max-height: 63px;
+		/* Set the maximum height for the content */
+		overflow: hidden;
+	}
+
+	.content4 {
+		max-height: 63px;
+		/* Set the maximum height for the content */
+		overflow: hidden;
+	}
+
+	.expanded {
+		max-height: none;
+		/* Remove the height limit when expanded */
+	}
+	#readMoreBtn1 {
+		display: block;
+		color: #0d6efd;
+	}
+
+	#readMoreBtn2 {
+		display: block;
+		color: #0d6efd;
+	}
+
+	#readMoreBtn3 {
+		display: block;
+		color: #0d6efd;
+	}
+
+	#readMoreBtn4 {
+		display: block;
+		color: #0d6efd;
+	}
+	
 }
+
+
+
+
 </style>
+
+
 
 <!-- Banner -->
 <!-- <section class="banner-section show-banner">
@@ -168,7 +254,7 @@ $current_time = date("H:i");
 						<img src="assets/img/large.png" class="img-fluid aos" alt="bannerimage">
 						<div class="view-all">
 							<h4 style="color: #FFFFFF">Noul MG - De la 35&euro;/zi </h4>	
-							<!-- <a href="/" class="btn btn-view d-inline-flex align-items-center">Rent Now <span><i class="feather-arrow-right ms-2"></i></span></a> -->
+							<!-- <a href="/" class="btn btn-view d-inline-flex align-items-center">Rezerva acum <span><i class="feather-arrow-right ms-2"></i></span></a> -->
 						</div>
 					</div>
 				</div>
@@ -232,7 +318,14 @@ $current_time = date("H:i");
 							</div>
 						</div>
 					</li>
-					<li class="column-group-main">						
+					<li class="column-group-main">		
+						<style>
+							.disabled-keyboard  {
+							pointer-events: none;
+							touch-action: none;
+							background-color: #f1f1f1;
+							}
+						</style>				
 						<div class="input-block">																	
 							<label>Pickup Date</label>
 						</div>
@@ -240,7 +333,7 @@ $current_time = date("H:i");
 							<div class="input-block date-widget">												
 								<div class="group-img">
 								<!-- <input type="text" class="form-control " name="pickup_date" value="<?= (Session::exists('pickup_date')) ? Session::get('pickup_date') : ''; ?>" id="pickup_date" required> -->
-								<input type="text" class="form-control " name="pickup_date" value="<?= (Session::exists('pickup_date')) ? Session::get('pickup_date') : date("d-m-Y"); ?>" id="pickup_date" required>
+								<input type="text" class="form-control "   name="pickup_date" value="<?= (Session::exists('pickup_date')) ? Session::get('pickup_date') : date("d-m-Y"); ?>" id="pickup_date" required>
 								<span><i class="feather-calendar"></i></span>
 								</div>
 							</div>
@@ -294,7 +387,7 @@ $current_time = date("H:i");
 <!-- /Search -->
 
 <!-- Popular Services -->
-<section class="section popular-services popular-explore">		
+<section class="section popular-services popular-explore pt-3">		
 	<div class="container">	
 		<!-- Heading title-->
 		<div class="section-heading" data-aos="fade-down">
@@ -368,7 +461,8 @@ $current_time = date("H:i");
 							<span class="badge-overlay strip">Pret Special!</span>
 														
 							<div class="listing-img">
-								<a href="/inchirieri.php?carID=<?=$item['carID']?>">
+								<a href="/inchirieri-masini.php">
+								<!-- <a href="/inchirieri.php?carID=<?=$item['carID']?>"> -->
 									<img src="https://dpdrent.ro/uploads/cars/<?php echo $item['carPhoto'];?>"  class="img-fluid" style="height: 250px">
 								</a>
 								
@@ -387,7 +481,7 @@ $current_time = date("H:i");
 										<span>(5.0)</span>
 									</div>													
 									<h3 class="listing-title">
-										<a href="/inchirieri.php?carID=<?=$item['carID']?>"><?php echo $item['carName'];?></a>
+										<a href="/inchirieri-masini.php"><?php echo $item['carName'];?></a>
 									</h3>
 								</div> 
 								<div class="listing-details-group">
@@ -455,9 +549,9 @@ $current_time = date("H:i");
 								</div>
 								<div class="listing-button">
 									<?php if (Session::exists('step') && Session::get('step') > 1) { ?>
-										<a onclick="rent_now(<?=$item['carID']?>)" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</a>
+										<a onclick="rent_now(<?=$item['carID']?>)" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rezerva acum</a>
 									<?php } else { ?>
-										<a href="/inchirieri-masini.php" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</a>
+										<a href="/inchirieri-masini.php" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rezerva acum</a>
 									<?php } ?>
 								</div>
 							</div>
@@ -471,7 +565,140 @@ $current_time = date("H:i");
 	</div>
 </section>
 
-<section class="section popular-services popular-explore pt-0" id="why-us-section">		
+<section class="section popular-services popular-explore pt-0 ">		
+	<div class="container">	
+		<div class="tab-content">
+			<div class="tab-pane active why-content" id="Carmazda">	
+				<div class="section-heading" data-aos="fade-down">
+					<h2>DE CE NOI?</h2>
+				</div>
+				<div class="row">
+					<div class="col-lg-6 col-md-6 col-12 d-flex mt-2">
+						<img src="/assets/uploads/1.png" style="height: 64px; width: 64px; background-color: #f8aa00; border-radius: 50%; margin-right: 10px"/>
+						<div class="icon-text">
+							<h5 class="title heading-font" style="color:#888888">Rent a car Bucuresti la preturi accesibile</h5>
+							<div class="content1" >
+								<p>Compania DpD Exclusive Rental ofera servicii de inchirieri auto Bucuresti si Rent a Car in regim Non Stop, pentru cele mai ravnite modele de masini. In prezent, DpD Exclusive Rental isi desfasoara activitatea in mai multe orase centrale, oferind o suita de avantaje alaturi de cele mai calitative servicii de inchirieri auto si rent a car Bucuresti in regim non-stop. Este suficient sa ne apelati si va vom inchiria masina pentru curse in Bucuresti, Otopeni sau chiar Brasov, Cluj si Aeroportul International din Cluj. De asemenea, oferim servicii de transfer de la si catre Aeroportul Otopeni, precum si posibilitatea de a opta pentru inchirieri masini cu sofer personal sau inchirieri auto pe termen lung. Preturile noastre incep de la 10 euro fara garantie.</p><p><strong>De ce sa alegeti DpD Exclusive Rental?</strong></p><p>DpD Exclusive Rental este o companie dedicata serviciilor de inchirieri auto si rent a car la preturi mai mult decat accesibile, ofertandu-va cu o calitate superioara a serviciilor complete. Pentru ca ne dorim sa va fim alaturi ori de cate ori aveti nevoie sa inchiriati o masina pentru o cursa in Bucuresti, Cluj sau Brasov, va degrevam de birocratie, propunandu-va un proces de plata rapid si sigur. Beneficiarii, persoane fizice si / sau juridice, pot achita costul serviciilor rent a car cash. Nu impunem plata cu cardul si nici o garantie preliminara, intocmai pentru ca tinem cont de timpul dumneavoastra. Locatiile in care facem livrari sunt Bucuresti, Otopeni, Cluj-Napoca, Brasov, Iasi, Timisoara si Craiova. Pentru persoanele care doresc sa opteze pentru <a href="https://dpd-rentacar.ro/" target="_blank" rel="noopener noreferrer">rent a car Bucuresti</a>, oferim si serviciul de inchirieri auto Bucuresti in sistem urgent.</p>
+							</div>
+							<a id="readMoreBtn1">Read More</a>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-12 d-flex mt-2">
+						<img src="/assets/uploads/2.png" class="mr-5" style="height: 64px; width: 64px; background-color: #f8aa00; border-radius: 50%; margin-right: 10px"/>
+						<div class="icon-text">
+							<h5 class="title heading-font" style="color:#888888">Pentru ce locatii se poate folosi sistemul de inchirieri auto din Bucuresti?</h5>
+							<div class="content2">
+								<p>Compania DpD Exclusive Rental este localizata in Voluntari, la intersectia dintre Bucuresti si aeroportul Otopeni, intr-o zona cu iesire la strada, pentru accesul cat mai facil al autovehiculelor. Compania propune pachete de servicii premium de Rent a car in Bucuresti. Accesandu-le, puteti beneficia de: piese de schimb accesibile, asigurari tip RCA – Casco (serviciu accesat prin DpD Insurance), <a href="https://tractariauto.co.ro/" target="_blank" rel="noopener noreferrer">tractari auto Bucuresti si asistenta rutiera</a>, servicii complete de leasing operational cu masini si modele noi, dar si <a href="https://dpdautomotive.ro/" target="_blank" rel="noopener noreferrer">service auto in orasul Bucuresti</a> (Bosch Car Service Negruzzi).</p><p>In prezent, DpD Exclusive Rental inchiriaza masini in Bucuresti si aeroportul Otopeni (transfer la si de la aeroport), dar si in Iasi, Brasov, Cluj-Napoca (oras si aeroport), Timisoara si Craiova. De curand, am implementat serviciul de rent a car Bucuresti – Otopeni in sistem de urgenta, astfel ca, independent de ora sau zi, sa aveti siguranta ca va puteti deplasa acolo unde este nevoie de dumneavoastra cu o masina sigura!</p>
+							</div>
+							<a id="readMoreBtn2">Read More</a>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-12 d-flex mt-2">
+						<img src="/assets/uploads/3.png" class="mr-5" style="height: 64px; width: 64px; background-color: #f8aa00; border-radius: 50%; margin-right: 10px"/>
+						<div class="icon-text">
+							<h5 class="title heading-font" style="color:#888888">Avantajele oferite pentru inchirieri auto Bucuresti</h5>
+							<div class="content3" style="line-height:20px;">
+								<p>Tariful propus de compania noastra pentru inchirieri auto in Bucuresti pornesc de la valoarea de 10 euro, pret ce nu include garantie. Tariful este aplicat si in cazul transferului efectuat de la si spre Aeroportul Otopeni, dar si inchirierea masinilor conduse de un sofer personal sau inchirierea auto pe un termen mai lung, agreat de beneficiar si DpD Exclusive Rental.</p><p>Acum Mai Aproape De Dumneavoastra In Aeroportul Otopeni Prin Ofertele Noastre De Rent A Car – O Varietate De Modele De Masini – Cutie Viteze Automata Sau Manuala!</p><p>Compania noastra va ofera servicii premium de rent a car si inchirieri auto in regim non-stop atat in Bucuresti, Otopeni, Brasov sau Cluj. In egala masura, va punem la dispozitie si servicii rent a car fara depozit (fara raspundere), fara a va limita de la suita de modele ale masinilor pe care le puteti inchiria.</p><p><strong>Ce modele de masini se pot inchiria la DpD Exclusive Rental?</strong></p><p>Portofoliul companiei DpD Exclusive Rental gazduieste un numar impresionant de marci si modele de masini pe care le puteti inchiria. Detinem o flota cu peste 150 de masini noi, disponibila pentru clientii interesati de inchirieri auto:</p><p>Inchirieri Auto De Lux Bucuresti Si Otopeni – Bmw X5 Si X6, Audi A4, A5, A7 Si A8 (Cutie Automata) – Q5 Si Q7, Mercedes CLS Si Cabrio<br>
+									Rent A Car Bucuresti De La 10 Euro (Low Cost) – Dacia Logan, Chevrolet, Hyndai, Opel, Peugeot, Volkswagen, Ford, Kia, Suzuki.</p><p>Serviciile noastre complete se raporteaza si la optiunea de a beneficia de accesoriile masinii inchiriate de dumneavoastra, de la GPS, scaun pentru copil si pana la portbagaj auto suplimentar sau lanturi pentru iarna.</p>
+							</div>
+							<a id="readMoreBtn3">Read More</a>
+						</div>
+					</div>
+					<div class="col-lg-6 col-md-6 col-12 d-flex mt-2">
+						<img src="/assets/uploads/4.png" class="mr-5" style="height: 64px; width: 64px; background-color: #f8aa00; border-radius: 50%; margin-right: 10px"/>
+						<div class="icon-text">
+							<h5 class="title heading-font" style="color:#888888">Servicii De Inchirieri Masini Bucuresti Constant Imbunatatite</h5>
+							<div class="content4" style="line-height:20px;">
+								<p>Pentru ca ne dorim sa venim in intampinarea nevoilor si asteptarilor dumneavoastra, va punem la dispozitie o gama de servicii rent a car complete atat pentru Bucuresti si Otopeni, cat si pentru Cluj-Napoca, Brasov sau Timisoara. Pentru DpD Exclusive Rental, siguranta dumneavoastra este prioritara, astfel ca flota noastra de masini noi este verificata constant si beneficiaza de toate avizele reprezentative. Puteti inchiria o masina pentru curse in locatiile sus-mentionate contomitent cu serviciul de tractari auto in Bucuresti, care functioneaza in regim non-stop.</p><p>* Orice persoana fizica sau juridica poate solicita de un pachet de asigurari, respectiv Depozit (returnat in urma prestarii serviciului) sau Full Casco (incepand de la 5 euro / zi si raspundere 0 la minimum 6 zile de inchiriere).</p><p>*In limita stocului disponibil!</p><p>De ce rent a car Bucuresti prin DpD Exclusive Rental? Va oferim: cele mai mici tarife pentru inchirieri auto profesionale; transparenta si raspundere; inchirieri si tractari auto in regim non-stop; accesul facil la serviciile si masinile din portofoliu; masina dorita la set cu accesoriile de care ai nevoie.</p>
+							</div>
+							<a  id="readMoreBtn4">Read More</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+
+<!-- Rental deals -->
+<section class="section popular-services" style="padding-top: 10px">
+	<div class="container">
+		<div class="section-heading"  data-aos="fade-down">
+			<h2>Recomandari!</h2>
+		</div>
+		<div class="row">
+			<div class="popular-slider-group">
+				<div class="owl-carousel rental-deal-slider owl-theme">
+					<?php foreach ($recommend_cars as $car) { ?>
+					<div class="rental-car-item">
+						<div class="listing-item mb-0">										
+							<div class="listing-img">
+								<a href="/inchirieri-masini.php">
+									<img src="https://dpdrent.ro/uploads/cars/<?php echo $car['carPhoto']?>" style="height: 250px !important">
+								</a>
+							</div>										
+							<div class="listing-content">
+								<div class="listing-features">												
+									<div class="fav-item-rental">
+										<span class="featured-text">De la &euro;<?php echo $car['price5']?>/zi</span>									
+									</div>																  
+									<div class="list-rating">							
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<i class="fas fa-star filled"></i>
+										<span>(5.0)</span>
+									</div>													
+									<h3 class="listing-title">
+										<a href="/inchirieri-masini.php"><?php echo $car['carName'];?></a>
+									</h3>
+								</div> 
+								<div class="listing-details-group">
+                                    <ul style="display: ruby-text">
+
+                                    <?php $equip = explode(';', $car['equip']);
+                                        $searchValue = ['24','23'];
+										$matchingValues = array_intersect($equip, $searchValue);
+										$remainingValues = array_diff($equip, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+
+										$searchValue = ['27','34'];
+										$matchingValues = array_intersect($modifiedArray, $searchValue);
+										$remainingValues = array_diff($modifiedArray, $searchValue);
+
+										$modifiedArray = array_merge($matchingValues, $remainingValues);
+										
+										foreach ($modifiedArray as $eqId) {
+                                            $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
+                                            $results = mysqli_query($db, $query);
+                                            $eqInfo = mysqli_fetch_object($results);
+                                        ?>
+                                            <li>
+                                                <span><img src="https://dpdrent.ro/uploads/equip/<?= $eqInfo->equipPhoto ?>"></span>
+                                                <p><?= $eqInfo->equipName; ?></p>
+                                            </li>
+                                    <?php } ?>
+                                        
+                                    </ul>	
+                                </div>
+								<div class="listing-button">
+									<a href="/inchirieri-masini.php" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rezerva acum</a>
+								</div>	
+							</div>
+						</div>
+					</div>
+					<?php } ?>
+				</div>	
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- 
+<section class="section popular-services popular-explore pt-0 show-mobile-text" id="why-us-section">		
 	<div class="container">	
 		<div class="tab-content">
 			<div class="tab-pane active why-content" id="Carmazda">	
@@ -511,84 +738,7 @@ $current_time = date("H:i");
 			</div>
 		</div>
 	</div>
-</section>
-
-
-<!-- Rental deals -->
-<section class="section popular-services" style="padding: 0px">
-	<div class="container">
-		<div class="section-heading"  data-aos="fade-down">
-			<h2>Recommended Car Rental deals</h2>
-		</div>
-		<div class="row">
-			<div class="popular-slider-group">
-				<div class="owl-carousel rental-deal-slider owl-theme">
-					<?php foreach ($recommend_cars as $car) { ?>
-					<div class="rental-car-item">
-						<div class="listing-item mb-0">										
-							<div class="listing-img">
-								<a href="/inchirieri.php?carID=<?=$car['carID']?>">
-									<img src="https://dpdrent.ro/uploads/cars/<?php echo $car['carPhoto']?>" style="height: 250px !important">
-								</a>
-							</div>										
-							<div class="listing-content">
-								<div class="listing-features">												
-									<div class="fav-item-rental">
-										<span class="featured-text">De la &euro;<?php echo $car['price5']?>/zi</span>									
-									</div>																  
-									<div class="list-rating">							
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<i class="fas fa-star filled"></i>
-										<span>(5.0)</span>
-									</div>													
-									<h3 class="listing-title">
-										<a href="/inchirieri.php?carID=<?=$car['carID']?>"><?php echo $car['carName'];?></a>
-									</h3>
-								</div> 
-								<div class="listing-details-group">
-                                    <ul style="display: ruby-text">
-
-                                    <?php $equip = explode(';', $car['equip']);
-                                        $searchValue = ['24','23'];
-										$matchingValues = array_intersect($equip, $searchValue);
-										$remainingValues = array_diff($equip, $searchValue);
-
-										$modifiedArray = array_merge($matchingValues, $remainingValues);
-
-										$searchValue = ['27','34'];
-										$matchingValues = array_intersect($modifiedArray, $searchValue);
-										$remainingValues = array_diff($modifiedArray, $searchValue);
-
-										$modifiedArray = array_merge($matchingValues, $remainingValues);
-										
-										foreach ($modifiedArray as $eqId) {
-                                            $query = "SELECT * FROM equip WHERE equipID = " . $eqId . " AND status = 'active'";
-                                            $results = mysqli_query($db, $query);
-                                            $eqInfo = mysqli_fetch_object($results);
-                                        ?>
-                                            <li>
-                                                <span><img src="https://dpdrent.ro/uploads/equip/<?= $eqInfo->equipPhoto ?>"></span>
-                                                <p><?= $eqInfo->equipName; ?></p>
-                                            </li>
-                                    <?php } ?>
-                                        
-                                    </ul>	
-                                </div>
-								<div class="listing-button">
-									<a href="/inchirieri.php?carID=<?=$car['carID']?>" class="btn btn-order"><span><i class="feather-calendar me-2"></i></span>Rent Now</a>
-								</div>	
-							</div>
-						</div>
-					</div>
-					<?php } ?>
-				</div>	
-			</div>
-		</div>
-	</div>
-</section>
+</section> -->
 
 
 <!-- Facts By The Numbers -->
@@ -680,14 +830,29 @@ require_once './layout/footer.php';
 	});
 
 	$(document).ready(function() {
+
+		$('#pickup_date').on('focus', function() {
+			console.log('=======================')
+			$(this).blur(); // Remove focus to prevent keyboard from opening
+		});
+		
+		// $("#pickup_date").datetimepicker({
+		// 	format: 'DD-MM-YYYY',
+		// 	icons: {
+		// 		up: "fas fa-angle-up",
+		// 		down: "fas fa-angle-down",
+		// 		next: 'fas fa-angle-right',
+		// 		previous: 'fas fa-angle-left'
+		// 	},
+		// 	minDate: moment().startOf('day'),
+		// });
+				
 		$("#pickup_date").datetimepicker({
-			format: 'DD-MM-YYYY',
-			icons: {
-				up: "fas fa-angle-up",
-				down: "fas fa-angle-down",
-				next: 'fas fa-angle-right',
-				previous: 'fas fa-angle-left'
-			},
+			format:'d-m-Y H:i',
+			allowTimes:[
+				'00:00', '00:30','01:00', '01:30','02:00', '02:30','03:00', '03:30','04:00', '04:30','05:00', '05:30','06:00', '06:30','07:00', '07:30','08:00', '08:30','09:00', '09:30','10:00', '10:30','11:00', '11:30', '12:00', '12:30',
+				'13:00','13:30','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00','23:00'
+			],
 			minDate: moment().startOf('day'),
 		});
 
@@ -699,7 +864,7 @@ require_once './layout/footer.php';
 				next: 'fas fa-angle-right',
 				previous: 'fas fa-angle-left'
 			},
-			minDate: moment().add(2, 'days').startOf('day')
+			minDate: moment().add(2, 'days').startOf('day'),
 		});
 	});
 
@@ -759,6 +924,59 @@ require_once './layout/footer.php';
             }
 		})
 	}
+
+	$(document).ready(function () {
+		var content1 = $('.content1');
+		var button1 = $('#readMoreBtn1');
+
+		button1.click(function () {
+			if (content1.hasClass('expanded')) {
+				content1.removeClass('expanded');
+				button1.text('Read More');
+			} else {
+				content1.addClass('expanded');
+				button1.text('Read Less');
+			}
+		});
+		var content2 = $('.content2');
+		var button2 = $('#readMoreBtn2');
+
+		button2.click(function () {
+			if (content2.hasClass('expanded')) {
+				content2.removeClass('expanded');
+				button2.text('Read More');
+			} else {
+				content2.addClass('expanded');
+				button2.text('Read Less');
+			}
+		});
+		var content3 = $('.content3');
+		var button3 = $('#readMoreBtn3');
+
+		button3.click(function () {
+			if (content3.hasClass('expanded')) {
+				content3.removeClass('expanded');
+				button3.text('Read More');
+			} else {
+				content3.addClass('expanded');
+				button3.text('Read Less');
+			}
+		});
+
+		var content4 = $('.content4');
+		var button4 = $('#readMoreBtn4');
+
+		button4.click(function () {
+			if (content4.hasClass('expanded')) {
+				content4.removeClass('expanded');
+				button4.text('Read More');
+			} else {
+				content4.addClass('expanded');
+				button4.text('Read Less');
+			}
+		});
+	});
+	
 </script>
 
 		
